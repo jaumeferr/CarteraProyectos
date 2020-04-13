@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <script src="js/jquery-3.3.1.min.js"></script>
+    <script src="js/fase1.js"></script>
+</head>
+
+<body>
+    <div id="login">
+        <form>
+            <div id="errorLogin" hidden="true"> Nombre de usuario o contraseña incorectos</div>
+            <label for="fname">Usuario:</label>
+            <input type="text" id="user" name="user"><br><br>
+            <label for="lname">Contraseña:</label>
+            <input type="text" id="password" name="password"><br><br>
+            <button id="loginButton" onclick="login()">Entrar </button>
+        </form>
+    </div>
+    <div id="main" hidden="true">
+        Aquí va la configuración de cartera
+    </div>
+</body>
+
+</html>
