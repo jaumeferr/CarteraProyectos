@@ -1,55 +1,59 @@
-var userList;
+var users;
 var userLogged;
 
 $(document).ready(function() {
-    userList = [{
-            "user": "juanfrau",
-            "password": "123",
-            "role": "rector",
-        },
-        {
-            "user": "jaumeferr",
-            "password": "123",
-            "role": "cd",
-        },
-        {
-            "user": "romankarb",
-            "password": "123",
-            "role": "cio",
-        },
-        {
-            "user": "migvidal",
-            "password": "123",
-            "role": "promotor",
-        },
-        {
-            "user": "pautrias",
-            "password": "123",
-            "role": "solicitante",
-        },
-        {
-            "user": "javieram",
-            "password": "123",
-            "role": "pm",
-        },
-        {
-            "user": "migalberti",
-            "password": "123",
-            "role": "apoyo",
-        },
-        {
-            "user": "bdunkin",
-            "password": "123",
-            "role": "oficina",
-        }
-    ];
+    if (!localStorage.getItem('users')) {
+        var newsUsers = [{
+                "user": "juanfrau",
+                "password": "123",
+                "role": "rector",
+            },
+            {
+                "user": "jaumeferr",
+                "password": "123",
+                "role": "cd",
+            },
+            {
+                "user": "romankarb",
+                "password": "123",
+                "role": "cio",
+            },
+            {
+                "user": "migvidal",
+                "password": "123",
+                "role": "promotor",
+            },
+            {
+                "user": "pautrias",
+                "password": "123",
+                "role": "solicitante",
+            },
+            {
+                "user": "javieram",
+                "password": "123",
+                "role": "pm",
+            },
+            {
+                "user": "migalberti",
+                "password": "123",
+                "role": "apoyo",
+            },
+            {
+                "user": "bdunkin",
+                "password": "123",
+                "role": "oficina",
+            }
+        ];
 
-    localStorage.setItem('userList', userList);
-
+        localStorage.setItem('users', JSON.stringify(newsUsers));
+        users = JSON.parse(localStorage.getItem('users'));
+    } else {
+        users = JSON.parse(localStorage.getItem('users'));
+    }
     if (!localStorage.getItem('faseCartera')) {
         localStorage.setItem('faseCartera', "1");
     }
-})
+});
 
 function login() {
 
@@ -59,20 +63,17 @@ function login() {
     var isValid = false;
     var url;
 
-    debugger;
     for (i = 0;
-        (i < userList.length) && !isValid; i++) {
-        if ((user === userList[i].user) && (pass === userList[i].password)) {
+        (i < users.length) && !isValid; i++) {
+        if ((user === users[i].user) && (pass === users[i].password)) {
             isValid = true;
-            userLogged = userList[i];
-            localStorage.setItem('userSession', user);
+            userLogged = users[i];
+            localStorage.setItem('userLogged', JSON.stringify(userLogged));
 
             if (hasSomethingToDo()) {
                 //Redireccionar a la página.
                 url = "fase" + localStorage.getItem('faseCartera') + ".htm";
-                window.location.replace(url);
-                /* error: no funciona el cambio de página, se refresca y se pasa la información 
-                del usuario por parámetro en la url, vuelve a la misma pantalla.*/
+                location.href = url;
             } else {
                 $('#NothingToDo').show();
 
@@ -86,7 +87,6 @@ function login() {
 }
 
 function hasSomethingToDo() {
-    debugger;
     var rol = userLogged.role;
     switch (localStorage.getItem('faseCartera')) {
         case "1":
