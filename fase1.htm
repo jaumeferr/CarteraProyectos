@@ -2,12 +2,60 @@
 <html>
 
 <head>
+    <link rel="stylesheet" href="css/fase1.css">
     <script src="js/jquery-3.3.1.min.js"></script>
     <script src="js/fase1Controller.js"></script>
 </head>
 
 <body>
     <div id="userInfo"></div>
+
+    <div id="RRFF"> RRFF </div>
+
+    <div id="RRHH"> RRHH </div>
+
+    <div id="CritEvaluacion"> Criterios de Evaluación</div>
+
+    <div id="Calendario" class="config_calendar">
+        <p>Calendario</p>
+
+        <div class="config_calendar_row">
+            <p>Publicación de la convocatoria</p>
+            <label for="fConvocatoria">Fecha: </label>
+            <input type="date" id="fConvocatoria">
+        </div>
+
+        <div class="config_calendar_row">
+            <p>Presentación de propuestas</p>
+            <label for="PPropuestaDesde">Desde: </label>
+            <input type="date" id="PPropuestaDesde">
+            <label for="PPropuestaHasta">Hasta: </label>
+            <input type="date" id="PPropuestaHasta">
+        </div>
+
+        <div class="config_calendar_row">
+            <p>Evaluación y priorización</p>
+            <label for="PEvalPriorDesde">Desde: </label>
+            <input type="date" id="PEvalPriorDesde">
+            <label for="PEvalPriorHasta">Hasta: </label>
+            <input type="date" id="PEvalPriorHasta">
+        </div class="config_calendar_row">
+
+        <div class="config_calendar_row">
+            <p>Publicación de proyectos aprobados</p>
+            <label for="PAprobados">Fecha: </label>
+            <input type="date" id="PAprobados">
+        </div>
+
+
+    </div>
+    <div id="Documentacion">
+        <div id="Descripcion">Drop your file here</div>
+        <div id="Reglamento" ">Drop your file here</div>
+        <div id="FormEstandar ">Drop your file here</div>
+        <div id="textoConv ">Drop your file here</div>
+
+    </div>
 </body>
 
 </html>

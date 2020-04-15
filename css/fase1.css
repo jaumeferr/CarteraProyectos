@@ -1,0 +1,35 @@
+#Descripcion {
+    border: 5px solid blue;
+    width: 200px;
+    height: 100px;
+    border-style: dashed;
+}
+
+#Reglamento {
+    border: 5px solid blue;
+    width: 200px;
+    height: 100px;
+    border-style: dashed;
+}
+
+#FormEstandar {
+    border: 5px solid blue;
+    width: 200px;
+    height: 100px;
+    border-style: dashed;
+}
+
+#textoConv {
+    border: 5px solid blue;
+    width: 200px;
+    height: 100px;
+    border-style: dashed;
+}
+
+.config_calendar_row {
+    background-color: black;
+    color: white;
+    padding: 5px;
+    border-style: ridge;
+    width: 250;
+}

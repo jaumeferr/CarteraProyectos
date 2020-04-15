@@ -1,0 +1,30 @@
+{
+    "config": {
+        "rrff": {
+            "procesos": [],
+            "costeProcesos": "",
+            "costeRRHH": "",
+            "cuantiaInversion": ""
+        },
+        "rrhh": [],
+        "criterios": [],
+        "calendario": {
+            "fechaPublicacionConvocatoria": "",
+            "periodoPresentacionPropuestas": {
+                "desde": "",
+                "hasta": ""
+            },
+            "periodoEvaluacionPriorizacion": {
+                "desde": "",
+                "hasta": ""
+            },
+            "fechaPublicacionAprobados": ""
+        },
+        "documentacion": {
+            "descripcion": "",
+            "reglamento": "",
+            "formularioPropuesta": "",
+            "textoConvocatoria": ""
+        }
+    }
+}
