@@ -14,44 +14,68 @@
 
     <div id="RRHH"> RRHH </div>
 
-    <div id="CritEvaluacion"> Criterios de Evaluación</div>
+    <div id="CritEvaluacion"> Criterios de Evaluación
+        <button id="nuevoCrit_btn" onclick="abrir_nuevoCrit_vtn()">Añadir</button>
 
-    <div id="Calendario" class="config_calendar">
-        <p>Calendario</p>
+        <table id="tabla_criterios">
+            <tr>
+                <td>Criterio</td>
+                <td>Pond</td>
+            </tr>
+        </table>
 
-        <div class="config_calendar_row">
-            <p>Publicación de la convocatoria</p>
-            <label for="fConvocatoria">Fecha: </label>
-            <input type="date" id="fConvocatoria">
+        <div id="nuevoCrit_vtn" class="modal">
+            <!-- Modal content -->
+            <div class="modal-content">
+                <label for="nuevoCrit_desc">Descripción: </label>
+                <textarea id="nuevoCrit_desc" rows="10" cols="40"></textarea>
+                <label for="nuevoCrit_desc">Ponderación(%): </label>
+                <input type="number" id="nuevoCrit_pond" min="0" max="100">
+                <div class="buttons_modal_vtn">
+                    <button onclick="guardar_nuevoCrit()">Guardar</button>
+                    <button onclick="cerrar_nuevoCrit()">Cerrar</button>
+                </div>
+
+            </div>
+
         </div>
 
-        <div class="config_calendar_row">
-            <p>Presentación de propuestas</p>
-            <label for="PPropuestaDesde">Desde: </label>
-            <input type="date" id="PPropuestaDesde">
-            <label for="PPropuestaHasta">Hasta: </label>
-            <input type="date" id="PPropuestaHasta">
+        <div id="Calendario" class="config_calendar" style="width: 35%;">
+            <p>Calendario</p>
+
+            <div class="config_calendar_row">
+                <p>Publicación de la convocatoria</p>
+                <label for="fConvocatoria">Fecha: </label>
+                <input type="date" id="fConvocatoria">
+            </div>
+
+            <div class="config_calendar_row">
+                <p>Presentación de propuestas</p>
+                <label for="PPropuestaDesde">Desde: </label>
+                <input type="date" id="PPropuestaDesde">
+                <label for="PPropuestaHasta">Hasta: </label>
+                <input type="date" id="PPropuestaHasta">
+            </div>
+
+            <div class="config_calendar_row">
+                <p>Evaluación y priorización</p>
+                <label for="PEvalPriorDesde">Desde: </label>
+                <input type="date" id="PEvalPriorDesde">
+                <label for="PEvalPriorHasta">Hasta: </label>
+                <input type="date" id="PEvalPriorHasta">
+            </div class="config_calendar_row">
+
+            <div class="config_calendar_row">
+                <p>Publicación de proyectos aprobados</p>
+                <label for="PAprobados">Fecha: </label>
+                <input type="date" id="PAprobados">
+            </div>
+
+
         </div>
-
-        <div class="config_calendar_row">
-            <p>Evaluación y priorización</p>
-            <label for="PEvalPriorDesde">Desde: </label>
-            <input type="date" id="PEvalPriorDesde">
-            <label for="PEvalPriorHasta">Hasta: </label>
-            <input type="date" id="PEvalPriorHasta">
-        </div class="config_calendar_row">
-
-        <div class="config_calendar_row">
-            <p>Publicación de proyectos aprobados</p>
-            <label for="PAprobados">Fecha: </label>
-            <input type="date" id="PAprobados">
-        </div>
-
-
-    </div>
-    <div id="Documentacion">
-        <div id="Descripcion">Drop your file here</div>
-        <div id="Reglamento" ">Drop your file here</div>
+        <div id="Documentacion">
+            <div id="Descripcion">Drop your file here</div>
+            <div id="Reglamento" ">Drop your file here</div>
         <div id="FormEstandar ">Drop your file here</div>
         <div id="textoConv ">Drop your file here</div>
 
