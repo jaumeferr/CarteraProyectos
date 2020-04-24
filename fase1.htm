@@ -8,78 +8,190 @@
 </head>
 
 <body>
-    <div id="userInfo"></div>
-
-    <div id="RRFF"> RRFF </div>
-
-    <div id="RRHH"> RRHH </div>
-
-    <div id="CritEvaluacion"> Criterios de Evaluación
-        <button id="nuevoCrit_btn" onclick="abrir_nuevoCrit_vtn()">Añadir</button>
-
-        <table id="tabla_criterios">
-            <tr>
-                <td>Criterio</td>
-                <td>Pond</td>
-            </tr>
-        </table>
-
-        <div id="nuevoCrit_vtn" class="modal">
-            <!-- Modal content -->
-            <div class="modal-content">
-                <label for="nuevoCrit_desc">Descripción: </label>
-                <textarea id="nuevoCrit_desc" rows="10" cols="40"></textarea>
-                <label for="nuevoCrit_desc">Ponderación(%): </label>
-                <input type="number" id="nuevoCrit_pond" min="0" max="100">
-                <div class="buttons_modal_vtn">
-                    <button onclick="guardar_nuevoCrit()">Guardar</button>
-                    <button onclick="cerrar_nuevoCrit()">Cerrar</button>
+    <div id="config_vtn">
+        <div id="userInfo"></div>
+        <div id="top_button_config_vtn">
+            <button id="rec_proc_panel_button" onclick="onRecProcPanelButtonClick()">Recursos y procesos</button>
+            <button id="crit_doc_panel_button" onclick="onCritDocPanelButtonClick()">Criterios y documentación</button>
+            <button id="cal_panel_button" onclick="onCalPanelButtonClick()">Calendario</button>
+        </div>
+        <div id="rec_proc_panel">
+            <div id="rec_panel">
+                <div id="rec_panel_buttons">
+                    <button id="add_rec_button">Añadir</button>
+                    <button id="edit_rec_button">Editar</button>
+                    <button id="remove_rec_button">Eliminar</button>
                 </div>
+                <div id="rec_table_panel">
+                    <table id="rec_table">
+                        <tr>
+                            <th>Área</th>
+                            <th>Recurso</th>
+                            <th>Nombre</th>
+                            <th>Coste (€)/h</th>
+                            <th>Horas</th>
+                        </tr>
+                        <tr>
+                            <td>Sistemas</td>
+                            <td>Ing.Software</td>
+                            <td>Toni da Vinci</td>
+                            <td>40€/h</td>
+                            <td>450</td>
+                        </tr>
+                        <tr>
+                            <td>Sistemas</td>
+                            <td>Ing.Software</td>
+                            <td>Toni da Vinci</td>
+                            <td>40€/h</td>
+                            <td>450</td>
+                        </tr>
+                        <tr>
+                            <td>Sistemas</td>
+                            <td>Ing.Software</td>
+                            <td>Toni da Vinci</td>
+                            <td>40€/h</td>
+                            <td>450</td>
+                        </tr>
+                        <tr>
+                            <td>Sistemas</td>
+                            <td>Ing.Software</td>
+                            <td>Toni da Vinci</td>
+                            <td>40€/h</td>
+                            <td>450</td>
+                        </tr>
+                        <tr>
+                            <td>Sistemas</td>
+                            <td>Ing.Software</td>
+                            <td>Toni da Vinci</td>
+                            <td>40€/h</td>
+                            <td>450</td>
+                        </tr>
+                    </table>
+                </div>
+                <div id="rec_amount_panel">
+                    <label for="rec_amount">Total recursos: </label>
+                    <input type="text" id="rec_amount" name="rec_amount">
+                </div>
+            </div>
+            <div id="proc_panel">
+                <div id="proc_panel_buttons">
+                    <button id="add_proc_button">Añadir</button>
+                    <button id="edit_proc_button">Editar</button>
+                    <button id="remove_proc_button">Eliminar</button>
+                </div>
+                <div id="proc_table_panel">
+                    <table id="proc_table">
+                        <tr>
+                            <th>Nombre del proceso</th>
+                            <th>Coste anual</th>
+                        </tr>
+                        <tr>
+                            <td>Proceso 1</td>
+                            <td>450.45€</td>
+                        </tr>
+                        <tr>
+                            <td>Proceso 1</td>
+                            <td>450.45€</td>
+                        </tr>
+                        <tr>
+                            <td>Proceso 1</td>
+                            <td>450.45€</td>
+                        </tr>
+                        <tr>
+                            <td>Proceso 1</td>
+                            <td>450.45€</td>
+                        </tr>
+                    </table>
+                </div>
+                <div id="proc_amount_panel">
+                    <label for="proc_amount">Total procesos: </label>
+                    <input type="text" id="proc_amount" name="proc_amount">
+                </div>
+            </div>
+            <div id="amount_panel">
+                <label for="rec_proc_amount">Total: </label>
+                <input type="text" id="rec_proc_amount" name="rec_proc_amount">
+            </div>
+        </div>
+        <div id="crit_doc_panel">
+            <div id="crit_panel">
+                <div id="crit_panel_buttons">
+                    <button id="add_crit_button">Añadir</button>
+                    <button id="edit_crit_button">Editar</button>
+                    <button id="remove_crit_button">Eliminar</button>
+                </div>
+                <div id="crit_table_panel">
+                    <table id="crit_table">
+                        <tr>
+                            <th>Pond.(%)</th>
+                            <th>Descripción del criterio</th>
+                        </tr>
+                        <tr>
+                            <td>95</td>
+                            <td>El primer criterior es este</td>
+                        </tr>
+                        <tr>
+                            <td>55</td>
+                            <td>El primer criterior es este</td>
+                        </tr>
+                        <tr>
+                            <td>25</td>
+                            <td>El primer criterior es este</td>
+                        </tr>
+                        <tr>
+                            <td>25</td>
+                            <td>El primer criterior es este</td>
+                        </tr>
+                        <tr>
+                            <td>25</td>
+                            <td>El primer criterior es este</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <div id="doc_panel">
 
             </div>
-
         </div>
-
-        <div id="Calendario" class="config_calendar" style="width: 35%;">
+        <div id="cal_panel" class="config_calendar " style="width: 35%; ">
             <p>Calendario</p>
 
-            <div class="config_calendar_row">
+            <div class="config_calendar_row ">
                 <p>Publicación de la convocatoria</p>
-                <label for="fConvocatoria">Fecha: </label>
-                <input type="date" id="fConvocatoria">
+                <label for="fConvocatoria ">Fecha: </label>
+                <input type="date " id="fConvocatoria ">
             </div>
 
-            <div class="config_calendar_row">
+            <div class="config_calendar_row ">
                 <p>Presentación de propuestas</p>
-                <label for="PPropuestaDesde">Desde: </label>
-                <input type="date" id="PPropuestaDesde">
-                <label for="PPropuestaHasta">Hasta: </label>
-                <input type="date" id="PPropuestaHasta">
+                <label for="PPropuestaDesde ">Desde: </label>
+                <input type="date " id="PPropuestaDesde ">
+                <label for="PPropuestaHasta ">Hasta: </label>
+                <input type="date " id="PPropuestaHasta ">
             </div>
 
-            <div class="config_calendar_row">
+            <div class="config_calendar_row ">
                 <p>Evaluación y priorización</p>
-                <label for="PEvalPriorDesde">Desde: </label>
-                <input type="date" id="PEvalPriorDesde">
-                <label for="PEvalPriorHasta">Hasta: </label>
-                <input type="date" id="PEvalPriorHasta">
-            </div class="config_calendar_row">
-
-            <div class="config_calendar_row">
-                <p>Publicación de proyectos aprobados</p>
-                <label for="PAprobados">Fecha: </label>
-                <input type="date" id="PAprobados">
+                <label for="PEvalPriorDesde ">Desde: </label>
+                <input type="date " id="PEvalPriorDesde ">
+                <label for="PEvalPriorHasta ">Hasta: </label>
+                <input type="date " id="PEvalPriorHasta ">
             </div>
 
-
+            <div class="config_calendar_row ">
+                <p>Publicación de proyectos aprobados</p>
+                <label for="PAprobados ">Fecha: </label>
+                <input type="date " id="PAprobados ">
+            </div>
         </div>
-        <div id="Documentacion">
-            <div id="Descripcion">Drop your file here</div>
-            <div id="Reglamento" ">Drop your file here</div>
-        <div id="FormEstandar ">Drop your file here</div>
-        <div id="textoConv ">Drop your file here</div>
-
     </div>
+    <div id="bot_buttons_config_vtn ">
+        <button id="send_config_button " onclick="onSendConfigButtonClick() ">Enviar</button>
+        <button id="approve_config_button " onclick="onApproveConfigButtonClick() ">Aprobar</button>
+        <button id="reject_config_button " onclick="onRejectConfigButtonClick() ">Rechazar</button>
+        <button id="exit_button " onclick="onExitButton() ">Salir</button>
+    </div>
+
 </body>
 
 </html>
