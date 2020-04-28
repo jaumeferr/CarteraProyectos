@@ -52,7 +52,9 @@ $(document).ready(function() {
     }
     if (!localStorage.getItem('faseCartera')) {
         localStorage.setItem('faseCartera', "1");
+        localStorage.setItem('estadoCartera', "crear_config");
     }
+
 });
 
 function login() {
