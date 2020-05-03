@@ -2,7 +2,8 @@ var users;
 var userLogged;
 
 $(document).ready(function() {
-    if (!localStorage.getItem('users')) {
+
+    if (!sessionStorage.getItem('users')) {
         var newsUsers = [{
                 "user": "juanfrau",
                 "password": "123",
@@ -45,18 +46,23 @@ $(document).ready(function() {
             }
         ];
 
-        localStorage.setItem('users', JSON.stringify(newsUsers));
-        users = JSON.parse(localStorage.getItem('users'));
+        sessionStorage.setItem('users', JSON.stringify(newsUsers));
+        users = JSON.parse(sessionStorage.getItem('users'));
     } else {
-        users = JSON.parse(localStorage.getItem('users'));
+        users = JSON.parse(sessionStorage.getItem('users'));
     }
-    if (!localStorage.getItem('faseCartera')) {
-        localStorage.setItem('faseCartera', "1");
+    
+    if (!sessionStorage.getItem('faseCartera')) {
+        sessionStorage.setItem('faseCartera', "1");
+    }
+
+    if(!sessionStorage.getItem('propuestas')){
+        s = {propuestas:[]} ;
+        sessionStorage.setItem('propuestas', JSON.stringify(s));
     }
 });
 
 function login() {
-
     var user = $("#user").val();
     var pass = $("#password").val();
 
@@ -68,11 +74,11 @@ function login() {
         if ((user === users[i].user) && (pass === users[i].password)) {
             isValid = true;
             userLogged = users[i];
-            localStorage.setItem('userLogged', JSON.stringify(userLogged));
+            sessionStorage.setItem('userLogged', JSON.stringify(userLogged));
 
             if (hasSomethingToDo()) {
                 //Redireccionar a la página.
-                url = "fase" + localStorage.getItem('faseCartera') + ".htm";
+                url = "fase" + sessionStorage.getItem('faseCartera') + ".htm";
                 location.href = url;
             } else {
                 $('#NothingToDo').show();
@@ -88,7 +94,7 @@ function login() {
 
 function hasSomethingToDo() {
     var rol = userLogged.role;
-    switch (localStorage.getItem('faseCartera')) {
+    switch (sessionStorage.getItem('faseCartera')) {
         case "1":
             if (rol === "cio" || rol === "rector" || rol === "cd") {
                 return true;
