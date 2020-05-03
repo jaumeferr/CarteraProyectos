@@ -54,12 +54,14 @@ $(document).ready(function() {
     
     if (!sessionStorage.getItem('faseCartera')) {
         sessionStorage.setItem('faseCartera', "1");
+        sessionStorage.setItem('estadoCartera', "crear_config");
     }
 
     if(!sessionStorage.getItem('propuestas')){
         s = {propuestas:[]} ;
         sessionStorage.setItem('propuestas', JSON.stringify(s));
     }
+
 });
 
 function login() {

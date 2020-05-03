@@ -19,6 +19,7 @@
             <div id="rec_panel">
                 <div id="rec_panel_buttons">
                     <button id="add_rec_button">Añadir</button>
+                    <button id="open_rec_button">Ver</button>
                     <button id="edit_rec_button">Editar</button>
                     <button id="remove_rec_button">Eliminar</button>
                 </div>
@@ -76,6 +77,7 @@
             <div id="proc_panel">
                 <div id="proc_panel_buttons">
                     <button id="add_proc_button">Añadir</button>
+                    <button id="open_proc_button">Ver</button>
                     <button id="edit_proc_button">Editar</button>
                     <button id="remove_proc_button">Eliminar</button>
                 </div>
@@ -112,11 +114,16 @@
                 <label for="rec_proc_amount">Total: </label>
                 <input type="text" id="rec_proc_amount" name="rec_proc_amount">
             </div>
+            <div id="my_amount_panel">
+                <label for="my_amount">Cuantía de Inversión: </label>
+                <input type="text" id="my_amount" name="my_amount">
+            </div>
         </div>
         <div id="crit_doc_panel">
             <div id="crit_panel">
                 <div id="crit_panel_buttons">
                     <button id="add_crit_button">Añadir</button>
+                    <button id="open_crit_button">Ver</button>
                     <button id="edit_crit_button">Editar</button>
                     <button id="remove_crit_button">Eliminar</button>
                 </div>
@@ -124,7 +131,7 @@
                     <table id="crit_table">
                         <tr>
                             <th>Pond.(%)</th>
-                            <th>Descripción del criterio</th>
+                            <th>Criterio</th>
                         </tr>
                         <tr>
                             <td>95</td>
@@ -153,43 +160,43 @@
 
             </div>
         </div>
-        <div id="cal_panel" class="config_calendar " style="width: 35%; ">
+        <div id="cal_panel" class="config_calendar" style="width: 35%; ">
             <p>Calendario</p>
 
-            <div class="config_calendar_row ">
+            <div class="config_calendar_row">
                 <p>Publicación de la convocatoria</p>
-                <label for="fConvocatoria ">Fecha: </label>
-                <input type="date " id="fConvocatoria ">
+                <label for="fConvocatoria">Fecha: </label>
+                <input type="date" id="fConvocatoria">
             </div>
 
-            <div class="config_calendar_row ">
+            <div class="config_calendar_row">
                 <p>Presentación de propuestas</p>
-                <label for="PPropuestaDesde ">Desde: </label>
-                <input type="date " id="PPropuestaDesde ">
-                <label for="PPropuestaHasta ">Hasta: </label>
-                <input type="date " id="PPropuestaHasta ">
+                <label for="PPropuestaDesde">Desde: </label>
+                <input type="date" id="PPropuestaDesde">
+                <label for="PPropuestaHasta">Hasta: </label>
+                <input type="date" id="PPropuestaHasta">
             </div>
 
-            <div class="config_calendar_row ">
+            <div class="config_calendar_row">
                 <p>Evaluación y priorización</p>
-                <label for="PEvalPriorDesde ">Desde: </label>
-                <input type="date " id="PEvalPriorDesde ">
-                <label for="PEvalPriorHasta ">Hasta: </label>
-                <input type="date " id="PEvalPriorHasta ">
+                <label for="PEvalPriorDesde">Desde: </label>
+                <input type="date" id="PEvalPriorDesde">
+                <label for="PEvalPriorHasta">Hasta: </label>
+                <input type="date" id="PEvalPriorHasta">
             </div>
 
-            <div class="config_calendar_row ">
+            <div class="config_calendar_row">
                 <p>Publicación de proyectos aprobados</p>
-                <label for="PAprobados ">Fecha: </label>
-                <input type="date " id="PAprobados ">
+                <label for="PAprobados">Fecha: </label>
+                <input type="date" id="PAprobados">
             </div>
         </div>
     </div>
-    <div id="bot_buttons_config_vtn ">
-        <button id="send_config_button " onclick="onSendConfigButtonClick() ">Enviar</button>
-        <button id="approve_config_button " onclick="onApproveConfigButtonClick() ">Aprobar</button>
-        <button id="reject_config_button " onclick="onRejectConfigButtonClick() ">Rechazar</button>
-        <button id="exit_button " onclick="onExitButton() ">Salir</button>
+    <div id="bot_buttons_config_vtn">
+        <button id="send_config_button" onclick="onSendConfigButtonClick() ">Enviar</button>
+        <button id="approve_config_button" onclick="onApproveConfigButtonClick() ">Aprobar</button>
+        <button id="reject_config_button" onclick="onRejectConfigButtonClick() ">Rechazar</button>
+        <button id="exit_button" onclick="onExitButton() ">Salir</button>
     </div>
 
 </body>

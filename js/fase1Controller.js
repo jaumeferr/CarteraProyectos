@@ -8,7 +8,7 @@ $(document).ready(function() {
     var cartAux = localStorage.getItem('carteraProyectos');
 
     if (cartAux) {
-        carteraProyectos = JSON.parse(cartAux);
+        carteraProyectos = cartAux;
 
         //Cargar estado actual de la cartera.
         //cargar_criterios();
@@ -45,7 +45,7 @@ $(document).ready(function() {
             }
         }
 
-        localStorage.setItem('carteraProyectos', JSON.stringify(carteraProyectos));
+        localStorage.setItem('carteraProyectos', carteraProyectos);
     }
 
     //Ocultar todas los paneles
@@ -61,28 +61,67 @@ $(document).ready(function() {
 
 function checkPrivileges() {
     var role = userLogged.role;
-    var fase = localStorage.getItem('faseCartera');
+    var estado = localStorage.getItem('estadoCartera');
 
-    if (role === "rector" && fase === "aprobar_config") {
+    if (role === "rector" && estado === "aprobar_config") {
         //Ocultar todos los bototes de edición.
-        //Ocultar botoón de enviar.
-        //Mostrar botón de aprobar.
-        //Mostrar botón rechazar
+        $("#add_rec_button").hide();
+        $("#add_proc_button").hide();
+        $("#add_crit_button").hide();
+        $("#edit_rec_button").hide();
+        $("#edit_proc_button").hide();
+        $("#edit_crit_button").hide();
+        $("#remove_rec_button").hide();
+        $("#remove_proc_button").hide();
+        $("#remove_crit_button").hide();
 
-    } else if (role === "rector" && fase != "aprobar config") {
+        //Ocultar botoón de enviar.
+        $("#send_config_button").hide();
+
+    } else if (role === "rector" && estado != "aprobar_config") {
         //Ocultar todos los botones de edición.
+        $("#add_rec_button").hide();
+        $("#add_proc_button").hide();
+        $("#add_crit_button").hide();
+        $("#edit_rec_button").hide();
+        $("#edit_proc_button").hide();
+        $("#edit_crit_button").hide();
+        $("#remove_rec_button").hide();
+        $("#remove_proc_button").hide();
+        $("#remove_crit_button").hide();
+
         //Ocultar botón de enviar.
-        //Ocultar botón de aprobar.
-        //Ocultar botón de rechazar.
-    } else if (role === "cio" && fase === "crear_config") {
-        //Mostrar todos los botones de edición.
-        //Ocultar botón de aprobar.
-        //Ocultar botón de rechazar
+        $("#send_config_button").hide();
+
+        //Ocultar botón de aprobar y rechazar.
+        $("#approve_config_button").hide();
+        $("#reject_config_button").hide();
+
+
+    } else if (role === "cio" && estado === "crear_config") {
+        //Ocultar botón de aprobar y rechazar.
+        $("#approve_config_button").hide();
+        $("#reject_config_button").hide();
+
     } else {
         //Ocultar todos los botones de edición.
-        //Ocultar botón rechazar.
-        //Ocultar botón aprobar.
+        $("#add_rec_button").hide();
+        $("#add_proc_button").hide();
+        $("#add_crit_button").hide();
+        $("#edit_rec_button").hide();
+        $("#edit_proc_button").hide();
+        $("#edit_crit_button").hide();
+        $("#remove_rec_button").hide();
+        $("#remove_proc_button").hide();
+        $("#remove_crit_button").hide();
+
+        //Ocultar botón aprobar y rechazar.
+        $("#approve_config_button").hide();
+        $("#reject_config_button").hide();
+
         //Ocultar botón enviar.
+        $("#send_config_button").hide();
+
     }
 }
 
@@ -113,23 +152,61 @@ function onCalPanelButtonClick() {
 
 //BOTTOM
 function onSendConfigButtonClick() {
+    //Validar info de los campos.
+    if (validate()) {
+        //Cargar info de los campos en variable.
+        loadInfo();
+    }
 
+    //Guardar info en el storage.
+    localStorage.setItem('carteraProyectos', carteraProyectos);
+
+    //Cambiar estado cartera.
+    localStorage.setItem('estadoCartera', "aprobar_config");
+
+    alert("La configuración se ha enviado correctamente");
 }
 
 function onApproveConfigButtonClick() {
+    //Cambiar estado.
+    localStorage.setItem('faseCartera', "2");
 
+    alert("La configuración se ha aprobado correctamente");
 }
 
 function onRejectConfigButtonClick() {
+    //Enviar feedback.
 
+    //Cambiar estado.
+    localStorage.setItem('estadoCartera', "crear_config");
+
+    alert("La configuración se ha rechazado correctamente");
 }
 
 function validate() {
 
 }
 
-function onExitButton() {
+function loadInfo() {
+    //Calendar
+    carteraProyectos.calendario.fechaPublicacionConvocatoria = $("#fConvocatoria").val();
+    carteraProyectos.calendario.periodoPresentacionPropuestas.desde = $("#PPropuestaDesde").val();
+    carteraProyectos.calendario.periodoPresentacionPropuestas.hasta = $("#PPropuestaHasta").val();
+    carteraProyectos.calendario.periodoEvaluacionPriorizacion.desde = $("#PEvalPriorDesde").val();
+    carteraProyectos.calendario.periodoEvaluacionPriorizacion.hasta = $("#PEvalPriorHasta").val();
+    carteraProyectos.calendario.fechaPublicacionAprobados = $("#PAprobados").val();
 
+    //RRHH-RRFF
+    carteraProyectos.rrff.cuantiaInversion = $("#my_amount").val();
+
+    //Criterios
+    //Docu
+}
+
+function onExitButton() {
+    //Redireccionar a la página de login.
+    url = "login.htm";
+    location.href = url;
 }
 
 //--------------------------------------------
