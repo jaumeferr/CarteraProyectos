@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title> Propuesta proyectos</title>
+    <script src="js/jquery-3.3.1.min.js"></script>
+    <script src="js/fase2Controller.js"></script>
+</head>
+
+<body>
+    <button onclick="redirectlogin()">Salir</button>
+    <br>
+    <hr /><br>
+    <div id="redactarpropuesta" hidden="true">
+        <button onclick="formpropuesta()">Redactar propuesta de nuevo proyecto </button><br><br>
+        <div id="formpropuesta" hidden="true">
+            <label for="fpropuesta">Redacción de propuesta para nuevo proyecto</label><br>
+            <label for="ftitlepropuesta">Título de la propuesta</label>
+            <input type="text" id="ftitlepropuesta" name="ftitlepropuesta"><br><br>
+            <label for="fdescripciontextarea">Descripción</label><br>
+            <textarea rows="10" cols="100" name="propuesta" id="fdescripciontextarea"></textarea><br><br>
+            <label for="fbeneficiostextarea">Beneficios estratégicos</label><br>
+            <textarea rows="10" cols="100" name="beneficios" id="fbeneficiostextarea"></textarea><br><br>
+            <label for="fpromotor">Nombre del promotor</label>
+            <input type="text" id="fpromotorname" name="promotorname"><br><br>
+            <button>Adjuntar archivos</button><br>
+            <button id="fpropuestabutton" onclick="enviarpropuesta()">Enviar</button>
+        </div>
+    </div>
+    <div id="mostrarpropuesta" hidden="true">
+        <table id="tablepropuestas"></table>
+        <div id="containerpropuesta" hidden="true">
+            <p>Título: </p>
+            <p id="titlepropuesta"></p>
+            <p>Descipcion: </p>
+            <p id="descripciontext"></p>
+            <p>Beneficios estrategicos: </p>
+            <p id="beneficiostext"></p>
+            <p>Solicitante: </p>
+            <p id="solicitantepropuesta"></p>
+            <div id="hidetopromotor">
+                <p >Director del proyecto: </p>
+                <p id="dproyectopropuesta"></p>
+                <p>Promotor: </p>
+                <p id="promotorpropuesta"></p>
+                <p>Costes: </p>
+                <p id="costespropuesta"></p>
+                <p>Duracion: </p>
+                <p id="duracionpropuesta"></p>
+                <p>Riesgos: </p>
+                <p id="riesgospropuesta"></p>
+                <p>Hitos: </p>
+                <p id="hitospropuesta"></p>
+                <p>Entregables: </p>
+                <p id="entregablespropuesta"></p>
+            </div>
+            <label>¿Qué desea hacer con esta propuesta?</label><br>
+            <button onclick="aceptar()">Aceptar</button>
+            <button onclick="rechazar()">Rechazar</button>
+        </div>
+    </div>
+    <div id="formpropuestapromotor" hidden="true">
+        <p>Modifique los aspectos necesarios antes de enviar</p><br>
+        <p id="ftitlepropuestapromotor" hidden="true"></p>
+        <label for="fnewtitlepropuestapromotor">Título de la propuesta</label>
+        <input type="text" id="fnewtitlepropuestapromotor" name="fnewtitlepropuestapromotor"><br><br>
+        <label for="fdescripciontextareapromotor">Descripcion</label>
+        <textarea rows="10" cols="100" name="propuestapromotor" id="fdescripciontextareapromotor"></textarea><br>
+        <label for="fdproyectosname">Nombre del director de proyectos:</label>
+        <input type="text" id="fdproyectosname" name="fdproyectosname"><br><br>
+        <p>Solicitante: </p>
+        <p id="solicitantepropuestapromotor"></p>
+        <label for="fbeneficiostextareapromotor">BEneficios estrategicos</label>
+        <textarea rows="10" cols="100" name="propuestapromotor" id="fbeneficiostextareapromotor"></textarea><br>
+        <label for="fcostespropuestapromotor">Costes:</label>
+        <input type="text" id="fcostespropuestapromotor" name="fcostespropuestapromotor"><br><br>
+        <label for="fduracionpropuestapromotor">Duracion:</label>
+        <input type="text" id="fduracionpropuestapromotor" name="fduracionpropuestapromotor"><br><br>
+        <label for="friesgospropuestapromotor">Riesgos:</label>
+        <input type="text" id="friesgospropuestapromotor" name="friesgospropuestapromotor"><br><br>
+        <label for="fhitospropuestapromotor">Hitos:</label>
+        <input type="text" id="fhitospropuestapromotor" name="fhitospropuestapromotor"><br><br>
+        <label for="fentregablespropuestapromotor">Entregables:</label>
+        <input type="text" id="fentregablespropuestapromotor" name="fentregablespropuestapromotor"><br><br>
+        <button>Adjuntar archivos</button><br>
+        <button onclick="enviarpropuestapromotor()">Enviar</button>
+    </div>
+    <div id="nothingToDo" hidden="true">
+        Por el momento no hay nada que hacer aquí...
+    </div>
+</body>
+
+</html>
