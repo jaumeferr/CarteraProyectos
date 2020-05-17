@@ -26,5 +26,24 @@
             "formularioPropuesta": "",
             "textoConvocatoria": ""
         }
+    },
+
+    "propuesta": {
+        "titulo": "",
+        "descripcion": "",
+        "director": "",
+        "estado": 0,
+        "beneficios": "",
+        "costes": "",
+        "duracion": "",
+        "riesgos": "",
+        "hitos": "",
+        "entregables": "",
+        "rrhh": [],
+        "rrff": [],
+        "cuantia": 0,
+        "score": "",
+        "seguimiento": ""
+
     }
 }
