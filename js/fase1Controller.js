@@ -3,7 +3,6 @@ var carteraProyectos;
 
 $(document).ready(function() {
     userLogged = JSON.parse(localStorage.getItem('userLogged'));
-    9
     $("#userInfo").append("User: " + userLogged.user + "\n Role: " + userLogged.role);
     var cartAux = localStorage.getItem('carteraProyectos');
 
