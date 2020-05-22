@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Ejecución</title>
+    <script src="js/jquery-3.3.1.min.js"></script>
+    <script src="js/fase4Controller.js"></script>
+</head>
+
+<body>
+    <button onclick="location.href='login.htm'">Salir</button>
+    <br>
+    <hr /><br>
+    <div id="notificacionesaceptaciondg" hidden="true">
+
+    </div>
+    <div>
+        <table id="tableproyectos">
+            <tr>
+                <th>Título</th>
+                <th>Fecha inicio</th>
+                <th>Fecha fin</th>
+                <th>Presupuesto</th>
+                <th>Detalles del proyecto</th>
+                <th>Comentarios</th>
+                <th>Estado del proyecto</th>
+            </tr>
+        </table>
+    </div>
+    <div id="detalleproyecto" hidden="true">
+        <label for="titleproyecto">Título: </label>
+        <input type="text" id="titleproyecto" name="titleproyecto" disabled><br><br>
+        <label for="descripcionproyecto">Descipcion: </label>
+        <input type="text" id="descripcionproyecto" name="descripcionproyecto" disabled><br><br>
+        <label for="beneficiosproyecto">Beneficios estrategicos: </label>
+        <input type="text" id="beneficiosproyecto" name="beneficiosproyecto" disabled><br><br>
+        <label for="solicitanteproyecto">Solicitante: </label>
+        <input type="text" id="solicitanteproyecto" name="solicitanteproyecto" disabled><br><br>
+        <label for="directorproyecto">Director del proyecto: </label>
+        <input type="text" id="directorproyecto" name="directorproyecto" disabled><br><br>
+        <label for="promotorproyecto">Promotor: </label>
+        <input type="text" id="promotorproyecto" name="promotorproyecto" disabled><br><br>
+        <label for="costesproyecto">Costes: </label>
+        <input type="text" id="costesproyecto" name="costesproyecto" disabled><br><br>
+        <label for="duracionproyecto">Duracion: </label>
+        <input type="text" id="duracionproyecto" name="duracionproyecto" disabled><br><br>
+        <label for="riesgosproyecto">Riesgos: </label>
+        <input type="text" id="riesgosproyecto" name="riesgosproyecto" disabled><br><br>
+        <label for="hitosproyecto">Hitos: </label>
+        <input type="text" id="hitosproyecto" name="hitosproyecto" disabled><br><br>
+        <label for="entregablesproyecto">Entregables: </label>
+        <input type="text" id="entregablesproyecto" name="entregablesproyecto" disabled><br><br>
+
+        <button id="reconfigurarbutton" onclick="reconfigurar()" hidden="true">Realizar cambios en el proyecto</button>
+
+        <div id="divbuttons" hidden="true">
+            <button onclick="guardar()">Guardar cambios</button>
+            <button onclick="pararproyecto()">Parar proyecto</button>
+            <button onclick="cancelarproyecto()">Cancelar proyecto</button>
+            
+        </div>
+
+    </div>
+</body>
+
+</html>

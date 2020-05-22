@@ -4,26 +4,28 @@ $(document).ready(function () {
 
     userLogged = JSON.parse(sessionStorage.getItem('userLogged'));
     role = userLogged.role;
+    $("#userInfo").append("Usuario: " + userLogged.user);
+    $("#buttoncambiarfase").hide();
+    $("#buttonredactarpropuesta").hide();
 
     if (role == "solicitante") {
-        $("#redactarpropuesta").show();
+        $("#buttonredactarpropuesta").show();
     } else if (role == "promotor") {
         jsonpropuestas = JSON.parse(sessionStorage.getItem('propuestas'));
         for (var i = 0; i < jsonpropuestas.propuestas.length; i++) {
             item = jsonpropuestas.propuestas[i];
             console.log(item);
             if (item.promotor == userLogged.user && item.estado == 1) {
-                $("#tablepropuestas").append("<tr><td>" + item.titulo + "</td><td><button onclick='verpropuesta(\"" + item.titulo.toString() + "\")'>Ver propuesta</button></td></tr>");
+                $("#tablepropuestas").append("<tr><td style='padding-top:15px;padding-left:50px;'>" + item.titulo + "</td><td style='text-align: center; padding:10px;'><button class='btn btn-secondary' onclick='verpropuesta(\"" + item.titulo.toString() + "\")'>Ver propuesta</button></td></tr>");
             }
         }
         $("#mostrarpropuesta").show();
     } else if (role == "cio") {
+        $("#buttoncambiarfase").show();
         insertpropuestastable(3);
     } else if (role == "oficina") {
         insertpropuestastable(2);
-    } else {
-        $("#nothingToDo").show();
-    }
+    } 
 });
 
 function formpropuesta() {
@@ -32,7 +34,7 @@ function formpropuesta() {
 
 function enviarpropuesta() {
     propuestatext = { estado: 1, titulo: $("#ftitlepropuesta").val(), descripcion: $("#fdescripciontextarea").val(), beneficios: $("#fbeneficiostextarea").val(),
-     promotor: $("#fpromotorname").val(), solicitante: userLogged.user, director: "", costes: "", duracion: "", riesgos: "", hitos: "", entregables: "" };
+     promotor: $("#fpromotorname").val(), solicitante: userLogged.user, director: "", costes: "", duracion: "", riesgos: "", hitos: "", entregables: "",ejecucion:"bien" };
     jsonpropuestas = JSON.parse(sessionStorage.getItem('propuestas'));
     jsonpropuestas.propuestas.push(propuestatext);
     sessionStorage.setItem('propuestas', JSON.stringify(jsonpropuestas));
@@ -49,6 +51,7 @@ function aceptar() {
 
     if (userLogged.role == "promotor") {
 
+        $("#tablepropuestas").hide();
         title = $("#titlepropuesta").text();
         jsonpropuestas = JSON.parse(sessionStorage.getItem('propuestas'));
         for (var i = 0; i < jsonpropuestas.propuestas.length; i++) {
@@ -58,7 +61,7 @@ function aceptar() {
                 $("#fnewtitlepropuestapromotor").val(item.titulo);
                 $("#fdescripciontextareapromotor").val(item.descripcion);
                 $("#fbeneficiostextareapromotor").val(item.beneficios);
-                $("#solicitantepropuestapromotor").text(item.solicitante);
+                $("#solicitantepropuestapromotor").val(item.solicitante);
             }
         }
         $("#formpropuestapromotor").show();
@@ -131,10 +134,6 @@ function verpropuesta(titulo) {
 }
 
 
-function redirectlogin() {
-    location.href = "login.htm";
-}
-
 function cambiarestado(nuevoestado) {
     title = $("#titlepropuesta").text();
     jsonpropuestas = JSON.parse(sessionStorage.getItem('propuestas'));
@@ -200,4 +199,9 @@ function enviarpropuestapromotor() {
         }
     }
     $("#mostrarpropuesta").show();
+}
+
+function cambiarfase3(){
+    sessionStorage.setItem('faseCartera', "3");
+    location.href = "fase3.htm"
 }
