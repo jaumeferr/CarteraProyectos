@@ -1,6 +1,6 @@
 var userLogged;
 
-$(document).ready(function () {
+$(document).ready(function() {
 
     userLogged = JSON.parse(sessionStorage.getItem('userLogged'));
     role = userLogged.role;
@@ -33,8 +33,21 @@ function formpropuesta() {
 }
 
 function enviarpropuesta() {
-    propuestatext = { estado: 1, titulo: $("#ftitlepropuesta").val(), descripcion: $("#fdescripciontextarea").val(), beneficios: $("#fbeneficiostextarea").val(),
-     promotor: $("#fpromotorname").val(), solicitante: userLogged.user, director: "", costes: "", duracion: "", riesgos: "", hitos: "", entregables: "",ejecucion:"bien" };
+    propuestatext = {
+        estado: 1,
+        titulo: $("#ftitlepropuesta").val(),
+        descripcion: $("#fdescripciontextarea").val(),
+        beneficios: $("#fbeneficiostextarea").val(),
+        promotor: $("#fpromotorname").val(),
+        solicitante: userLogged.user,
+        director: "",
+        costes: "",
+        duracion: "",
+        riesgos: "",
+        hitos: "",
+        entregables: "",
+        ejecucion:"bien"
+    };
     jsonpropuestas = JSON.parse(sessionStorage.getItem('propuestas'));
     jsonpropuestas.propuestas.push(propuestatext);
     sessionStorage.setItem('propuestas', JSON.stringify(jsonpropuestas));
@@ -123,10 +136,10 @@ function verpropuesta(titulo) {
             $("#entrgablespropuesta").text(item.entregables);
             if (userLogged.role == "promotor") {
                 $("#hidetopromotor").hide();
-            }else if (userLogged.role == "oficina" || userLogged.role == "cio") {
+            } else if (userLogged.role == "oficina" || userLogged.role == "cio") {
                 $("#hidetopromotor").show();
-            }   
-            
+            }
+
             $("#containerpropuesta").show();
 
         }
