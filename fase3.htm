@@ -11,7 +11,7 @@
     <!-- Evaluar cada proyecto de la cartera con criterios estratégicos-->
     <div id="prior_proy_panel">
         <div id="prior_proy_panel_buttons">
-            <button id="evaluate_proy_button">Evaluar</button>
+            <button id="evaluate_proy_button" onclick="onEvaluateButtonClick()">Evaluar</button>
         </div>
         <div id="prior_proy_table_panel">
             <table id="prior_proy_table">
@@ -22,10 +22,42 @@
             </table>
         </div>
     </div>
-    <div id="prior_proy_modal"></div>
+    <div id="prior_proy_modal" class="modal">
+        <div class="modal-content">
+            <div class="grid-container">
+                <div class="grid-item">
+                    <label for="proy_tit">Titulo: </label>
+                    <input id="proy_tit" name="proy_tit">
+                    <label for="proy_desc">Descripcion: </label>
+                    <input id="proy_desc" name="proy_desc">
+                    <label for="proy_benf">Benef. Estr: </label>
+                    <input id="proy_benf" name="proy_benf">
+                    <label for="proy_costs">Costes: </label>
+                    <input id="proy_costs" name="proy_costs">
+                    <label for="proy_dur">Duracion: </label>
+                    <input id="proy_dur" name="proy_dur">
+                    <label for="proy_hit">Hitos: </label>
+                    <input id="proy_hit" name="proy_hit">
+                    <label for="proy_entr">Entregables: </label>
+                    <input id="proy_entr" name="proy_entr">
+                    <label for="proy_riesgos">Riesgos: </label>
+                    <input id="proy_riesgos" name="proy_riesgos">
+                </div>
+                <div class="grid-item">
+                    <table id="prior_crit_table">
+                        <tr>
+                            <th>Criterio</th>
+                            <th> </th>
+                        </tr>
+                    </table>
+                </div>>
+            </div>
+        </div>
+    </div>
     <!-- Elaborar la propuesta de la lista priorizada de proyectos-->
     <!-- Revisar la priorización y asignar financiación para cada proyecto-->
     <!-- Publicar proyectos financiados que se van a ejecutar-->
+    <!-- Formulario para explicar por qué no se va a publicar-->
 
 </body>
 

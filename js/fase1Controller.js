@@ -187,6 +187,7 @@ function validate() {
 }
 
 function loadInfo() {
+    debugger;
     //Calendar
     carteraProyectos.calendario.fechaPublicacionConvocatoria = $("#fConvocatoria").val();
     carteraProyectos.calendario.periodoPresentacionPropuestas.desde = $("#PPropuestaDesde").val();
@@ -199,6 +200,10 @@ function loadInfo() {
     carteraProyectos.rrff.cuantiaInversion = $("#my_amount").val();
 
     //Criterios
+    var criterios = $("#crit_table");
+    for (var i = 0; i < criterios.rows.Length; i++) {
+        carteraProyectos.criterios.push({ pond: criterios.rows[i].item(0), desc: criterios.rows[i].item(1) });
+    }
     //Docu
 }
 

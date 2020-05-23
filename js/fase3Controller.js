@@ -1,8 +1,9 @@
 var propuestas;
 
 $(document).ready(function() {
+    debugger;
     propJSON = sessionStorage.getItem('propuestas');
-    if (propJSON) {
+    if (propJSON = null) { //CAMBIAR A if(propJSON)
         this.propuestas = JSON.Parse(propJSON);
     } else {
         this.propuestas = [{
@@ -44,7 +45,7 @@ $(document).ready(function() {
 
     //Cargar propuestas en tabla
     var table = $("#prior_proy_table");
-    propuestas.forEach(function(propuesta) {
+    this.propuestas.forEach(function(propuesta) {
         table.append("<tr><td>" + propuesta.titulo + "</td><td>" + "-" + "</td></tr>");
     });
 
@@ -57,12 +58,40 @@ function onPublishButtonClick() {
 
 /*Confirmar la revisión de la priorización, habiendo asignado financiación para
 cada proyecto.*/
-function onAssignButtonClick() {
+function onEvaluateButtonClick() {
+    var criterios;
+    var critJSON;
+    var crit_table = $("#prior_crit_table");
+    //Asegurarse de que se ha seleccionado una linea
 
+    //Cargar detalle de proyecto en modal
+
+    //Cargar criterios
+    critJSON = sessionStorage.getItem('carteraProyectos.config.criterios');
+    if (critJSON) {
+        criterios = JSON.Parse(critJSON);
+    }
+    for (var i = 0; i < criterios.Length; i++) {
+        crit_table.append("<tr><td>" + criterios[i].desc + "</td><td>" + '<input type="checkbox" id="crit_' + i + '"/>' + "</td></tr>");
+    }
+
+    var modal = document.getElementById("prior_proy_modal");
+    modal.style.display = "block";
 }
 
 
 /*Enviar propuesta de lista priorizada de proyectos. */
 function onSendButtonClick() {
+
+}
+
+
+//MODAL BUTTON
+function onExitModalButtonClick() {
+    var modal = document.getElementById("prior_proy_modal");
+    modal.style.display = "none";
+}
+
+function onSaveModalButtonClick() {
 
 }
