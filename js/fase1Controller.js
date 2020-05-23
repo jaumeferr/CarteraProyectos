@@ -187,7 +187,6 @@ function validate() {
 }
 
 function loadInfo() {
-    debugger;
     //Calendar
     carteraProyectos.calendario.fechaPublicacionConvocatoria = $("#fConvocatoria").val();
     carteraProyectos.calendario.periodoPresentacionPropuestas.desde = $("#PPropuestaDesde").val();

@@ -3,6 +3,7 @@
 
 <head>
     <title> Priorización Proyectos</title>
+    <link rel="stylesheet" href="css/fase3.css">
     <script src="js/jquery-3.3.1.min.js"></script>
     <script src="js/fase3Controller.js"></script>
 </head>
@@ -10,9 +11,6 @@
 <body>
     <!-- Evaluar cada proyecto de la cartera con criterios estratégicos-->
     <div id="prior_proy_panel">
-        <div id="prior_proy_panel_buttons">
-            <button id="evaluate_proy_button" onclick="onEvaluateButtonClick()">Evaluar</button>
-        </div>
         <div id="prior_proy_table_panel">
             <table id="prior_proy_table">
                 <tr>
@@ -24,6 +22,10 @@
     </div>
     <div id="prior_proy_modal" class="modal">
         <div class="modal-content">
+            <div>
+                <label for="proy_score_modal">Score: </label>
+                <input type="text" id="proy_score_modal" name="proy_score_modal">
+            </div>
             <div class="grid-container">
                 <div class="grid-item">
                     <label for="proy_tit">Titulo: </label>

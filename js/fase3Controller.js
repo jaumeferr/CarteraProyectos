@@ -1,52 +1,54 @@
 var propuestas;
 
 $(document).ready(function() {
-    debugger;
+    props = JSON.stringify([{
+            titulo: "AAA",
+            descripcion: "Este es el proyecto AAA y trata de esto.",
+            director: "Alguien Importante",
+            estado: 0,
+            beneficios: "35000",
+            costes: "30000",
+            duracion: "50 días",
+            riesgos: "Muchos",
+            hitos: "Algunos habrá",
+            entregables: "También bastantes",
+            rrhh: [],
+            rrff: [],
+            cuantia: 100000,
+            score: "",
+            seguimiento: ""
+        },
+        {
+            titulo: "BBB",
+            descripcion: "Este es el proyecto BBB y trata de esto.",
+            director: "Alguien Más Importante",
+            estado: 0,
+            beneficios: "400000",
+            costes: "25000",
+            duracion: "90 días",
+            riesgos: "Muchísimos",
+            hitos: "Algunos habrá también",
+            entregables: "También muchos",
+            rrhh: [],
+            rrff: [],
+            cuantia: 1324000,
+            score: "",
+            seguimiento: ""
+        }
+    ])
+
+    sessionStorage.setItem('propuestas', props);
     propJSON = sessionStorage.getItem('propuestas');
-    if (propJSON = null) { //CAMBIAR A if(propJSON)
-        this.propuestas = JSON.Parse(propJSON);
+    if (propJSON) { //CAMBIAR A if(propJSON)
+        propuestas = JSON.parse(propJSON);
     } else {
-        this.propuestas = [{
-                titulo: "AAA",
-                descripcion: "Este es el proyecto AAA y trata de esto.",
-                director: "Alguien Importante",
-                estado: 0,
-                beneficios: "35000",
-                costes: "30000",
-                duracion: "50 días",
-                riesgos: "Muchos",
-                hitos: "Algunos habrá",
-                entregables: "También bastantes",
-                rrhh: [],
-                rrff: [],
-                cuantia: 100000,
-                score: "",
-                seguimiento: ""
-            },
-            {
-                titulo: "BBB",
-                descripcion: "Este es el proyecto BBB y trata de esto.",
-                director: "Alguien Más Importante",
-                estado: 0,
-                beneficios: "400000",
-                costes: "25000",
-                duracion: "90 días",
-                riesgos: "Muchísimos",
-                hitos: "Algunos habrá también",
-                entregables: "También muchos",
-                rrhh: [],
-                rrff: [],
-                cuantia: 1324000,
-                score: "",
-                seguimiento: ""
-            }
-        ]
+
     }
 
     //Cargar propuestas en tabla
     var table = $("#prior_proy_table");
-    this.propuestas.forEach(function(propuesta) {
-        table.append("<tr><td>" + propuesta.titulo + "</td><td>" + "-" + "</td></tr>");
+    propuestas.forEach(function(propuesta) {
+        table.append("<tr><td style='padding-top:15px;padding-left:50px;'>" + propuesta.titulo + "</td><td style='padding-top:15px;padding-left:50px;'>" + propuesta.score + "</td><td style='text-align: center; padding:10px;'><button onclick='onEvaluateButtonClick(\"" + propuesta.titulo.toString() + "\")'>Evaluar</button></td></tr>");
     });
 
 });
@@ -58,13 +60,25 @@ function onPublishButtonClick() {
 
 /*Confirmar la revisión de la priorización, habiendo asignado financiación para
 cada proyecto.*/
-function onEvaluateButtonClick() {
+function onEvaluateButtonClick(titulo) {
+    debugger;
     var criterios;
     var critJSON;
     var crit_table = $("#prior_crit_table");
-    //Asegurarse de que se ha seleccionado una linea
 
     //Cargar detalle de proyecto en modal
+    for (var i = 0; i < propuestas.Length; i++) {
+        if (propuestas[i].titulo == titulo) {
+            $("#proy_tit").val(propuestas[i].titulo);
+            $("#proy_desc").val(propuestas[i].descripcion);
+            $("#proy_benf").val(propuestas[i].beneficios);
+            $("#proy_costs").val(propuestas[i].costes);
+            $("#proy_dur").val(propuestas[i].duracion);
+            $("#proy_hit").val(propuestas[i].hitos);
+            $("#proy_entr").val(propuestas[i].entregables);
+            $("#proy_riesgos").val(propuestas[i].riesgos);
+        }
+    }
 
     //Cargar criterios
     critJSON = sessionStorage.getItem('carteraProyectos.config.criterios');
