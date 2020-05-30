@@ -3,10 +3,12 @@ var userLogged;
 $(document).ready(function () {
 
     userLogged = JSON.parse(sessionStorage.getItem('userLogged'));
+    role = userLogged.role;
+    $("#userInfo").append("Usuario: " + userLogged.name);
 
     propuestatext = {
-        estado: 5, titulo: "titulo", descripcion: "des", beneficios: "ben",
-        promotor: "prom", solicitante: "sol", director: "dir", costes: "111", duracion: "12", riesgos: "molts", hitos: "tambe", entregables: "cap", ejecucion: "mal"
+        estado: 5, titulo: "aaaaaaaaaa", descripcion: "des", beneficios: "ben",
+        promotor: "prom", solicitante: "sol", director: "dir", costes: "111", duracion: "12", riesgos: "molts", hitos: "tambe", entregables: "cap", ejecucion: "mal", seguimiento:"aprobado"
     };
     jsonpropuestas = JSON.parse(sessionStorage.getItem('propuestas'));
     jsonpropuestas.propuestas.push(propuestatext);
@@ -15,24 +17,24 @@ $(document).ready(function () {
     jsonpropuestas = JSON.parse(sessionStorage.getItem('propuestas'));
     console.log(jsonpropuestas)
 
-    if (userLogged.role == "rector") {
+    if (userLogged.role == "dg") {
         mostrarnotificaciones();
     }
 
-    showprojects();
+    showprojects("aprobado");
 });
 
 
 
-function showprojects() {
-    $("#tableproyectos")
+function showprojects(priority) {
+    $("#tableproyectos").empty();
     jsonpropuestas = JSON.parse(sessionStorage.getItem('propuestas'));
     for (var i = 0; i < jsonpropuestas.propuestas.length; i++) {
         item = jsonpropuestas.propuestas[i];
-        if (item.estado == 5) { // y otra condicion : ha sido aceptado en la fase 3
+        if (item.estado == 5 && item.seguimiento == priority) { // y otra condicion : ha sido aceptado en la fase 3
             s = "<tr><td>" + item.titulo + "</td><td></td><td></td><td>" + item.costes + "</td>";
-            s += "<td><button onclick='verdetalles(\"" + item.titulo.toString() + "\")'>Ver detalles</button></td>";
-            s += "<td><button onclick='vercomentarios(\"" + item.titulo.toString() + "\")'>Ver comentarios</button></td>";
+            s += "<td><button class='btn btn-secondary' onclick='verdetalles(\"" + item.titulo.toString() + "\")'>Ver detalles</button></td>";
+            s += "<td><button class='btn btn-secondary' onclick='vercomentarios(\"" + item.titulo.toString() + "\")'>Ver comentarios</button></td>";
             s += "<td><select id='ejecucionproyecto' name='ejecucionproyecto' disabled><option value='bien' style='background-color:green'>Bien</option><option value='regular' style='background-color:yellow'>Regular</option>";
             s += "<option value='mal' style='background-color:red'>Mal</option></select></td></tr>";
             $("#tableproyectos").append(s);
@@ -50,10 +52,10 @@ function showprojects() {
     if (userLogged.role == "promotor") {
         $("#ejecucionproyecto").prop("disabled", false);
     }
-    $("#mostrarpropuesta").show();
 }
 
 function verdetalles(titulo) {
+    $("#tableprojects").hide();
 
     jsonpropuestas = JSON.parse(sessionStorage.getItem('propuestas'));
     for (var i = 0; i < jsonpropuestas.propuestas.length; i++) {
@@ -103,29 +105,35 @@ function reconfigurar() {
 function pararproyecto() {
     notificaciones = JSON.parse(sessionStorage.getItem('notificacionescio'));
     titulo = $("#titleproyecto").val();
-    mensajetext = { titulo: $("#titleproyecto").val(), tipo: "Paralización"};
+    mensajetext = { titulo: $("#titleproyecto").val(), tipo: "Paralización" };
     notificaciones = JSON.parse(sessionStorage.getItem('notificacionescio'));
     notificaciones.notificacionescio.push(mensajetext);
     sessionStorage.setItem('notificacionescio', JSON.stringify(notificaciones));
-    
+
     notificaciones = JSON.parse(sessionStorage.getItem('notificacionescio'));
     console.log(notificaciones)
+
+    $("#tableprojects").show();
+    $("#detalleproyecto").hide();
 }
 
 function cancelarproyecto() {
     notificaciones = JSON.parse(sessionStorage.getItem('notificacionescio'));
     titulo = $("#titleproyecto").val();
-    mensajetext = { titulo: $("#titleproyecto").val(), tipo: "Cancelación"};
+    mensajetext = { titulo: $("#titleproyecto").val(), tipo: "Cancelación" };
     notificaciones = JSON.parse(sessionStorage.getItem('notificacionescio'));
     notificaciones.notificacionescio.push(mensajetext);
     sessionStorage.setItem('notificacionescio', JSON.stringify(notificaciones));
+
+    $("#tableprojects").show();
+    $("#detalleproyecto").hide();
 }
 
 function mostrarnotificaciones() {
     notificaciones = JSON.parse(sessionStorage.getItem('notificacionescio'));
     for (var i = 0; i < notificaciones.notificacionescio.length; i++) {
         mensaje = notificaciones.notificacionescio[i];
-        s = "<p>Notificación para la" + mensaje.tipo + " del proyecto " + mensaje.titulo;
+        s = "<p>Notificación para la <b>" + mensaje.tipo + "</b> del proyecto <b>" + mensaje.titulo + "</b>";
         s += "<button onclick='aceptarcio(" + i + ")'>Aceptar</button><button onclick='rechazarcio(" + i + ")'>Rechazar</button>"
         $("#notificacionesaceptaciondg").append(s)
     }
@@ -161,4 +169,22 @@ function rechazarcio(i) {
     notificaciones.notificacionescio[i].remove();
     sessionStorage.setItem('notificacionescio', JSON.stringify(notificaciones));
     mostrarnotificaciones();
+}
+
+function showtypeproject(priority) {
+    if (priority == "aprobado") {
+        showprojects("aprobado");
+    } else if (priority = "apalzado") {
+        showprojects("aplazado");
+    }
+}
+
+function goback(){
+    $("#tableprojects").show();
+    $("#detalleproyecto").hide();
+    
+}
+
+function guardarcambios(){
+
 }

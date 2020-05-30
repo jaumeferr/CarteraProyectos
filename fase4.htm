@@ -5,62 +5,121 @@
     <title>Ejecución</title>
     <script src="js/jquery-3.3.1.min.js"></script>
     <script src="js/fase4Controller.js"></script>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <script src="js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="css/fase4.css">
 </head>
 
 <body>
-    <button onclick="location.href='login.htm'">Salir</button>
-    <br>
-    <hr /><br>
-    <div id="notificacionesaceptaciondg" hidden="true">
-
-    </div>
-    <div>
-        <table id="tableproyectos">
-            <tr>
-                <th>Título</th>
-                <th>Fecha inicio</th>
-                <th>Fecha fin</th>
-                <th>Presupuesto</th>
-                <th>Detalles del proyecto</th>
-                <th>Comentarios</th>
-                <th>Estado del proyecto</th>
-            </tr>
-        </table>
-    </div>
-    <div id="detalleproyecto" hidden="true">
-        <label for="titleproyecto">Título: </label>
-        <input type="text" id="titleproyecto" name="titleproyecto" disabled><br><br>
-        <label for="descripcionproyecto">Descipcion: </label>
-        <input type="text" id="descripcionproyecto" name="descripcionproyecto" disabled><br><br>
-        <label for="beneficiosproyecto">Beneficios estrategicos: </label>
-        <input type="text" id="beneficiosproyecto" name="beneficiosproyecto" disabled><br><br>
-        <label for="solicitanteproyecto">Solicitante: </label>
-        <input type="text" id="solicitanteproyecto" name="solicitanteproyecto" disabled><br><br>
-        <label for="directorproyecto">Director del proyecto: </label>
-        <input type="text" id="directorproyecto" name="directorproyecto" disabled><br><br>
-        <label for="promotorproyecto">Promotor: </label>
-        <input type="text" id="promotorproyecto" name="promotorproyecto" disabled><br><br>
-        <label for="costesproyecto">Costes: </label>
-        <input type="text" id="costesproyecto" name="costesproyecto" disabled><br><br>
-        <label for="duracionproyecto">Duracion: </label>
-        <input type="text" id="duracionproyecto" name="duracionproyecto" disabled><br><br>
-        <label for="riesgosproyecto">Riesgos: </label>
-        <input type="text" id="riesgosproyecto" name="riesgosproyecto" disabled><br><br>
-        <label for="hitosproyecto">Hitos: </label>
-        <input type="text" id="hitosproyecto" name="hitosproyecto" disabled><br><br>
-        <label for="entregablesproyecto">Entregables: </label>
-        <input type="text" id="entregablesproyecto" name="entregablesproyecto" disabled><br><br>
-
-        <button id="reconfigurarbutton" onclick="reconfigurar()" hidden="true">Realizar cambios en el proyecto</button>
-
-        <div id="divbuttons" hidden="true">
-            <button onclick="guardar()">Guardar cambios</button>
-            <button onclick="pararproyecto()">Parar proyecto</button>
-            <button onclick="cancelarproyecto()">Cancelar proyecto</button>
-            
+    <div class="container-fluid" style="background-color: white;">
+        <div class="row">
+            <div class="col-xl-12" style="padding: 1%;">
+                <div id="userInfo" style="position:absolute; margin:auto; padding: 0.5%; background-color: white;">
+                </div>
+                <div style="text-align: right;">
+                    <button class="btn btn-info" onclick="location.href='login.htm'">Salir</button>
+                </div>
+            </div>
         </div>
-
     </div>
+    <br><br>
+    <div class="container">
+        <div class="row">
+            <div class="col-xl-12">
+                <div id="notificacionesaceptaciondg" hidden="true" class="whitecontainer">
+                </div>
+            </div>
+        </div>
+    </div>
+    <br><br>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-xl-12">
+                <div id="tableprojects" class="whitecontainer">
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-info" onclick="showtypeproject('aprobado')">En
+                            ejecución</button>
+                        <button type="button" class="btn btn-info" onclick="showtypeproject('aplazado')">En
+                            espera</button>
+                    </div>
+                    <br><br>
+                    <div>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Título</th>
+                                    <th>Fecha inicio</th>
+                                    <th>Fecha fin</th>
+                                    <th>Presupuesto</th>
+                                    <th>Detalles del proyecto</th>
+                                    <th>Comentarios</th>
+                                    <th>Estado del proyecto</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tableproyectos">
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-xl-12">
+                <div id="detalleproyecto" hidden="true" class="whitecontainer">
+                    <label for="titleproyecto">Título </label>
+                    <input type="text" id="titleproyecto" name="titleproyecto" disabled
+                        class="form-control widthinput"><br><br>
+                    <label for="descripcionproyecto">Descipcion </label>
+                    <input type="text" id="descripcionproyecto" name="descripcionproyecto" disabled
+                        class="form-control widthinput"><br><br>
+                    <label for="beneficiosproyecto">Beneficios estrategicos</label>
+                    <input type="text" id="beneficiosproyecto" name="beneficiosproyecto" disabled
+                        class="form-control widthinput"><br><br>
+                    <label for="solicitanteproyecto">Solicitante </label>
+                    <input type="text" id="solicitanteproyecto" name="solicitanteproyecto" disabled
+                        class="form-control widthinput"><br><br>
+                    <label for="directorproyecto">Director del proyecto </label>
+                    <input type="text" id="directorproyecto" name="directorproyecto" disabled
+                        class="form-control widthinput"><br><br>
+                    <label for="promotorproyecto">Promotor</label>
+                    <input type="text" id="promotorproyecto" name="promotorproyecto" disabled
+                        class="form-control widthinput"><br><br>
+                    <label for="costesproyecto">Costes </label>
+                    <input type="text" id="costesproyecto" name="costesproyecto" disabled
+                        class="form-control widthinput"><br><br>
+                    <label for="duracionproyecto">Duracion </label>
+                    <input type="text" id="duracionproyecto" name="duracionproyecto" disabled
+                        class="form-control widthinput"><br><br>
+                    <label for="riesgosproyecto">Riesgos </label>
+                    <input type="text" id="riesgosproyecto" name="riesgosproyecto" disabled
+                        class="form-control widthinput"><br><br>
+                    <label for="hitosproyecto">Hitos </label>
+                    <input type="text" id="hitosproyecto" name="hitosproyecto" disabled
+                        class="form-control widthinput"><br><br>
+                    <label for="entregablesproyecto">Entregables </label>
+                    <input type="text" id="entregablesproyecto" name="entregablesproyecto" disabled
+                        class="form-control widthinput"><br><br>
+
+                    <button class="btn btn-info" id="reconfigurarbutton" onclick="reconfigurar()" hidden="true">Realizar
+                        cambios en el
+                        proyecto</button>
+                    <button class="btn btn-info" onclick="goback()">Volver</button>
+                    <br><br>
+                    <div id="divbuttons" hidden="true">
+                        <button class="btn btn-info" onclick="guardarcambios()">Guardar cambios</button>
+                        <button class="btn btn-info" onclick="pararproyecto()">Parar proyecto</button>
+                        <button class="btn btn-info" onclick="cancelarproyecto()">Cancelar proyecto</button>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <br><br>
 </body>
 
 </html>
