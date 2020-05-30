@@ -7,9 +7,10 @@
     <script src="js/fase2Controller.js"></script>
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <script src="js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="css/fase2.css">
 </head>
 
-<body style="background-color: #87CEFA;">
+<body>
 
     <div class="container-fluid" style="background-color: white;">
         <div class="row">
@@ -31,17 +32,19 @@
     <div class="container">
         <div class="row">
             <div class="col-xl-12">
-                <div id="formpropuesta" hidden="true"
-                    style="padding: 50px;padding-left: 150px; background-color: white;">
+                <div id="formpropuesta" hidden="true" class="whitecontainer">
                     <h4>Redacción de propuesta para nuevo proyecto</h4><br>
                     <label for="ftitlepropuesta">Título de la propuesta&nbsp;&nbsp;&nbsp;</label>
-                    <input type="text" id="ftitlepropuesta" name="ftitlepropuesta" style="width : 560px;"><br><br>
+                    <input type="text" id="ftitlepropuesta" name="ftitlepropuesta" class="form-control widthinput"><br><br>
                     <label for="fdescripciontextarea">Descripción</label><br>
-                    <textarea rows="10" cols="100" name="propuesta" id="fdescripciontextarea"></textarea><br><br>
+                    <textarea rows="10" cols="100" name="propuesta" id="fdescripciontextarea" class="form-control widthinput"></textarea><br><br>
                     <label for="fbeneficiostextarea">Beneficios estratégicos</label><br>
-                    <textarea rows="10" cols="100" name="beneficios" id="fbeneficiostextarea"></textarea><br><br>
+                    <textarea rows="10" cols="100" name="beneficios" id="fbeneficiostextarea" class="form-control widthinput"></textarea><br><br>
                     <label for="fpromotor">Nombre del promotor&nbsp;&nbsp;&nbsp;</label>
-                    <input type="text" id="fpromotorname" name="promotorname"><br><br>
+                    <select id="fpromotorname" name="promotorname" class="form-control" style="width: 150px;">
+                        <option value="Miguel Vidal">Miguel Vidal</option>
+                        <option value="Antonio Álvarez">Antonio Álvarez</option>
+                    </select><br><br>
                     <button class="btn btn-secondary">Adjuntar archivos</button><br><br>
                     <button id="fpropuestabutton" class="btn btn-info" onclick="enviarpropuesta()">Enviar</button>
 
@@ -56,29 +59,29 @@
                     <table  class="table table-hover" style="background-color: white;">
                     <tbody id="tablepropuestas"></tbody>
                     </table>
-                    <div id="containerpropuesta" hidden="true" style="padding: 50px;padding-left: 150px; background-color: white;">
-                        <p><b>Título: </b></p>
+                    <div id="containerpropuesta" hidden="true" class="whitecontainer">
+                        <p><b>Título </b></p>
                         <p id="titlepropuesta"></p>
-                        <p><b>Descripción: </b></p>
+                        <p><b>Descripción </b></p>
                         <p id="descripciontext"></p>
-                        <p><b>Beneficios estratégicos: </b></p>
+                        <p><b>Beneficios estratégicos </b></p>
                         <p id="beneficiostext"></p>
-                        <p><b>Solicitante: </b></p>
+                        <p><b>Solicitante </b></p>
                         <p id="solicitantepropuesta"></p>
                         <div id="hidetopromotor">
-                            <p><b>Director del proyecto: </b></p>
+                            <p><b>Director del proyecto </b></p>
                             <p id="dproyectopropuesta"></p>
-                            <p><b>Promotor: </b></p>
+                            <p><b>Promotor </b></p>
                             <p id="promotorpropuesta"></p>
-                            <p><b>Costes: </b></p>
+                            <p><b>Costes </b></p>
                             <p id="costespropuesta"></p>
-                            <p><b>Duración: </b></p>
+                            <p><b>Duración </b></p>
                             <p id="duracionpropuesta"></p>
-                            <p><b>Riesgos: </b></p>
+                            <p><b>Riesgos </b></p>
                             <p id="riesgospropuesta"></p>
-                            <p><b>Hitos: </b></p>
+                            <p><b>Hitos </b></p>
                             <p id="hitospropuesta"></p>
-                            <p><b>Entregables: </b></p>
+                            <p><b>Entregables </b></p>
                             <p id="entregablespropuesta"></p>
                         </div><br><br>
                         <label>¿Qué desea hacer con esta propuesta?</label><br><br>
@@ -94,30 +97,33 @@
     <div class="container">
         <div class="row">
             <div class="col-xl-12">
-    <div id="formpropuestapromotor" hidden="true" style="padding: 50px;padding-left: 150px; background-color: white;">
+    <div id="formpropuestapromotor" hidden="true" class="whitecontainer">
         <h3>Modifique los aspectos necesarios antes de enviar</h3><br>
         <p id="ftitlepropuestapromotor" hidden="true"></p>
-        <label for="fnewtitlepropuestapromotor">Título de la propuesta: </label>
-        <input type="text" id="fnewtitlepropuestapromotor" name="fnewtitlepropuestapromotor"><br><br>
+        <label for="fnewtitlepropuestapromotor">Título de la propuesta </label>
+        <input type="text" id="fnewtitlepropuestapromotor" name="fnewtitlepropuestapromotor" class="form-control widthinput"><br><br>
         <label for="fdescripciontextareapromotor">Descripción</label><br>
-        <textarea rows="10" cols="100" name="propuestapromotor" id="fdescripciontextareapromotor"></textarea><br><br>
-        <label for="fdproyectosname">Nombre del director de proyectos:</label>
-        <input type="text" id="fdproyectosname" name="fdproyectosname"><br><br>
-        <label for="solicitantepropuestapromotor">Solicitante: </label>
-        <input type="text" id="solicitantepropuestapromotor" name="solicitantepropuestapromotor" disabled><br><br>
+        <textarea rows="10" cols="100" name="propuestapromotor" id="fdescripciontextareapromotor" class="form-control widthinput"></textarea><br><br>
+        <label for="fdproyectosname">Director del proyectos</label>
+        <select id="fdproyectosname" name="fdproyectosname" class="form-control" style="width: 180px;">
+            <option value="Javier Amengual">Javier Amengual</option>
+            <option value="Ana Márquez">Ana Márquez</option>
+        </select><br><br>
+        <label for="solicitantepropuestapromotor">Solicitante </label>
+        <input type="text" id="solicitantepropuestapromotor" name="solicitantepropuestapromotor" disabled class="form-control" style="width: 180px;"><br><br>
         <label for="fbeneficiostextareapromotor">Beneficios estratégicos</label><br>
-        <textarea rows="10" cols="100" name="propuestapromotor" id="fbeneficiostextareapromotor"></textarea><br><br>
-        <label for="fcostespropuestapromotor">Costes:</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-        <input type="text" id="fcostespropuestapromotor" name="fcostespropuestapromotor"><br><br>
-        <label for="fduracionpropuestapromotor">Duración:</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-        <input type="text" id="fduracionpropuestapromotor" name="fduracionpropuestapromotor"><br><br>
-        <label for="friesgospropuestapromotor">Riesgos:</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-        <input type="text" id="friesgospropuestapromotor" name="friesgospropuestapromotor"><br><br>
-        <label for="fhitospropuestapromotor">Hitos:</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-        <input type="text" id="fhitospropuestapromotor" name="fhitospropuestapromotor"><br><br>
-        <label for="fentregablespropuestapromotor">Entregables:</label>&nbsp;&nbsp;
-        <input type="text" id="fentregablespropuestapromotor" name="fentregablespropuestapromotor"><br><br>
-        <button class="btn btn-secondary" >Adjuntar archivos</button><br><br>
+        <textarea rows="10" cols="100" name="propuestapromotor" id="fbeneficiostextareapromotor" class="form-control widthinput"></textarea><br><br>
+        <label class="specificlabel" for="fcostespropuestapromotor">Costes</label>
+        <input type="text" id="fcostespropuestapromotor" name="fcostespropuestapromotor" class="form-control widthinput"><br><br>
+        <label class="specificlabel" for="fduracionpropuestapromotor">Duración</label>
+        <input type="text" id="fduracionpropuestapromotor" name="fduracionpropuestapromotor" class="form-control widthinput"><br><br>
+        <label class="specificlabel" for="friesgospropuestapromotor">Riesgos</label>
+        <input type="text" id="friesgospropuestapromotor" name="friesgospropuestapromotor" class="form-control widthinput"><br><br>
+        <label class="specificlabel" for="fhitospropuestapromotor">Hitos</label>
+        <input type="text" id="fhitospropuestapromotor" name="fhitospropuestapromotor" class="form-control widthinput"><br><br>
+        <label class="specificlabel" for="fentregablespropuestapromotor">Entregables</label>
+        <input type="text" id="fentregablespropuestapromotor" name="fentregablespropuestapromotor" class="form-control widthinput"><br><br>
+        <button class="btn btn-secondary" >Adjuntar archivos</button><br><br><br>
         <button class="btn btn-info" onclick="enviarpropuestapromotor()">Enviar</button>
     </div>
             </div>

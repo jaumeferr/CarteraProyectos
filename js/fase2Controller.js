@@ -4,7 +4,7 @@ $(document).ready(function() {
 
     userLogged = JSON.parse(sessionStorage.getItem('userLogged'));
     role = userLogged.role;
-    $("#userInfo").append("Usuario: " + userLogged.user);
+    $("#userInfo").append("Usuario: " + userLogged.name);
     $("#buttoncambiarfase").hide();
     $("#buttonredactarpropuesta").hide();
 
@@ -15,7 +15,7 @@ $(document).ready(function() {
         for (var i = 0; i < jsonpropuestas.propuestas.length; i++) {
             item = jsonpropuestas.propuestas[i];
             console.log(item);
-            if (item.promotor == userLogged.user && item.estado == 1) {
+            if (item.promotor == userLogged.name && item.estado == 1) {
                 $("#tablepropuestas").append("<tr><td style='padding-top:15px;padding-left:50px;'>" + item.titulo + "</td><td style='text-align: center; padding:10px;'><button class='btn btn-secondary' onclick='verpropuesta(\"" + item.titulo.toString() + "\")'>Ver propuesta</button></td></tr>");
             }
         }
@@ -39,7 +39,7 @@ function enviarpropuesta() {
         descripcion: $("#fdescripciontextarea").val(),
         beneficios: $("#fbeneficiostextarea").val(),
         promotor: $("#fpromotorname").val(),
-        solicitante: userLogged.user,
+        solicitante: userLogged.name,
         director: "",
         costes: "",
         duracion: "",
@@ -56,8 +56,7 @@ function enviarpropuesta() {
     $("#fdescripciontextarea").val("")
     $("#fbeneficiostextarea").val("")
     $("#fpromotorname").val("")
-    jsonpropuestas = JSON.parse(sessionStorage.getItem('propuestas'));
-    console.log(jsonpropuestas);
+
 }
 
 function aceptar() {
@@ -100,7 +99,7 @@ function rechazar() {
         for (var i = 0; i < jsonpropuestas.propuestas.length; i++) {
             item = jsonpropuestas.propuestas[i];
             console.log(item);
-            if (item.promotor == userLogged.user && item.estado == 1) {
+            if (item.promotor == userLogged.name && item.estado == 1) {
                 $("#tablepropuestas").append("<tr><td>" + item.titulo + "</td><td><button onclick='verpropuesta(\"" + item.titulo.toString() + "\")'>Ver propuesta</button></td></tr>");
             }
         }
@@ -152,7 +151,6 @@ function cambiarestado(nuevoestado) {
     jsonpropuestas = JSON.parse(sessionStorage.getItem('propuestas'));
     for (var i = 0; i < jsonpropuestas.propuestas.length; i++) {
         if (jsonpropuestas.propuestas[i].titulo == title) {
-            debugger;
             jsonpropuestas.propuestas[i].estado = nuevoestado;
             sessionStorage.setItem('propuestas', JSON.stringify(jsonpropuestas));
         }
@@ -167,14 +165,14 @@ function insertpropuestastable(estado) {
         item = jsonpropuestas.propuestas[i];
         console.log(item);
         if (item.estado == estado) {
-            $("#tablepropuestas").append("<tr><td>" + item.titulo + "</td><td><button onclick='verpropuesta(\"" + item.titulo.toString() + "\")'>Ver propuesta</button></td></tr>");
+            $("#tablepropuestas").append("<tr><td style='padding-top:15px;padding-left:50px;'>" + item.titulo + "</td><td style='text-align: center; padding:10px;'><button class='btn btn-secondary' onclick='verpropuesta(\"" + item.titulo.toString() + "\")'>Ver propuesta</button></td></tr>");
         }
     }
     $("#mostrarpropuesta").show();
 }
 
 function enviarpropuestapromotor() {
-    debugger;
+
     title = $("#ftitlepropuestapromotor").text();
     jsonpropuestas = JSON.parse(sessionStorage.getItem('propuestas'));
     for (var i = 0; i < jsonpropuestas.propuestas.length; i++) {
@@ -206,12 +204,11 @@ function enviarpropuestapromotor() {
     jsonpropuestas = JSON.parse(sessionStorage.getItem('propuestas'));
     for (var i = 0; i < jsonpropuestas.propuestas.length; i++) {
         item = jsonpropuestas.propuestas[i];
-        console.log(item);
-        if (item.promotor == userLogged.user && item.estado == 1) {
-            $("#tablepropuestas").append("<tr><td>" + item.titulo + "</td><td><button onclick='verpropuesta(\"" + item.titulo.toString() + "\")'>Ver propuesta</button></td></tr>");
+        if (item.promotor == userLogged.name && item.estado == 1) {
+            $("#tablepropuestas").append("<tr><td style='padding-top:15px;padding-left:50px;'>" + item.titulo + "</td><td style='text-align: center; padding:10px;'><button class='btn btn-secondary' onclick='verpropuesta(\"" + item.titulo.toString() + "\")'>Ver propuesta</button></td></tr>");
         }
     }
-    $("#mostrarpropuesta").show();
+    $("#tablepropuestas").show();
 }
 
 function cambiarfase3(){

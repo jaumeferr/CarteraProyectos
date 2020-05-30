@@ -7,42 +7,50 @@ $(document).ready(function() {
         var newsUsers = [{
                 "user": "juanfrau",
                 "password": "123",
-                "role": "rector",
+                "role": "dg",
+                "name": "Juan Frau"
             },
             {
                 "user": "jaumeferr",
                 "password": "123",
                 "role": "cd",
+                "name": "Jaume Ferrer"
             },
             {
                 "user": "romankarb",
                 "password": "123",
                 "role": "cio",
+                "name": "Roman Karbushev"
             },
             {
                 "user": "migvidal",
                 "password": "123",
                 "role": "promotor",
+                "name": "Miguel Vidal"
             },
             {
                 "user": "pautrias",
                 "password": "123",
                 "role": "solicitante",
+                "name": "Pau Trias"
             },
             {
                 "user": "javieram",
                 "password": "123",
                 "role": "pm",
+                "name": "Javier Amengual"
             },
             {
                 "user": "migalberti",
                 "password": "123",
                 "role": "apoyo",
+                "name": "Miguel Alberti"
             },
             {
                 "user": "bdunkin",
                 "password": "123",
                 "role": "oficina",
+                "name": "Bo Dunkin"
             }
         ];
 
@@ -62,6 +70,11 @@ $(document).ready(function() {
         sessionStorage.setItem('propuestas', JSON.stringify(s));
     }
 
+    if(!sessionStorage.getItem('notificacionescio')){
+        s = {notificacionescio:[]} ;
+        sessionStorage.setItem('notificacionescio', JSON.stringify(s));
+    }
+
 });
 
 function login() {
@@ -70,7 +83,7 @@ function login() {
 
     var isValid = false;
     var url;
-
+    debugger;
     for (i = 0;
         (i < users.length) && !isValid; i++) {
         if ((user === users[i].user) && (pass === users[i].password)) {
@@ -82,9 +95,8 @@ function login() {
                 //Redireccionar a la página.
                 url = "fase" + sessionStorage.getItem('faseCartera') + ".htm";
                 location.href = url;
-            } else {
-                $('#NothingToDo').show();
-
+            } else {            
+                location.href = "nothingtodo.htm";
             }
         }
     }
@@ -98,7 +110,7 @@ function hasSomethingToDo() {
     var rol = userLogged.role;
     switch (sessionStorage.getItem('faseCartera')) {
         case "1":
-            if (rol === "cio" || rol === "rector" || rol === "cd") {
+            if (rol === "cio" || rol === "dg" || rol === "cd") {
                 return true;
             } else {
                 return false;
@@ -112,14 +124,14 @@ function hasSomethingToDo() {
             }
 
         case "3":
-            if (rol === "oficina" || rol === "cio" || rol === "cd" || rol === "rector") {
+            if (rol === "oficina" || rol === "cio" || rol === "cd" || rol === "dg") {
                 return true;
             } else {
                 return false;
             }
 
         case "4":
-            if (rol === "rector" || rol === "cio" || rol === "promotor") {
+            if (rol === "dg" || rol === "cio" || rol === "promotor" || rol === "cd") {
                 return true;
             } else {
                 return false;
