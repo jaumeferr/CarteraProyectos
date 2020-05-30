@@ -2,9 +2,9 @@ var userLogged;
 var carteraProyectos;
 
 $(document).ready(function() {
-    userLogged = JSON.parse(localStorage.getItem('userLogged'));
-    $("#userInfo").append("User: " + userLogged.user + "\n Role: " + userLogged.role);
-    var cartAux = localStorage.getItem('carteraProyectos');
+    userLogged = JSON.parse(sessionStorage.getItem('userLogged'));
+    $("#userInfo").append("Usuario: " + userLogged.name);
+    var cartAux = sessionStorage.getItem('carteraProyectos');
 
     if (cartAux) {
         carteraProyectos = cartAux;
@@ -44,13 +44,13 @@ $(document).ready(function() {
             }
         }
 
-        localStorage.setItem('carteraProyectos', carteraProyectos);
+        sessionStorage.setItem('carteraProyectos', carteraProyectos);
     }
 
     //Ocultar todas los paneles
     $("#crit_doc_panel").hide();
     $("#cal_panel").hide();
-    $("#rec_proc_panel").hide();
+    $("#rec_proc_panel").show();
 
     checkPrivileges();
 });
@@ -60,9 +60,9 @@ $(document).ready(function() {
 
 function checkPrivileges() {
     var role = userLogged.role;
-    var estado = localStorage.getItem('estadoCartera');
+    var estado = sessionStorage.getItem('estadoCartera');
 
-    if (role === "rector" && estado === "aprobar_config") {
+    if (role === "dg" && estado === "aprobar_config") {
         //Ocultar todos los bototes de edición.
         $("#add_rec_button").hide();
         $("#add_proc_button").hide();
@@ -77,7 +77,7 @@ function checkPrivileges() {
         //Ocultar botoón de enviar.
         $("#send_config_button").hide();
 
-    } else if (role === "rector" && estado != "aprobar_config") {
+    } else if (role === "dg" && estado != "aprobar_config") {
         //Ocultar todos los botones de edición.
         $("#add_rec_button").hide();
         $("#add_proc_button").hide();
@@ -158,17 +158,17 @@ function onSendConfigButtonClick() {
     }
 
     //Guardar info en el storage.
-    localStorage.setItem('carteraProyectos', carteraProyectos);
+    sessionStorage.setItem('carteraProyectos', carteraProyectos);
 
     //Cambiar estado cartera.
-    localStorage.setItem('estadoCartera', "aprobar_config");
+    sessionStorage.setItem('estadoCartera', "aprobar_config");
 
     alert("La configuración se ha enviado correctamente");
 }
 
 function onApproveConfigButtonClick() {
     //Cambiar estado.
-    localStorage.setItem('faseCartera', "2");
+    sessionStorage.setItem('faseCartera', "2");
 
     alert("La configuración se ha aprobado correctamente");
 }
@@ -177,7 +177,7 @@ function onRejectConfigButtonClick() {
     //Enviar feedback.
 
     //Cambiar estado.
-    localStorage.setItem('estadoCartera', "crear_config");
+    sessionStorage.setItem('estadoCartera', "crear_config");
 
     alert("La configuración se ha rechazado correctamente");
 }
@@ -251,8 +251,8 @@ function guardar_nuevoCrit() {
         $("#crit_pond").val(" ");
         modal.style.display = "none";
 
-        //Actualizar localStorage
-        localStorage.setItem('carteraProyectos', JSON.stringify(carteraProyectos));
+        //Actualizar sessionStorage
+        sessionStorage.setItem('carteraProyectos', JSON.stringify(carteraProyectos));
     } else {
         alert("Debes rellenar los campos");
     }
