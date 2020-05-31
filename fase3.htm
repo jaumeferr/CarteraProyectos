@@ -24,35 +24,43 @@
         <div class="modal-content">
             <div>
                 <label for="proy_score_modal">Score: </label>
-                <input type="text" id="proy_score_modal" name="proy_score_modal">
+                <input type="text" id="proy_score_modal" name="proy_score_modal" value="0">
             </div>
-            <div class="grid-container">
-                <div class="grid-item">
+            <div class="row">
+                <div class="column">
                     <label for="proy_tit">Titulo: </label>
-                    <input id="proy_tit" name="proy_tit">
+                    <input id="proy_tit" name="proy_tit" style="width: 90%">
                     <label for="proy_desc">Descripcion: </label>
-                    <input id="proy_desc" name="proy_desc">
+                    <input id="proy_desc" name="proy_desc" style="width: 90%">
                     <label for="proy_benf">Benef. Estr: </label>
-                    <input id="proy_benf" name="proy_benf">
+                    <input id="proy_benf" name="proy_benf" style="width: 90%">
                     <label for="proy_costs">Costes: </label>
-                    <input id="proy_costs" name="proy_costs">
+                    <input id="proy_costs" name="proy_costs" style="width: 90%">
                     <label for="proy_dur">Duracion: </label>
-                    <input id="proy_dur" name="proy_dur">
+                    <input id="proy_dur" name="proy_dur" style="width: 90%">
                     <label for="proy_hit">Hitos: </label>
-                    <input id="proy_hit" name="proy_hit">
+                    <input id="proy_hit" name="proy_hit" style="width: 90%">
                     <label for="proy_entr">Entregables: </label>
-                    <input id="proy_entr" name="proy_entr">
+                    <input id="proy_entr" name="proy_entr" style="width: 90%">
                     <label for="proy_riesgos">Riesgos: </label>
-                    <input id="proy_riesgos" name="proy_riesgos">
+                    <input id="proy_riesgos" name="proy_riesgos" style="width: 90%">
                 </div>
-                <div class="grid-item">
+                <div class="column">
                     <table id="prior_crit_table">
                         <tr>
                             <th>Criterio</th>
                             <th> </th>
                         </tr>
                     </table>
-                </div>>
+                </div>
+
+
+
+
+            </div>
+            <div>
+                <button onclick="onSaveModalButtonClick()">Guardar</button>
+                <button onclick="onExitModalButtonClick()">Salir</button>
             </div>
         </div>
     </div>
