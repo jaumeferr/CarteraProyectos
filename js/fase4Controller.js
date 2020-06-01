@@ -6,17 +6,6 @@ $(document).ready(function () {
     role = userLogged.role;
     $("#userInfo").append("Usuario: " + userLogged.name);
 
-    propuestatext = {
-        estado: 5, titulo: "aaaaaaaaaa", descripcion: "des", beneficios: "ben",
-        promotor: "prom", solicitante: "sol", director: "dir", costes: "111", duracion: "12", riesgos: "molts", hitos: "tambe", entregables: "cap", ejecucion: "mal", seguimiento:"aprobado"
-    };
-    jsonpropuestas = JSON.parse(sessionStorage.getItem('propuestas'));
-    jsonpropuestas.propuestas.push(propuestatext);
-    sessionStorage.setItem('propuestas', JSON.stringify(jsonpropuestas));
-
-    jsonpropuestas = JSON.parse(sessionStorage.getItem('propuestas'));
-    console.log(jsonpropuestas)
-
     if (userLogged.role == "dg") {
         mostrarnotificaciones();
     }
@@ -27,32 +16,90 @@ $(document).ready(function () {
 
 
 function showprojects(priority) {
-    $("#tableproyectos").empty();
+    $("#tableproyectoshead").empty();
+    $("#tableproyectosbody").empty();
+
+    s = "<tr><th>Título</th><th>Fecha inicio</th><th>Fecha fin</th><th>Presupuesto</th><th>Detalles del proyecto</th><th>Comentarios</th>";
+
+    if (priority == "aprobado") {
+        s += "<th>Estado del proyecto</th>";
+    } else if (priority == "aplazado") {
+
+    } else if (priority == "finalizado") {
+        s += "<th>Informe evaluación</th>";
+    }
+    s += "</tr>"
+    $("#tableproyectoshead").append(s);
+
     jsonpropuestas = JSON.parse(sessionStorage.getItem('propuestas'));
     for (var i = 0; i < jsonpropuestas.propuestas.length; i++) {
         item = jsonpropuestas.propuestas[i];
-        if (item.estado == 5 && item.seguimiento == priority) { // y otra condicion : ha sido aceptado en la fase 3
+        if (item.estado == 5 && item.seguimiento == priority) {
+
             s = "<tr><td>" + item.titulo + "</td><td></td><td></td><td>" + item.costes + "</td>";
             s += "<td><button class='btn btn-secondary' onclick='verdetalles(\"" + item.titulo.toString() + "\")'>Ver detalles</button></td>";
             s += "<td><button class='btn btn-secondary' onclick='vercomentarios(\"" + item.titulo.toString() + "\")'>Ver comentarios</button></td>";
-            s += "<td><select id='ejecucionproyecto' name='ejecucionproyecto' disabled><option value='bien' style='background-color:green'>Bien</option><option value='regular' style='background-color:yellow'>Regular</option>";
-            s += "<option value='mal' style='background-color:red'>Mal</option></select></td></tr>";
-            $("#tableproyectos").append(s);
+
+            if (item.seguimiento == "aprobado") {
+                s += "<td><select id='ejecucionproyecto' name='ejecucionproyecto' class='form-control' style='width: 100px;' disabled><option value='bien' style='background-color:green'>Bien</option>";
+                s += "<option value='regular' style='background-color:yellow'>Regular</option><option value='mal' style='background-color:red'>Mal</option></select></td>";
+            } else if (item.seguimiento == "aplazado") {
+
+            } else if (item.seguimiento == "finalizado") {
+                s += "<td><button class='btn btn-secondary' onclick='verevaluacion(\"" + item.titulo.toString() + "\")'>Ver informe</button></td>";
+            }
+
+            s += "</tr>";
+            $("#tableproyectosbody").append(s);
             if (item.ejecucion == "bien") {
                 $("#ejecucionproyecto option[value='bien']").prop("selected", true);
+                $("#ejecucionproyecto").css("background-color", "green");
             } else if (item.ejecucion == "regular") {
                 $("#ejecucionproyecto option[value='regular']").prop("selected", true);
+                $("#ejecucionproyecto").css("background-color", "yellow");
             } else {
                 $("#ejecucionproyecto option[value='mal']").prop("selected", true);
+                $("#ejecucionproyecto").css("background-color", "red");
             }
 
         }
     }
 
+
+
     if (userLogged.role == "promotor") {
         $("#ejecucionproyecto").prop("disabled", false);
+
+        $('#ejecucionproyecto').change(function (e) {
+            estado = $('#ejecucionproyecto').val()
+            if (estado == "bien") {
+                $("#ejecucionproyecto").css("background-color", "green");
+            } else if (estado == "regular") {
+                $("#ejecucionproyecto").css("background-color", "yellow");
+            } else {
+                $("#ejecucionproyecto").css("background-color", "red");
+            }
+        });
     }
+
+    $("#tableproyectos").show();
 }
+
+
+
+$('#ejecucionproyecto').change(function (e) {
+    print("cojooonses");
+    debugger;
+    estado = $('#ejecucionproyecto').val()
+    if (estado == "bien") {
+        $("#ejecucionproyecto").css("background-color", "green");
+    } else if (estado == "regular") {
+        $("#ejecucionproyecto").css("background-color", "yellow");
+    } else {
+        $("#ejecucionproyecto").css("background-color", "red");
+    }
+});
+
 
 function verdetalles(titulo) {
     $("#tableprojects").hide();
@@ -73,11 +120,11 @@ function verdetalles(titulo) {
             $("#hitosproyecto").val(item.hitos);
             $("#entregablesproyecto").val(item.entregables);
 
-            $("#detalleproyecto").show();
-
-            if (userLogged.role == "cd" || userLogged.role == "cio" || userLogged.role == "rector") {
+            $("#reconfigurarbutton").hide();
+            if ((item.seguimiento != "finalizado") && (userLogged.role == "cd" || userLogged.role == "cio" || userLogged.role == "dg")){
                 $("#reconfigurarbutton").show();
             }
+            $("#detalleproyecto").show();
             break;
         }
     }
@@ -110,11 +157,8 @@ function pararproyecto() {
     notificaciones.notificacionescio.push(mensajetext);
     sessionStorage.setItem('notificacionescio', JSON.stringify(notificaciones));
 
-    notificaciones = JSON.parse(sessionStorage.getItem('notificacionescio'));
-    console.log(notificaciones)
-
-    $("#tableprojects").show();
-    $("#detalleproyecto").hide();
+    goback();
+    mostrarnotificaciones();
 }
 
 function cancelarproyecto() {
@@ -125,16 +169,17 @@ function cancelarproyecto() {
     notificaciones.notificacionescio.push(mensajetext);
     sessionStorage.setItem('notificacionescio', JSON.stringify(notificaciones));
 
-    $("#tableprojects").show();
-    $("#detalleproyecto").hide();
+    goback();
+    mostrarnotificaciones();
 }
 
 function mostrarnotificaciones() {
+    $("#notificacionesaceptaciondg").empty();
     notificaciones = JSON.parse(sessionStorage.getItem('notificacionescio'));
     for (var i = 0; i < notificaciones.notificacionescio.length; i++) {
         mensaje = notificaciones.notificacionescio[i];
-        s = "<p>Notificación para la <b>" + mensaje.tipo + "</b> del proyecto <b>" + mensaje.titulo + "</b>";
-        s += "<button onclick='aceptarcio(" + i + ")'>Aceptar</button><button onclick='rechazarcio(" + i + ")'>Rechazar</button>"
+        s = "<p>Notificación para la <b>" + mensaje.tipo + "</b> del proyecto <b>" + mensaje.titulo + "</b>&nbsp;&nbsp;&nbsp;";
+        s += "<button class='btn-sm btn-info' onclick='aceptarcio(" + i + ")'>Aceptar</button>&nbsp;&nbsp;<button class='btn-sm btn-info' onclick='rechazarcio(" + i + ")'>Rechazar</button>"
         $("#notificacionesaceptaciondg").append(s)
     }
     $("#notificacionesaceptaciondg").show();
@@ -145,46 +190,113 @@ function aceptarcio(i) {
     mensaje = notificaciones.notificacionescio[i];
     jsonpropuestas = JSON.parse(sessionStorage.getItem('propuestas'));
     for (var i = 0; i < jsonpropuestas.propuestas.length; i++) {
-        item = jsonpropuestas.propuestas[i];
-        if (item.titulo == mensaje.titulo) {
-
-            if (mensaje.tipo = "Cancelación") {
-                //item. = cancelar
-            } else if (mensaje.tipo = "Paralización") {
-
-            } else {
-
-            }
+        if (jsonpropuestas.propuestas[i].titulo == mensaje.titulo) {
+            debugger;
+            if (mensaje.tipo == "Cancelación") {
+                jsonpropuestas.propuestas[i].seguimiento = "cancelado";
+            } else if (mensaje.tipo == "Paralización") {
+                jsonpropuestas.propuestas[i].seguimiento = "aplazado";
+            } 
+            break;
         }
     }
 
+    sessionStorage.setItem('propuestas', JSON.stringify(jsonpropuestas));
     notificaciones = JSON.parse(sessionStorage.getItem('notificacionescio'));
-    notificaciones.notificacionescio[i].remove();
+    notificaciones.notificacionescio.splice(i)
     sessionStorage.setItem('notificacionescio', JSON.stringify(notificaciones));
     mostrarnotificaciones();
+    showprojects("aprobado");
 }
 
 function rechazarcio(i) {
     notificaciones = JSON.parse(sessionStorage.getItem('notificacionescio'));
-    notificaciones.notificacionescio[i].remove();
+    notificaciones.notificacionescio.splice(i)
     sessionStorage.setItem('notificacionescio', JSON.stringify(notificaciones));
     mostrarnotificaciones();
+    showprojects("aprobado");
 }
 
-function showtypeproject(priority) {
-    if (priority == "aprobado") {
-        showprojects("aprobado");
-    } else if (priority = "apalzado") {
-        showprojects("aplazado");
-    }
-}
 
-function goback(){
-    $("#tableprojects").show();
+function goback() {
     $("#detalleproyecto").hide();
-    
+    $("#descripcionproyecto").prop("disabled", true);
+    $("#beneficiosproyecto").prop("disabled", true);
+    $("#costesproyecto").prop("disabled", true);
+    $("#duracionproyecto").prop("disabled", true);
+    $("#riesgosproyecto").prop("disabled", true);
+    $("#hitosproyecto").prop("disabled", true);
+    $("#entregablesproyecto").prop("disabled", true);
+    $("#divbuttons").hide();
+    $("#tableprojects").show();
 }
 
-function guardarcambios(){
+function guardarcambios() {
 
+    title = $("#titleproyecto").val();
+    jsonpropuestas = JSON.parse(sessionStorage.getItem('propuestas'));
+    for (var i = 0; i < jsonpropuestas.propuestas.length; i++) {
+        if (jsonpropuestas.propuestas[i].titulo == title) {
+            jsonpropuestas.propuestas[i].descripcion = $("#descripcionproyecto").val();
+            jsonpropuestas.propuestas[i].beneficios = $("#beneficiosproyecto").val();
+            jsonpropuestas.propuestas[i].costes = $("#costesproyecto").val();
+            jsonpropuestas.propuestas[i].duracion = $("#duracionproyecto").val();
+            jsonpropuestas.propuestas[i].riesgos = $("#riesgosproyecto").val();
+            jsonpropuestas.propuestas[i].hitos = $("#hitosproyecto").val();
+            jsonpropuestas.propuestas[i].entregables = $("#entregablesproyecto").val();
+
+            sessionStorage.setItem('propuestas', JSON.stringify(jsonpropuestas));
+        }
+    }
+
+    goback();
+}
+
+function verevaluacion(titulo) {
+    $("#tableprojects").hide();
+    $("#notificacionesaceptaciondg").hide();
+    jsonpropuestas = JSON.parse(sessionStorage.getItem('propuestas'));
+    for (var i = 0; i < jsonpropuestas.propuestas.length; i++) {
+        item = jsonpropuestas.propuestas[i];
+        if (item.titulo == titulo) {
+            $("#vertituloinforme").text(titulo);
+            $("#verinformefinalizado").text(item.informe);
+            break;
+        }
+    }
+    $("#verinformeevaluacion").show();
+}
+
+function finalizarproyecto() {
+    titulo = $("#titleproyecto").val();
+    $("#titleproyectoinforme").append(titulo);
+    jsonpropuestas = JSON.parse(sessionStorage.getItem('propuestas'));
+    goback();
+    $("#tableprojects").hide();
+    $("#informeevaluacion").show();
+}
+
+
+function enviarinforme(){
+    titulo = $("#titleproyecto").val();
+    informe = $("#finformeproyecto").val();
+    $("#informeevaluacion").hide();
+    $("#titleproyectoinforme").empty();
+    $("#finformeproyecto").val("");
+    $("#tableproyectos").show();
+    for (var i = 0; i < jsonpropuestas.propuestas.length; i++) {
+        if (jsonpropuestas.propuestas[i].titulo == titulo) {
+            jsonpropuestas.propuestas[i].seguimiento = "finalizado";
+            jsonpropuestas.propuestas[i].informe = informe;
+            sessionStorage.setItem('propuestas', JSON.stringify(jsonpropuestas));
+            break;
+        }
+    }
+    $("#tableprojects").show();
+}
+
+function volverdeinforme(){
+    $("#verinformeevaluacion").hide();
+    $("#notificacionesaceptaciondg").show();
+    $("#tableprojects").show();
 }

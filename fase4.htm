@@ -25,8 +25,9 @@
     <br><br>
     <div class="container">
         <div class="row">
-            <div class="col-xl-12">
-                <div id="notificacionesaceptaciondg" hidden="true" class="whitecontainer">
+            <div class="col-xl-12 whitecontainer">
+                <p><b>Notificaciones de cambio de estado de proyectos</b></p><br>
+                <div id="notificacionesaceptaciondg" hidden="true" >
                 </div>
             </div>
         </div>
@@ -36,17 +37,19 @@
     <div class="container">
         <div class="row">
             <div class="col-xl-12">
-                <div id="tableprojects" class="whitecontainer">
+                <div id="tableprojects" class="whitecontainer" style="padding-left: 50px;">
                     <div class="btn-group">
-                        <button type="button" class="btn btn-info" onclick="showtypeproject('aprobado')">En
+                        <button type="button" class="btn btn-info" onclick="showprojects('aprobado')">En
                             ejecución</button>
-                        <button type="button" class="btn btn-info" onclick="showtypeproject('aplazado')">En
+                        <button type="button" class="btn btn-info" onclick="showprojects('aplazado')">En
                             espera</button>
+                        <button type="button" class="btn btn-info" onclick="showprojects('finalizado')">Finalizado
+                            </button>
                     </div>
                     <br><br>
                     <div>
-                        <table>
-                            <thead>
+                        <table id="tableproyectos">
+                            <thead id="tableproyectoshead">
                                 <tr>
                                     <th>Título</th>
                                     <th>Fecha inicio</th>
@@ -55,9 +58,10 @@
                                     <th>Detalles del proyecto</th>
                                     <th>Comentarios</th>
                                     <th>Estado del proyecto</th>
+                                    <th>Informe evaluación</th>
                                 </tr>
                             </thead>
-                            <tbody id="tableproyectos">
+                            <tbody id="tableproyectosbody">
                             </tbody>
                         </table>
                     </div>
@@ -109,12 +113,37 @@
                     <button class="btn btn-info" onclick="goback()">Volver</button>
                     <br><br>
                     <div id="divbuttons" hidden="true">
-                        <button class="btn btn-info" onclick="guardarcambios()">Guardar cambios</button>
+                        <button class="btn btn-info" onclick="guardarcambios()">Guardar cambios</button><br><br>
+                        <button class="btn btn-info" onclick="finalizarproyecto()">Finalizar proyecto</button>
                         <button class="btn btn-info" onclick="pararproyecto()">Parar proyecto</button>
                         <button class="btn btn-info" onclick="cancelarproyecto()">Cancelar proyecto</button>
 
                     </div>
 
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-xl-12">
+                <div id="informeevaluacion" hidden="true" class="whitecontainer">
+                    <h4>Informe de evaluación del proyecto</h4>
+                    <p id=titleproyectoinforme></p>
+                    <textarea rows="10" cols="100" name="finformeproyecto" id="finformeproyecto" class="form-control widthinput"></textarea><br><br>
+                    <button class="btn btn-info" onclick="enviarinforme()">Enviar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-xl-12">
+                <div id="verinformeevaluacion" hidden="true" class="whitecontainer">
+                    <h4>Informe de evaluación del proyecto</h4><br>
+                    <p id=vertituloinforme></p>
+                    <p id=verinformefinalizado></p><br><br>
+                    <button class="btn btn-info" onclick="volverdeinforme()">Volver</button>
                 </div>
             </div>
         </div>
