@@ -1,76 +1,114 @@
 var propuestas;
 var criterios;
+var estado;
+var lista_priorizada;
 
-$(document).ready(function() {
+$(document).ready(function () {
+    var estado = sessionStorage.getItem('estadoCartera');
+    if (!estado) {
+        estado = "priorizar_proyectos";
+    }
+
     props = JSON.stringify([{
-            titulo: "AAA",
-            descripcion: "Este es el proyecto AAA y trata de esto.",
-            director: "Alguien Importante",
-            estado: 0,
-            beneficios: "35000",
-            costes: "30000",
-            duracion: "50 días",
-            riesgos: "Muchos",
-            hitos: "Algunos habrá",
-            entregables: "También bastantes",
-            rrhh: [],
-            rrff: [],
-            cuantia: 100000,
-            score: "0",
-            seguimiento: ""
-        },
-        {
-            titulo: "BBB",
-            descripcion: "Este es el proyecto BBB y trata de esto.",
-            director: "Alguien Más Importante",
-            estado: 0,
-            beneficios: "400000",
-            costes: "25000",
-            duracion: "90 días",
-            riesgos: "Muchísimos",
-            hitos: "Algunos habrá también",
-            entregables: "También muchos",
-            rrhh: [],
-            rrff: [],
-            cuantia: 1324000,
-            score: "0",
-            seguimiento: ""
-        }
+        titulo: "AAA",
+        descripcion: "Este es el proyecto AAA y trata de esto.",
+        director: "Alguien Importante",
+        estado: 0,
+        beneficios: "35000",
+        costes: "30000",
+        duracion: "50 días",
+        riesgos: "Muchos",
+        hitos: "Algunos habrá",
+        entregables: "También bastantes",
+        rrhh: [],
+        rrff: [],
+        cuantia: 100000,
+        score: "0",
+        seguimiento: "",
+        cuantiaFinanciacion: "0",
+    },
+    {
+        titulo: "BBB",
+        descripcion: "Este es el proyecto BBB y trata de esto.",
+        director: "Alguien Más Importante",
+        estado: 0,
+        beneficios: "400000",
+        costes: "25000",
+        duracion: "90 días",
+        riesgos: "Muchísimos",
+        hitos: "Algunos habrá también",
+        entregables: "También muchos",
+        rrhh: [],
+        rrff: [],
+        cuantia: 1324000,
+        score: "0",
+        seguimiento: ""
+    }
     ]);
 
     crits = JSON.stringify([{
-            desc: "criterio 1",
-            pond: "25"
-        },
-        {
-            desc: "criterio 2",
-            pond: "75"
-        }
+        desc: "criterio 1",
+        pond: "25"
+    },
+    {
+        desc: "criterio 2",
+        pond: "75"
+    }
     ]);
 
-    sessionStorage.setItem('carteraProyectos.criterios', crits);
-    sessionStorage.setItem('propuestas', props);
-    propJSON = sessionStorage.getItem('propuestas');
-    critJSON = sessionStorage.getItem("carteraProyectos.criterios");
+    if (estado == "priorizar_proyectos") {
+        sessionStorage.setItem('carteraProyectos.criterios', crits); //Quitar
+        sessionStorage.setItem('propuestas', props); //Quitar
 
-    if (propJSON && critJSON) { //CAMBIAR A if(propJSON)
+        propJSON = sessionStorage.getItem('propuestas');
+        critJSON = sessionStorage.getItem("carteraProyectos.criterios");
+
         propuestas = JSON.parse(propJSON);
         criterios = JSON.parse(critJSON);
-    } else {
 
+        //Cargar propuestas en tabla (PRIORIZAR)
+        var table = $("#prior_proy_table");
+        propuestas.forEach(function (propuesta) {
+            table.append("<tr><td style='padding-top:15px;padding-left:50px;'>" + propuesta.titulo + "</td><td style='padding-top:15px;padding-left:50px;'>" + propuesta.score + "</td><td style='text-align: center; padding:10px;'><button onclick='onEvaluateButtonClick(\"" + propuesta.titulo.toString() + "\")'>Evaluar</button></td></tr>");
+        });
+
+        $("#prior_proy_table_panel").show();
+        $("#publishButton").hide();
+        $("#rejectButton").hide();
+
+    } else if (estado == "financiar_proyectos") {
+        priorJSON = sessionStorage.getItem('lista_priorizada');
+        lista_priorizada = JSON.parse(priorJSON);
+
+        //Cargar lista priorizada en tabla (FINANCIAR)
+        var table = $("#financ_proy_table");
+        lista_priorizada.forEach(function (propuesta) {
+            table.append("<tr><td style='padding-top:15px;padding-left:50px;'>" + propuesta.titulo + "</td><td style='padding-top:15px;padding-left:50px;'>" + propuesta.score + "</td><td style='text-align: center; padding:10px;'><button onclick='onFinanceButtonClick(\"" + propuesta.titulo.toString() + "\")'>Financiar</button></td></tr>");
+        });
+
+        $("#financ_proy_table_panel").show();
+        $("#sendButton").hide();
     }
-
-    //Cargar propuestas en tabla
-    var table = $("#prior_proy_table");
-    propuestas.forEach(function(propuesta) {
-        table.append("<tr><td style='padding-top:15px;padding-left:50px;'>" + propuesta.titulo + "</td><td style='padding-top:15px;padding-left:50px;'>" + propuesta.score + "</td><td style='text-align: center; padding:10px;'><button onclick='onEvaluateButtonClick(\"" + propuesta.titulo.toString() + "\")'>Evaluar</button></td></tr>");
-    });
 
 });
 
 /*Publicar proyectos financiados que se vana ejecutar. */
 function onPublishButtonClick() {
-    //Abrir ventana de evaluación solo si se ha seleccionado una línea.
+    //Cambiar fase de la cartera
+    sessionStorage.setItem('faseCartera', "4");
+    alert("Se ha publicado la lista priorizada de proyectos");
+}
+
+/*Rechazar propuesta de priorizacion de proyectos*/
+function onRejectButtonClick() {
+    /*var modal = document.getElementById("rejectForm");
+    modal.style.display = "block";*/
+}
+
+function onExitButtonClick() {
+    //Redireccionar a la página de login.
+    url = "login.htm";
+    location.href = url;
 }
 
 /*Confirmar la revisión de la priorización, habiendo asignado financiación para
@@ -93,6 +131,16 @@ function onEvaluateButtonClick(titulo) {
         }
     }
 
+    //Borar criterios y score
+    $("#proy_score_modal").val("0");
+    var count = $('#prior_crit_table tr').length;
+
+    for (var x = 1; x < count; x++) {
+        $("#prior_crit_table tr:last").remove();
+    }
+
+
+
     //Cargar criterios
     for (var i = 0; i < criterios.length; i++) {
         var id = "crit_" + i;
@@ -101,12 +149,60 @@ function onEvaluateButtonClick(titulo) {
 
     var modal = document.getElementById("prior_proy_modal");
     modal.style.display = "block";
+
+    crit_table.show();
+    $("#saveFinancModalButton").hide();
 }
 
+function onFinanceButtonClick(titulo) {
+    var finan_panel = $("#finan_panel");
+
+    //Cargar detalle de proyecto en modal
+    for (var i = 0; i < lista_priorizada.length; i++) {
+        if (lista_priorizada[i].titulo == titulo) {
+            $("#proy_score_modal").val(lista_priorizada[i].score);
+            $("#proy_tit").val(lista_priorizada[i].titulo);
+            $("#proy_desc").val(lista_priorizada[i].descripcion);
+            $("#proy_benf").val(lista_priorizada[i].beneficios);
+            $("#proy_costs").val(lista_priorizada[i].costes);
+            $("#proy_dur").val(lista_priorizada[i].duracion);
+            $("#proy_hit").val(lista_priorizada[i].hitos);
+            $("#proy_entr").val(lista_priorizada[i].entregables);
+            $("#proy_riesgos").val(lista_priorizada[i].riesgos);
+        }
+    }
+
+    var modal = document.getElementById("prior_proy_modal");
+    modal.style.display = "block";
+
+    finan_panel.show();
+    $("#savePriorModalButton").hide();
+    //$("#proy_score_modal").hide();
+}
 
 /*Enviar propuesta de lista priorizada de proyectos. */
 function onSendButtonClick() {
+    debugger;
+    //Ordenar por score
+    var lista_prior = propuestas;
+    lista_prior.sort(function (a, b) {
+        if (a.score > b.score) {
+            return 1;
+        }
+        if (a.score < b.score) {
+            return -1;
+        }
+        // a must be equal to b
+        return 0;
+    });
 
+    //Crear lista priorizada en session storage
+    sessionStorage.setItem('lista_priorizada', JSON.stringify(lista_prior));
+
+    //Actualizar estado
+    sessionStorage.setItem('estadoCartera', "financiar_proyectos");
+    sessionStorage.setItem('faseCartera', "3");
+    alert("La lista priorizada se ha enviado correctamente");
 }
 
 
@@ -116,7 +212,7 @@ function onExitModalButtonClick() {
     modal.style.display = "none";
 }
 
-function onSaveModalButtonClick() {
+function onSavePriorModalButtonClick() {
     var score = document.getElementById("proy_score_modal").value;
 
     //Actualizar datos propuesta
@@ -129,18 +225,46 @@ function onSaveModalButtonClick() {
     //Actualizar session storage
     sessionStorage.setItem('propuestas', propuestas);
 
-    debugger;
     //Actualizar tabla
     var table = $("#prior_proy_table");
     var count = $('#prior_proy_table tr').length;
 
     for (var x = 1; x < count; x++) {
-        $("#table tr:last").remove();
+        $("#prior_proy_table tr:last").remove();
     }
 
-    propuestas.forEach(function(propuesta) {
+    propuestas.forEach(function (propuesta) {
         table.append("<tr><td style='padding-top:15px;padding-left:50px;'>" + propuesta.titulo + "</td><td style='padding-top:15px;padding-left:50px;'>" + propuesta.score + "</td><td style='text-align: center; padding:10px;'><button onclick='onEvaluateButtonClick(\"" + propuesta.titulo.toString() + "\")'>Evaluar</button></td></tr>");
     });
+
+    //Cerrar ventana
+    var modal = document.getElementById("prior_proy_modal");
+    modal.style.display = "none";
+}
+
+function onSaveFinanModalButtonClick() {
+    var seg;
+    
+    //Guardar rrhh seleccionados para el proyecto
+    var selectedRRHH = $("#rrhh_finan").val();
+    //Guardar la cuantia 
+    var cuantia = $("#cuantia_finan").val();
+
+    //Actualizar lista priorizados
+    for (var i = 0; i < lista_priorizada.length; i++) {
+        if (lista_priorizada[i].titulo == $("#proy_tit").val()) {
+            lista_priorizada[i].cuantiaFinanciacion = cuantia;
+            lista_priorizada[i].rrhh = selectedRRHH;
+            //Cambiar el estado del proyecto
+            if (seg = $("#seguimiento").val()) {
+                lista_priorizada[i].seguimiento = seg;
+            }
+        }
+    }
+
+    //Actualizar session storage
+    sessionStorage.setItem('lista_priorizada', lista_priorizada);
+    alert("El proyecto se ha financiado exitosamente");
 
     //Cerrar ventana
     var modal = document.getElementById("prior_proy_modal");
@@ -160,4 +284,9 @@ function onChangeCriteriosCheckbox(checkbox, pond) {
 
     score.value = score_value;
 
+}
+
+//Informe Rechazar Lista
+function onSendRejectionButtonClick() {
+    //Cambiar a fase 3.1
 }

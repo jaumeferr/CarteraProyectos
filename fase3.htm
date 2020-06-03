@@ -11,8 +11,16 @@
 <body>
     <!-- Evaluar cada proyecto de la cartera con criterios estratégicos-->
     <div id="prior_proy_panel">
-        <div id="prior_proy_table_panel">
+        <div id="prior_proy_table_panel" hidden="true">
             <table id="prior_proy_table">
+                <tr>
+                    <th>Titulo del proyecto</th>
+                    <th>Score</th>
+                </tr>
+            </table>
+        </div>
+        <div id="financ_proy_table_panel" hidden="true">
+            <table id="financ_proy_table">
                 <tr>
                     <th>Titulo del proyecto</th>
                     <th>Score</th>
@@ -46,29 +54,56 @@
                     <input id="proy_riesgos" name="proy_riesgos" style="width: 90%">
                 </div>
                 <div class="column">
-                    <table id="prior_crit_table">
+                    <table id="prior_crit_table" hidden="true">
                         <tr>
                             <th>Criterio</th>
                             <th> </th>
                         </tr>
                     </table>
+                    <div id="finan_panel" hidden="true">
+                        <label for="rrhh_finan">Recursos Humanos: </label>
+                        <select name="rrhh_finan" id="rrhh_finan" multiple="multiple">
+                            <option value="RRHH-1">Persona 1</option>
+                            <option value="RRHH-2">Persona 2</option>
+                            <option value="RRHH-3">Persona 3</option>
+                            <option value="RRHH-4">Persona 4</option>
+                        </select> 
+                        <label for="cuantia_finan">Cuantía: </label>
+                        <input id="cuantia_finan" name="cuantia_finan" style="width: 90%">
+
+                        <label for="seguimiento">Estado del proyecto: </label>
+                        <select name="seguimiento" id="seguimiento">
+                            <option value="ejecutar">En ejecucion</option>
+                            <option value="esperar">En espera</option>
+                            <option value="cancelar">Cancelado</option>
+                        </select> 
+
+                    </div>
                 </div>
-
-
-
-
             </div>
             <div>
-                <button onclick="onSaveModalButtonClick()">Guardar</button>
-                <button onclick="onExitModalButtonClick()">Salir</button>
+                <button id="saveFinancModalButton" onclick="onSaveFinanModalButtonClick()">Aplicar</button>
+                <button id="savePriorModalButton=" onclick="onSavePriorModalButtonClick()">Guardar</button>
+                <button id="exitModalButton" onclick="onExitModalButtonClick()">Salir</button>
             </div>
         </div>
     </div>
     <!-- Elaborar la propuesta de la lista priorizada de proyectos-->
-    <!-- Revisar la priorización y asignar financiación para cada proyecto-->
-    <!-- Publicar proyectos financiados que se van a ejecutar-->
-    <!-- Formulario para explicar por qué no se va a publicar-->
+    <div>
+        <button id="sendButton" onclick="onSendButtonClick()">Enviar</button>
+        <button id="publishButton" onclick="onPublishButtonClick()">Publicar</button>
+        <button id="rejectButton" onclick="onRejectButtonClick()">Rechazar</button>
+        <button id="exitButton" onclick="onExitButtonClick()">Salir</button>
+    </div>
 
+    <!-- Formulario para explicar por qué no se va a publicar-->
+        <div id="rejectForm" class="modal">
+            <div class="modal-content">
+                <label for="rejectDesc">Informe de Rechazo</p>
+                <input id="rejectDesc" name="rejectDesc" type="textarea" cols= "4", rows="5">
+                <button onclick="onSendRejectionButtonClick()">Enviar</button>
+            </div>
+        </div>
 </body>
 
 </html>
