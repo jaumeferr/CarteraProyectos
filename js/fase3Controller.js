@@ -5,7 +5,7 @@ var lista_priorizada;
 
 $(document).ready(function () {
     var estado = sessionStorage.getItem('estadoCartera');
-    if (!estado) {
+    if (estado == "aprobar_config") {
         estado = "priorizar_proyectos";
     }
 
@@ -57,6 +57,8 @@ $(document).ready(function () {
     ]);
 
     if (estado == "priorizar_proyectos") {
+        //Usar solo propuestas con estado = 4
+        
         sessionStorage.setItem('carteraProyectos.criterios', crits); //Quitar
         sessionStorage.setItem('propuestas', props); //Quitar
 
@@ -182,7 +184,6 @@ function onFinanceButtonClick(titulo) {
 
 /*Enviar propuesta de lista priorizada de proyectos. */
 function onSendButtonClick() {
-    debugger;
     //Ordenar por score
     var lista_prior = propuestas;
     lista_prior.sort(function (a, b) {
@@ -262,8 +263,10 @@ function onSaveFinanModalButtonClick() {
         }
     }
 
+    //Borrar propuestas
+
     //Actualizar session storage
-    sessionStorage.setItem('lista_priorizada', lista_priorizada);
+    sessionStorage.setItem('propuestas', lista_priorizada);
     alert("El proyecto se ha financiado exitosamente");
 
     //Cerrar ventana
