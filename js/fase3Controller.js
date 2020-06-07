@@ -3,65 +3,64 @@ var criterios;
 var estado;
 var lista_priorizada;
 
-$(document).ready(function () {
+$(document).ready(function() {
     var estado = sessionStorage.getItem('estadoCartera');
     if (estado == "aprobar_config") {
         estado = "priorizar_proyectos";
     }
 
-    props = JSON.stringify([{
-        titulo: "AAA",
-        descripcion: "Este es el proyecto AAA y trata de esto.",
-        director: "Alguien Importante",
-        estado: 0,
-        beneficios: "35000",
-        costes: "30000",
-        duracion: "50 días",
-        riesgos: "Muchos",
-        hitos: "Algunos habrá",
-        entregables: "También bastantes",
-        rrhh: [],
-        rrff: [],
-        cuantia: 100000,
-        score: "0",
-        seguimiento: "",
-        cuantiaFinanciacion: "0",
-    },
-    {
-        titulo: "BBB",
-        descripcion: "Este es el proyecto BBB y trata de esto.",
-        director: "Alguien Más Importante",
-        estado: 0,
-        beneficios: "400000",
-        costes: "25000",
-        duracion: "90 días",
-        riesgos: "Muchísimos",
-        hitos: "Algunos habrá también",
-        entregables: "También muchos",
-        rrhh: [],
-        rrff: [],
-        cuantia: 1324000,
-        score: "0",
-        seguimiento: ""
+    if (!estado) {
+        estado = "priorizar_proyectos";
     }
+
+    props = JSON.stringify([{
+            titulo: "AAA",
+            descripcion: "Este es el proyecto AAA y trata de esto.",
+            director: "Alguien Importante",
+            estado: 4,
+            beneficios: "35000",
+            costes: "30000",
+            duracion: "50 días",
+            riesgos: "Muchos",
+            hitos: "Algunos habrá",
+            entregables: "También bastantes",
+            rrhh: [],
+            rrff: [],
+            cuantia: 100000,
+            score: "0",
+            seguimiento: "",
+            cuantiaFinanciacion: "0",
+        },
+        {
+            titulo: "BBB",
+            descripcion: "Este es el proyecto BBB y trata de esto.",
+            director: "Alguien Más Importante",
+            estado: 3,
+            beneficios: "400000",
+            costes: "25000",
+            duracion: "90 días",
+            riesgos: "Muchísimos",
+            hitos: "Algunos habrá también",
+            entregables: "También muchos",
+            rrhh: [],
+            rrff: [],
+            cuantia: 1324000,
+            score: "0",
+            seguimiento: ""
+        }
     ]);
 
     crits = JSON.stringify([{
-        desc: "criterio 1",
-        pond: "25"
-    },
-    {
-        desc: "criterio 2",
-        pond: "75"
-    }
+            desc: "criterio 1",
+            pond: "25"
+        },
+        {
+            desc: "criterio 2",
+            pond: "75"
+        }
     ]);
 
     if (estado == "priorizar_proyectos") {
-        //Usar solo propuestas con estado = 4
-        
-        sessionStorage.setItem('carteraProyectos.criterios', crits); //Quitar
-        sessionStorage.setItem('propuestas', props); //Quitar
-
         propJSON = sessionStorage.getItem('propuestas');
         critJSON = sessionStorage.getItem("carteraProyectos.criterios");
 
@@ -70,8 +69,10 @@ $(document).ready(function () {
 
         //Cargar propuestas en tabla (PRIORIZAR)
         var table = $("#prior_proy_table");
-        propuestas.forEach(function (propuesta) {
-            table.append("<tr><td style='padding-top:15px;padding-left:50px;'>" + propuesta.titulo + "</td><td style='padding-top:15px;padding-left:50px;'>" + propuesta.score + "</td><td style='text-align: center; padding:10px;'><button onclick='onEvaluateButtonClick(\"" + propuesta.titulo.toString() + "\")'>Evaluar</button></td></tr>");
+        propuestas.forEach(function(propuesta) {
+            if (propuesta.estado == 4) {
+                table.append("<tr><td style='padding-top:15px;padding-left:50px;'>" + propuesta.titulo + "</td><td style='padding-top:15px;padding-left:50px;'>" + propuesta.score + "</td><td style='text-align: center; padding:10px;'><button onclick='onEvaluateButtonClick(\"" + propuesta.titulo.toString() + "\")'>Evaluar</button></td></tr>");
+            }
         });
 
         $("#prior_proy_table_panel").show();
@@ -80,11 +81,13 @@ $(document).ready(function () {
 
     } else if (estado == "financiar_proyectos") {
         priorJSON = sessionStorage.getItem('lista_priorizada');
+
+
         lista_priorizada = JSON.parse(priorJSON);
 
         //Cargar lista priorizada en tabla (FINANCIAR)
         var table = $("#financ_proy_table");
-        lista_priorizada.forEach(function (propuesta) {
+        lista_priorizada.forEach(function(propuesta) {
             table.append("<tr><td style='padding-top:15px;padding-left:50px;'>" + propuesta.titulo + "</td><td style='padding-top:15px;padding-left:50px;'>" + propuesta.score + "</td><td style='text-align: center; padding:10px;'><button onclick='onFinanceButtonClick(\"" + propuesta.titulo.toString() + "\")'>Financiar</button></td></tr>");
         });
 
@@ -99,6 +102,7 @@ function onPublishButtonClick() {
     //Cambiar fase de la cartera
     sessionStorage.setItem('faseCartera', "4");
     alert("Se ha publicado la lista priorizada de proyectos");
+    $("#publishButton").hide();
 }
 
 /*Rechazar propuesta de priorizacion de proyectos*/
@@ -140,8 +144,6 @@ function onEvaluateButtonClick(titulo) {
     for (var x = 1; x < count; x++) {
         $("#prior_crit_table tr:last").remove();
     }
-
-
 
     //Cargar criterios
     for (var i = 0; i < criterios.length; i++) {
@@ -186,7 +188,7 @@ function onFinanceButtonClick(titulo) {
 function onSendButtonClick() {
     //Ordenar por score
     var lista_prior = propuestas;
-    lista_prior.sort(function (a, b) {
+    lista_prior.sort(function(a, b) {
         if (a.score > b.score) {
             return 1;
         }
@@ -204,10 +206,68 @@ function onSendButtonClick() {
     sessionStorage.setItem('estadoCartera', "financiar_proyectos");
     sessionStorage.setItem('faseCartera', "3");
     alert("La lista priorizada se ha enviado correctamente");
+
+    $("#sendButton").hide();
+}
+
+function onChangeCritsButtonClick() {
+    //Abrir modal 
+    var modal = document.getElementById("ajuste_crit_modal");
+    modal.style.display = "block";
+
+    //Borrar info tabla y cargar criterios
+    var table = $("#ajuste_crit_table");
+    var count = criterios.length;
+    var num_rows = $("#ajuste_crit_table tr").length;
+
+    for (var x = 1; x < num_rows; x++) {
+        $("#ajuste_crit_table tr:last").remove();
+    }
+
+    var i = 0;
+    criterios.forEach(function(criterio) {
+        table.append("<tr><td style='padding-top:15px;padding-left:50px;'><input type='text' id='crit_adj_" + i + "'></td><td style='padding-top:15px;padding-left:50px;'><input type='text' id='pond_adj_" + i + "'></td></tr>");
+        i++;
+    });
+
+    for (var j = 0; j < count; j++) {
+        var crit = "#crit_adj_" + j;
+        var pond = "#pond_adj_" + j;
+
+        $(crit).val(criterios[j].desc);
+        $(pond).val(criterios[j].pond);
+    }
 }
 
 
 //MODAL events
+function onAplicarAjusteCritButtonClick() {
+    criterios = [];
+    var count = $("#ajuste_crit_table tr").length;
+
+    for (var i = 1; i < count; i++) {
+        var crit = "#crit_adj_" + (i - 1);
+        var pond = "#pond_adj_" + (i - 1);
+
+        criterios.push({ desc: $(crit).val(), pond: $(pond).val() });
+    }
+
+    //Guardar criterios
+    sessionStorage.setItem('carteraProyectos.criterios', criterios);
+
+    //Cerrar modal
+    var modal = document.getElementById("ajuste_crit_modal");
+    modal.style.display = "none";
+
+    alert("Los criterios de evaluación se han modificado con éxito.");
+}
+
+function onExitAjusteCritButtonClick() {
+    //Cerrar modal
+    var modal = document.getElementById("ajuste_crit_modal");
+    modal.style.display = "none";
+}
+
 function onExitModalButtonClick() {
     var modal = document.getElementById("prior_proy_modal");
     modal.style.display = "none";
@@ -234,7 +294,7 @@ function onSavePriorModalButtonClick() {
         $("#prior_proy_table tr:last").remove();
     }
 
-    propuestas.forEach(function (propuesta) {
+    propuestas.forEach(function(propuesta) {
         table.append("<tr><td style='padding-top:15px;padding-left:50px;'>" + propuesta.titulo + "</td><td style='padding-top:15px;padding-left:50px;'>" + propuesta.score + "</td><td style='text-align: center; padding:10px;'><button onclick='onEvaluateButtonClick(\"" + propuesta.titulo.toString() + "\")'>Evaluar</button></td></tr>");
     });
 
@@ -245,17 +305,20 @@ function onSavePriorModalButtonClick() {
 
 function onSaveFinanModalButtonClick() {
     var seg;
-    
+
     //Guardar rrhh seleccionados para el proyecto
     var selectedRRHH = $("#rrhh_finan").val();
     //Guardar la cuantia 
     var cuantia = $("#cuantia_finan").val();
+    var fInicio = $("#fecha_inicio").val();
 
     //Actualizar lista priorizados
     for (var i = 0; i < lista_priorizada.length; i++) {
         if (lista_priorizada[i].titulo == $("#proy_tit").val()) {
             lista_priorizada[i].cuantiaFinanciacion = cuantia;
             lista_priorizada[i].rrhh = selectedRRHH;
+            lista_priorizada[i].fInicio = fInicio;
+
             //Cambiar el estado del proyecto
             if (seg = $("#seguimiento").val()) {
                 lista_priorizada[i].seguimiento = seg;
@@ -266,7 +329,7 @@ function onSaveFinanModalButtonClick() {
     //Borrar propuestas
 
     //Actualizar session storage
-    sessionStorage.setItem('propuestas', lista_priorizada);
+    sessionStorage.setItem('lista_priorizada', lista_priorizada);
     alert("El proyecto se ha financiado exitosamente");
 
     //Cerrar ventana
