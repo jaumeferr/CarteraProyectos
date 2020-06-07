@@ -25,7 +25,7 @@ $(document).ready(function() {
         insertpropuestastable(3);
     } else if (role == "oficina") {
         insertpropuestastable(2);
-    } 
+    }
 });
 
 function formpropuesta() {
@@ -46,7 +46,7 @@ function enviarpropuesta() {
         riesgos: "",
         hitos: "",
         entregables: "",
-        ejecucion:"bien"
+        ejecucion: "bien"
     };
     jsonpropuestas = JSON.parse(sessionStorage.getItem('propuestas'));
     jsonpropuestas.propuestas.push(propuestatext);
@@ -211,7 +211,7 @@ function enviarpropuestapromotor() {
     $("#tablepropuestas").show();
 }
 
-function cambiarfase3(){
+function cambiarfase3() {
     sessionStorage.setItem('faseCartera', "3");
     location.href = "fase3.htm"
 }
