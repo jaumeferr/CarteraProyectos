@@ -83,7 +83,7 @@ function login() {
 
     var isValid = false;
     var url;
-    debugger;
+
     for (i = 0;
         (i < users.length) && !isValid; i++) {
         if ((user === users[i].user) && (pass === users[i].password)) {

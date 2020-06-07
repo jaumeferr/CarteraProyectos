@@ -22,24 +22,41 @@
                         fase</button>
                     <button id="buttonredactarpropuesta" class="btn btn-info" onclick="formpropuesta()"
                         hidden="true">Redactar propuesta de nuevo proyecto</button>
-                        <button class="btn btn-info" onclick="location.href='login.htm'">Salir</button>
+                    <button type="button" class="btn btn-info" data-toggle="modal" data-target="#myModal">Ver configuración cartera</button>
+                    <button class="btn btn-info" onclick="location.href='login.htm'">Salir</button>
                 </div>
             </div>
         </div>
     </div>
-
     <br><br>
+    <div class="container">
+        <div class="modal fade" id="myModal" role="dialog">
+            <div class="modal-dialog modal-lg">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal">&times;</button>
+                  <h4 class="modal-title">Configuración de la cartera</h4>
+                </div>
+                <div class="modal-body" id="configuracionmodal">
+                </div>
+              </div>
+            </div>
+          </div>
+    </div>
     <div class="container">
         <div class="row">
             <div class="col-xl-12">
                 <div id="formpropuesta" hidden="true" class="whitecontainer">
                     <h4>Redacción de propuesta para nuevo proyecto</h4><br>
                     <label for="ftitlepropuesta">Título de la propuesta&nbsp;&nbsp;&nbsp;</label>
-                    <input type="text" id="ftitlepropuesta" name="ftitlepropuesta" class="form-control widthinput"><br><br>
+                    <input type="text" id="ftitlepropuesta" name="ftitlepropuesta"
+                        class="form-control widthinput"><br><br>
                     <label for="fdescripciontextarea">Descripción</label><br>
-                    <textarea rows="10" cols="100" name="propuesta" id="fdescripciontextarea" class="form-control widthinput"></textarea><br><br>
+                    <textarea rows="10" cols="100" name="propuesta" id="fdescripciontextarea"
+                        class="form-control widthinput"></textarea><br><br>
                     <label for="fbeneficiostextarea">Beneficios estratégicos</label><br>
-                    <textarea rows="10" cols="100" name="beneficios" id="fbeneficiostextarea" class="form-control widthinput"></textarea><br><br>
+                    <textarea rows="10" cols="100" name="beneficios" id="fbeneficiostextarea"
+                        class="form-control widthinput"></textarea><br><br>
                     <label for="fpromotor">Nombre del promotor&nbsp;&nbsp;&nbsp;</label>
                     <select id="fpromotorname" name="promotorname" class="form-control" style="width: 150px;">
                         <option value="Miguel Vidal">Miguel Vidal</option>
@@ -56,8 +73,8 @@
         <div class="row">
             <div class="col-xl-12">
                 <div id="mostrarpropuesta" hidden="true">
-                    <table  class="table table-hover" style="background-color: white;">
-                    <tbody id="tablepropuestas"></tbody>
+                    <table class="table table-hover" style="background-color: white;">
+                        <tbody id="tablepropuestas"></tbody>
                     </table>
                     <div id="containerpropuesta" hidden="true" class="whitecontainer">
                         <p><b>Título </b></p>
@@ -97,39 +114,55 @@
     <div class="container">
         <div class="row">
             <div class="col-xl-12">
-    <div id="formpropuestapromotor" hidden="true" class="whitecontainer">
-        <h3>Modifique los aspectos necesarios antes de enviar</h3><br>
-        <p id="ftitlepropuestapromotor" hidden="true"></p>
-        <label for="fnewtitlepropuestapromotor">Título de la propuesta </label>
-        <input type="text" id="fnewtitlepropuestapromotor" name="fnewtitlepropuestapromotor" class="form-control widthinput"><br><br>
-        <label for="fdescripciontextareapromotor">Descripción</label><br>
-        <textarea rows="10" cols="100" name="propuestapromotor" id="fdescripciontextareapromotor" class="form-control widthinput"></textarea><br><br>
-        <label for="fdproyectosname">Director del proyectos</label>
-        <select id="fdproyectosname" name="fdproyectosname" class="form-control" style="width: 180px;">
-            <option value="Javier Amengual">Javier Amengual</option>
-            <option value="Ana Márquez">Ana Márquez</option>
-        </select><br><br>
-        <label for="solicitantepropuestapromotor">Solicitante </label>
-        <input type="text" id="solicitantepropuestapromotor" name="solicitantepropuestapromotor" disabled class="form-control" style="width: 180px;"><br><br>
-        <label for="fbeneficiostextareapromotor">Beneficios estratégicos</label><br>
-        <textarea rows="10" cols="100" name="propuestapromotor" id="fbeneficiostextareapromotor" class="form-control widthinput"></textarea><br><br>
-        <label class="specificlabel" for="fcostespropuestapromotor">Costes</label>
-        <input type="text" id="fcostespropuestapromotor" name="fcostespropuestapromotor" class="form-control widthinput"><br><br>
-        <label class="specificlabel" for="fduracionpropuestapromotor">Duración</label>
-        <input type="text" id="fduracionpropuestapromotor" name="fduracionpropuestapromotor" class="form-control widthinput"><br><br>
-        <label class="specificlabel" for="friesgospropuestapromotor">Riesgos</label>
-        <input type="text" id="friesgospropuestapromotor" name="friesgospropuestapromotor" class="form-control widthinput"><br><br>
-        <label class="specificlabel" for="fhitospropuestapromotor">Hitos</label>
-        <input type="text" id="fhitospropuestapromotor" name="fhitospropuestapromotor" class="form-control widthinput"><br><br>
-        <label class="specificlabel" for="fentregablespropuestapromotor">Entregables</label>
-        <input type="text" id="fentregablespropuestapromotor" name="fentregablespropuestapromotor" class="form-control widthinput"><br><br>
-        <button class="btn btn-secondary" >Adjuntar archivos</button><br><br><br>
-        <button class="btn btn-info" onclick="enviarpropuestapromotor()">Enviar</button>
-    </div>
+                <div id="formpropuestapromotor" hidden="true" class="whitecontainer">
+                    <h3>Modifique los aspectos necesarios antes de enviar</h3><br>
+                    <p id="ftitlepropuestapromotor" hidden="true"></p>
+                    <label for="fnewtitlepropuestapromotor">Título de la propuesta </label>
+                    <input type="text" id="fnewtitlepropuestapromotor" name="fnewtitlepropuestapromotor"
+                        class="form-control widthinput"><br><br>
+                    <label for="fdescripciontextareapromotor">Descripción</label><br>
+                    <textarea rows="10" cols="100" name="propuestapromotor" id="fdescripciontextareapromotor"
+                        class="form-control widthinput"></textarea><br><br>
+                    <label for="fdproyectosname">Director del proyectos</label>
+                    <select id="fdproyectosname" name="fdproyectosname" class="form-control" style="width: 180px;">
+                        <option value="Javier Amengual">Javier Amengual</option>
+                        <option value="Ana Márquez">Ana Márquez</option>
+                    </select><br><br>
+                    <label for="solicitantepropuestapromotor">Solicitante </label>
+                    <input type="text" id="solicitantepropuestapromotor" name="solicitantepropuestapromotor" disabled
+                        class="form-control" style="width: 180px;"><br><br>
+                    <label for="fbeneficiostextareapromotor">Beneficios estratégicos</label><br>
+                    <textarea rows="10" cols="100" name="propuestapromotor" id="fbeneficiostextareapromotor"
+                        class="form-control widthinput"></textarea><br><br>
+                    <label class="specificlabel" for="fcostespropuestapromotor">Costes</label>
+                    <input type="text" id="fcostespropuestapromotor" name="fcostespropuestapromotor"
+                        class="form-control widthinput"><br><br>
+                    <label class="specificlabel" for="fduracionpropuestapromotor">Duración</label>
+                    <input type="text" id="fduracionpropuestapromotor" name="fduracionpropuestapromotor"
+                        class="form-control widthinput"><br><br>
+                    <label class="specificlabel" for="friesgospropuestapromotor">Riesgos</label>
+                    <input type="text" id="friesgospropuestapromotor" name="friesgospropuestapromotor"
+                        class="form-control widthinput"><br><br>
+                    <label class="specificlabel" for="fhitospropuestapromotor">Hitos</label>
+                    <input type="text" id="fhitospropuestapromotor" name="fhitospropuestapromotor"
+                        class="form-control widthinput"><br><br>
+                    <label class="specificlabel" for="fentregablespropuestapromotor">Entregables</label>
+                    <input type="text" id="fentregablespropuestapromotor" name="fentregablespropuestapromotor"
+                        class="form-control widthinput"><br><br>
+                    <button class="btn btn-secondary">Adjuntar archivos</button><br><br><br>
+                    <button class="btn btn-info" onclick="enviarpropuestapromotor()">Enviar</button>
+                </div>
             </div>
         </div>
     </div>
-
+    <div class="container">
+        <div class="row">
+            <div class="col-xl-12">
+                <div id="feedbacksolicitante" hidden="true" class="whitecontainer">    
+                </div>
+            </div>
+        </div>
+    </div>
     <br>
     <br>
 

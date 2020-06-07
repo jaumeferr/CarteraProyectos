@@ -19,7 +19,13 @@ function showprojects(priority) {
     $("#tableproyectoshead").empty();
     $("#tableproyectosbody").empty();
 
-    s = "<tr><th>Título</th><th>Fecha inicio</th><th>Fecha fin</th><th>Presupuesto</th><th>Detalles del proyecto</th><th>Comentarios</th>";
+    s = "<tr><th>Título</th>";
+    
+    if(priority == "aprobado" || priority =="finalizado"){
+    s += "<th>Fecha inicio</th><th>Fecha fin</th>";
+    }
+
+    s += "<th>Presupuesto</th><th>Detalles del proyecto</th><th>Comentarios</th>";
 
     if (priority == "aprobado") {
         s += "<th>Estado del proyecto</th>";
@@ -31,12 +37,16 @@ function showprojects(priority) {
     s += "</tr>"
     $("#tableproyectoshead").append(s);
 
-    jsonpropuestas = JSON.parse(sessionStorage.getItem('propuestas'));
-    for (var i = 0; i < jsonpropuestas.propuestas.length; i++) {
-        item = jsonpropuestas.propuestas[i];
-        if (item.estado == 5 && item.seguimiento == priority) {
+    jsonpropuestas = JSON.parse(sessionStorage.getItem('lista_priorizada'));
+    for (var i = 0; i < jsonpropuestas.length; i++) {
+        item = jsonpropuestas[i];
+        if (item.seguimiento == priority) {
 
-            s = "<tr><td>" + item.titulo + "</td><td></td><td></td><td>" + item.costes + "</td>";
+            s = "<tr><td>" + item.titulo + "</td>";
+            if(priority == "aprobado" || priority =="finalizado"){
+                s += "<td>"+ item.fechainicio +"</td><td>"+ item.fechafin +"</td>";
+            }
+            s +="<td>" + item.costes + "</td>";
             s += "<td><button class='btn btn-secondary' onclick='verdetalles(\"" + item.titulo.toString() + "\")'>Ver detalles</button></td>";
             s += "<td><button class='btn btn-secondary' onclick='vercomentarios(\"" + item.titulo.toString() + "\")'>Ver comentarios</button></td>";
 
@@ -88,8 +98,6 @@ function showprojects(priority) {
 
 
 $('#ejecucionproyecto').change(function (e) {
-    print("cojooonses");
-    debugger;
     estado = $('#ejecucionproyecto').val()
     if (estado == "bien") {
         $("#ejecucionproyecto").css("background-color", "green");
@@ -104,9 +112,9 @@ $('#ejecucionproyecto').change(function (e) {
 function verdetalles(titulo) {
     $("#tableprojects").hide();
 
-    jsonpropuestas = JSON.parse(sessionStorage.getItem('propuestas'));
-    for (var i = 0; i < jsonpropuestas.propuestas.length; i++) {
-        item = jsonpropuestas.propuestas[i];
+    jsonpropuestas = JSON.parse(sessionStorage.getItem('lista_priorizada'));
+    for (var i = 0; i < jsonpropuestas.length; i++) {
+        item = jsonpropuestas[i];
         if (item.titulo == titulo) {
             $("#titleproyecto").val(item.titulo);
             $("#solicitanteproyecto").val(item.solicitante);
@@ -188,20 +196,19 @@ function mostrarnotificaciones() {
 function aceptarcio(i) {
     notificaciones = JSON.parse(sessionStorage.getItem('notificacionescio'));
     mensaje = notificaciones.notificacionescio[i];
-    jsonpropuestas = JSON.parse(sessionStorage.getItem('propuestas'));
-    for (var i = 0; i < jsonpropuestas.propuestas.length; i++) {
-        if (jsonpropuestas.propuestas[i].titulo == mensaje.titulo) {
-            debugger;
+    jsonpropuestas = JSON.parse(sessionStorage.getItem('lista_priorizada'));
+    for (var i = 0; i < jsonpropuestas.length; i++) {
+        if (jsonpropuestas[i].titulo == mensaje.titulo) {
             if (mensaje.tipo == "Cancelación") {
-                jsonpropuestas.propuestas[i].seguimiento = "cancelado";
+                jsonpropuestas[i].seguimiento = "cancelado";
             } else if (mensaje.tipo == "Paralización") {
-                jsonpropuestas.propuestas[i].seguimiento = "aplazado";
+                jsonpropuestas[i].seguimiento = "aplazado";
             } 
             break;
         }
     }
 
-    sessionStorage.setItem('propuestas', JSON.stringify(jsonpropuestas));
+    sessionStorage.setItem('lista_priorizada', JSON.stringify(jsonpropuestas));
     notificaciones = JSON.parse(sessionStorage.getItem('notificacionescio'));
     notificaciones.notificacionescio.splice(i)
     sessionStorage.setItem('notificacionescio', JSON.stringify(notificaciones));
@@ -234,18 +241,18 @@ function goback() {
 function guardarcambios() {
 
     title = $("#titleproyecto").val();
-    jsonpropuestas = JSON.parse(sessionStorage.getItem('propuestas'));
-    for (var i = 0; i < jsonpropuestas.propuestas.length; i++) {
-        if (jsonpropuestas.propuestas[i].titulo == title) {
-            jsonpropuestas.propuestas[i].descripcion = $("#descripcionproyecto").val();
-            jsonpropuestas.propuestas[i].beneficios = $("#beneficiosproyecto").val();
-            jsonpropuestas.propuestas[i].costes = $("#costesproyecto").val();
-            jsonpropuestas.propuestas[i].duracion = $("#duracionproyecto").val();
-            jsonpropuestas.propuestas[i].riesgos = $("#riesgosproyecto").val();
-            jsonpropuestas.propuestas[i].hitos = $("#hitosproyecto").val();
-            jsonpropuestas.propuestas[i].entregables = $("#entregablesproyecto").val();
+    jsonpropuestas = JSON.parse(sessionStorage.getItem('lista_priorizada'));
+    for (var i = 0; i < jsonpropuestas.length; i++) {
+        if (jsonpropuestas[i].titulo == title) {
+            jsonpropuestas[i].descripcion = $("#descripcionproyecto").val();
+            jsonpropuestas[i].beneficios = $("#beneficiosproyecto").val();
+            jsonpropuestas[i].costes = $("#costesproyecto").val();
+            jsonpropuestas[i].duracion = $("#duracionproyecto").val();
+            jsonpropuestas[i].riesgos = $("#riesgosproyecto").val();
+            jsonpropuestas[i].hitos = $("#hitosproyecto").val();
+            jsonpropuestas[i].entregables = $("#entregablesproyecto").val();
 
-            sessionStorage.setItem('propuestas', JSON.stringify(jsonpropuestas));
+            sessionStorage.setItem('lista_priorizada', JSON.stringify(jsonpropuestas));
         }
     }
 
@@ -255,9 +262,9 @@ function guardarcambios() {
 function verevaluacion(titulo) {
     $("#tableprojects").hide();
     $("#notificacionesaceptaciondg").hide();
-    jsonpropuestas = JSON.parse(sessionStorage.getItem('propuestas'));
-    for (var i = 0; i < jsonpropuestas.propuestas.length; i++) {
-        item = jsonpropuestas.propuestas[i];
+    jsonpropuestas = JSON.parse(sessionStorage.getItem('lista_priorizada'));
+    for (var i = 0; i < jsonpropuestas.length; i++) {
+        item = jsonpropuestas[i];
         if (item.titulo == titulo) {
             $("#vertituloinforme").text(titulo);
             $("#verinformefinalizado").text(item.informe);
@@ -270,7 +277,7 @@ function verevaluacion(titulo) {
 function finalizarproyecto() {
     titulo = $("#titleproyecto").val();
     $("#titleproyectoinforme").append(titulo);
-    jsonpropuestas = JSON.parse(sessionStorage.getItem('propuestas'));
+    jsonpropuestas = JSON.parse(sessionStorage.getItem('lista_priorizada'));
     goback();
     $("#tableprojects").hide();
     $("#informeevaluacion").show();
@@ -284,11 +291,11 @@ function enviarinforme(){
     $("#titleproyectoinforme").empty();
     $("#finformeproyecto").val("");
     $("#tableproyectos").show();
-    for (var i = 0; i < jsonpropuestas.propuestas.length; i++) {
-        if (jsonpropuestas.propuestas[i].titulo == titulo) {
-            jsonpropuestas.propuestas[i].seguimiento = "finalizado";
-            jsonpropuestas.propuestas[i].informe = informe;
-            sessionStorage.setItem('propuestas', JSON.stringify(jsonpropuestas));
+    for (var i = 0; i < jsonpropuestas.length; i++) {
+        if (jsonpropuestas[i].titulo == titulo) {
+            jsonpropuestas[i].seguimiento = "finalizado";
+            jsonpropuestas[i].informe = informe;
+            sessionStorage.setItem('lista_priorizada', JSON.stringify(jsonpropuestas));
             break;
         }
     }

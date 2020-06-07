@@ -10,6 +10,7 @@ $(document).ready(function() {
 
     if (role == "solicitante") {
         $("#buttonredactarpropuesta").show();
+        feedbacksolicitante();
     } else if (role == "promotor") {
         jsonpropuestas = JSON.parse(sessionStorage.getItem('propuestas'));
         for (var i = 0; i < jsonpropuestas.propuestas.length; i++) {
@@ -25,11 +26,12 @@ $(document).ready(function() {
         insertpropuestastable(3);
     } else if (role == "oficina") {
         insertpropuestastable(2);
-    } 
+    }
 });
 
 function formpropuesta() {
     $("#formpropuesta").show();
+    $("#feedbacksolicitante").hide();
 }
 
 function enviarpropuesta() {
@@ -46,7 +48,7 @@ function enviarpropuesta() {
         riesgos: "",
         hitos: "",
         entregables: "",
-        ejecucion:"bien"
+        ejecucion: "bien"
     };
     jsonpropuestas = JSON.parse(sessionStorage.getItem('propuestas'));
     jsonpropuestas.propuestas.push(propuestatext);
@@ -57,6 +59,7 @@ function enviarpropuesta() {
     $("#fbeneficiostextarea").val("")
     $("#fpromotorname").val("")
 
+    feedbacksolicitante();
 }
 
 function aceptar() {
@@ -100,7 +103,7 @@ function rechazar() {
             item = jsonpropuestas.propuestas[i];
             console.log(item);
             if (item.promotor == userLogged.name && item.estado == 1) {
-                $("#tablepropuestas").append("<tr><td>" + item.titulo + "</td><td><button onclick='verpropuesta(\"" + item.titulo.toString() + "\")'>Ver propuesta</button></td></tr>");
+                $("#tablepropuestas").append("<tr><td style='padding-top:15px;padding-left:50px;'>" + item.titulo + "</td><td style='text-align: center; padding:10px;'><button class='btn btn-secondary' onclick='verpropuesta(\"" + item.titulo.toString() + "\")'>Ver propuesta</button></td></tr>");
             }
         }
         $("#mostrarpropuesta").show();
@@ -211,7 +214,24 @@ function enviarpropuestapromotor() {
     $("#tablepropuestas").show();
 }
 
-function cambiarfase3(){
+function cambiarfase3() {
     sessionStorage.setItem('faseCartera', "3");
     location.href = "fase3.htm"
+}
+
+function feedbacksolicitante() {
+    $("#feedbacksolicitante").empty();
+    jsonpropuestas = JSON.parse(sessionStorage.getItem('propuestas'));
+    for (var i = 0; i < jsonpropuestas.propuestas.length; i++) {
+        if (userLogged.name == jsonpropuestas.propuestas[i].solicitante) {
+            if (jsonpropuestas.propuestas[i].estado == 0) {
+                $("#feedbacksolicitante").append("<p>La propuesta <b>" + jsonpropuestas.propuestas[i].titulo + "</b> ha sido rechazada.</p>")
+            } else if (jsonpropuestas.propuestas[i].estado == 4) {
+                $("#feedbacksolicitante").append("<p>La propuesta <b>" + jsonpropuestas.propuestas[i].titulo + "</b> ha sido aceptada.</p>")
+            } else {
+                $("#feedbacksolicitante").append("<p>La propuesta <b>" + jsonpropuestas.propuestas[i].titulo + "</b> está pendiente de aceptación.</p>")
+            }
+        }
+    }
+    $("#feedbacksolicitante").show();
 }
