@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title> Priorización Proyectos</title>
+    <title> Priorizaci&oacuten Proyectos</title>
     <script src="js/jquery-3.3.1.min.js"></script>
     <script src="js/fase3Controller.js"></script>
     <link rel="stylesheet" href="css/bootstrap.min.css">
@@ -18,8 +18,6 @@
                 </div>
                 <div style="text-align: right;">
                     <button id="changeCritsButton" class="btn btn-info" onclick="onChangeCritsButtonClick()">Ajustar criterios</button>
-                    <button type="button" class="btn btn-info" data-toggle="modal" data-target="#myModal">Ver
-                        configuración cartera</button>
                     <button class="btn btn-info" onclick="location.href='login.htm'">Salir</button>
                 </div>
             </div>
@@ -32,7 +30,7 @@
                 <!-- Evaluar cada proyecto de la cartera con criterios estratégicos-->
                 <div id="prior_proy_panel" class="whitecontainer">
                     <div id="prior_proy_table_panel" hidden="true" >
-                        <table id="prior_proy_table">
+                        <table id="prior_proy_table" class=table>
                             <tr>
                                 <th>Titulo del proyecto</th>
                                 <th>Score</th>
@@ -61,17 +59,17 @@
             </div>
             <div class="row">
                 <div class="column">
-                    <label for="proy_tit">Titulo: </label>
+                    <label for="proy_tit">Título: </label><br>
                     <input id="proy_tit" name="proy_tit" style="width: 90%">
-                    <label for="proy_desc">Descripcion: </label>
+                    <label for="proy_desc">Descripción: </label>
                     <input id="proy_desc" name="proy_desc" style="width: 90%">
-                    <label for="proy_benf">Benef. Estr: </label>
-                    <input id="proy_benf" name="proy_benf" style="width: 90%">
-                    <label for="proy_costs">Costes: </label>
+                    <label for="proy_benf">Beneficios Estratégicos: </label>
+                    <input id="proy_benf" name="proy_benf" style="width: 90%"><br>
+                    <label for="proy_costs">Costes: </label><br>
                     <input id="proy_costs" name="proy_costs" style="width: 90%">
                     <label for="proy_dur">Duracion: </label>
-                    <input id="proy_dur" name="proy_dur" style="width: 90%">
-                    <label for="proy_hit">Hitos: </label>
+                    <input id="proy_dur" name="proy_dur" style="width: 90%"><br>
+                    <label for="proy_hit">Hitos: </label><br>
                     <input id="proy_hit" name="proy_hit" style="width: 90%">
                     <label for="proy_entr">Entregables: </label>
                     <input id="proy_entr" name="proy_entr" style="width: 90%">
@@ -108,10 +106,11 @@
                     </div>
                 </div>
             </div>
+            <br>
             <div>
-                <button id="saveFinancModalButton" onclick="onSaveFinanModalButtonClick()">Aplicar</button>
-                <button id="savePriorModalButton" onclick="onSavePriorModalButtonClick()">Guardar</button>
-                <button id="exitModalButton" onclick="onExitModalButtonClick()">Salir</button>
+                <button id="saveFinancModalButton" class="btn btn-info" onclick="onSaveFinanModalButtonClick()">Aplicar</button>
+                <button id="savePriorModalButton" class="btn btn-info" onclick="onSavePriorModalButtonClick()">Guardar</button>
+                <button id="exitModalButton" class="btn btn-info" onclick="onExitModalButtonClick()">Salir</button>
             </div>
         </div>
     </div>
@@ -122,11 +121,12 @@
             <table id="ajuste_crit_table">
                 <tr>
                     <th>Criterio</th>
-                    <th>Pond.</th>
+                    <th>Ponderación</th>
                 </tr>
             </table>
-            <button id="aplicarAjusteCritButton" onclick="onAplicarAjusteCritButtonClick()">Aplicar</button>
-            <button id="exitAjusteCritButton" onclick="onExitAjusteCritButtonClick()">Salir</button>
+            <br>
+            <button id="aplicarAjusteCritButton" class="btn btn-info" onclick="onAplicarAjusteCritButtonClick()">Aplicar</button>
+            <button id="exitAjusteCritButton" class="btn btn-info" onclick="onExitAjusteCritButtonClick()">Salir</button>
         </div>
     </div>
     <!-- Elaborar la propuesta de la lista priorizada de proyectos-->

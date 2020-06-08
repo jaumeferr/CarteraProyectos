@@ -19,66 +19,20 @@ $(document).ready(function() {
         estado = "priorizar_proyectos";
     }
 
-  /*  props = JSON.stringify([{
-            titulo: "AAA",
-            descripcion: "Este es el proyecto AAA y trata de esto.",
-            director: "Alguien Importante",
-            estado: 4,
-            beneficios: "35000",
-            costes: "30000",
-            duracion: "50 días",
-            riesgos: "Muchos",
-            hitos: "Algunos habrá",
-            entregables: "También bastantes",
-            rrhh: [],
-            rrff: [],
-            cuantia: 100000,
-            score: "0",
-            seguimiento: "",
-            cuantiaFinanciacion: "0",
-        },
-        {
-            titulo: "BBB",
-            descripcion: "Este es el proyecto BBB y trata de esto.",
-            director: "Alguien Más Importante",
-            estado: 3,
-            beneficios: "400000",
-            costes: "25000",
-            duracion: "90 días",
-            riesgos: "Muchísimos",
-            hitos: "Algunos habrá también",
-            entregables: "También muchos",
-            rrhh: [],
-            rrff: [],
-            cuantia: 1324000,
-            score: "0",
-            seguimiento: ""
-        }
-    ]);
-
-    crits = JSON.stringify([{
-            desc: "criterio 1",
-            pond: "25"
-        },
-        {
-            desc: "criterio 2",
-            pond: "75"
-        }
-    ]);*/
-
     if (estado == "priorizar_proyectos") {
         propJSON = sessionStorage.getItem('propuestas');
-        critJSON = sessionStorage.getItem("carteraProyectos.config.criterios");
+        critJSON = sessionStorage.getItem("carteraProyectos");
 
         propuestas = JSON.parse(propJSON);
         propuestas = propuestas.propuestas;
         criterios = JSON.parse(critJSON);
+        criterios = criterios.config.criterios;
 
         //Cargar propuestas en tabla (PRIORIZAR)
         var table = $("#prior_proy_table");
         propuestas.forEach(function(propuesta) {
             if (propuesta.estado == 4) {
-                table.append("<tr><td style='padding-top:15px;padding-left:50px;'>" + propuesta.titulo + "</td><td style='padding-top:15px;padding-left:50px;'>" + propuesta.score + "</td><td style='text-align: center; padding:10px;'><button onclick='onEvaluateButtonClick(\"" + propuesta.titulo.toString() + "\")'>Evaluar</button></td></tr>");
+                table.append("<tr><td style='padding-top:15px;'>" + propuesta.titulo + "</td><td style='padding-top:15px;padding-left:20px;'>" + propuesta.score + "</td><td style='text-align: center; padding:10px;'><button class='btn btn-secondary' onclick='onEvaluateButtonClick(\"" + propuesta.titulo.toString() + "\")'>Evaluar</button></td></tr>");
             }
         });
 
@@ -144,7 +98,7 @@ function onEvaluateButtonClick(titulo) {
         }
     }
 
-    //Borar criterios y score
+    //Borrar criterios y score
     $("#proy_score_modal").val("0");
     var count = $('#prior_crit_table tr').length;
 
@@ -233,7 +187,7 @@ function onChangeCritsButtonClick() {
 
     var i = 0;
     criterios.forEach(function(criterio) {
-        table.append("<tr><td style='padding-top:15px;padding-left:50px;'><input type='text' id='crit_adj_" + i + "'></td><td style='padding-top:15px;padding-left:50px;'><input type='text' id='pond_adj_" + i + "'></td></tr>");
+        table.append("<tr><td style='padding-top:15px;width:450px;'><input type='text' id='crit_adj_" + i + "' style='width:400px;'></td><td style='padding-top:15px;'><input type='text' id='pond_adj_" + i + "'></td></tr>");
         i++;
     });
 
@@ -291,7 +245,7 @@ function onSavePriorModalButtonClick() {
     }
 
     //Actualizar session storage
-    sessionStorage.setItem('propuestas', propuestas);
+    sessionStorage.setItem('propuestas', JSON.stringify(propuestas));
 
     //Actualizar tabla
     var table = $("#prior_proy_table");

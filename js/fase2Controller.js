@@ -48,7 +48,13 @@ function enviarpropuesta() {
         riesgos: "",
         hitos: "",
         entregables: "",
-        ejecucion: "bien"
+        ejecucion: "bien",
+        rrhh: [],
+        rrff: [],
+        cuantia: 100000,
+        score: "0",
+        seguimiento: "",
+        cuantiaFinanciacion: "0"
     };
     jsonpropuestas = JSON.parse(sessionStorage.getItem('propuestas'));
     jsonpropuestas.propuestas.push(propuestatext);
@@ -233,4 +239,17 @@ function feedbacksolicitante() {
         }
     }
     $("#feedbacksolicitante").show();
+}
+
+function verconfigcartera(){
+    $("#configuracionmodal").empty();
+    jsonconfiguracion = JSON.parse(sessionStorage.getItem('carteraProyectos'));
+    $("#configuracionmodal").append("<p><b>Criterios</b></p>");
+    jsonconfiguracion.config.criterios.forEach(function(criterio) {
+        $("#configuracionmodal").append("<p>"+ criterio.pond +"% "+criterio.desc+"</p>");
+    });
+    $("#configuracionmodal").append("<p><b>Fechas</b></p>");
+    $("#configuracionmodal").append("<p>Fecha publicación convocatoria: "+jsonconfiguracion.config.calendario.fechaPublicacionConvocatoria +"</p>");
+    $("#configuracionmodal").append("<p>Período presentación propuestas: "+jsonconfiguracion.config.calendario.periodoPresentacionPropuestas.desde+" a " +jsonconfiguracion.config.calendario.periodoPresentacionPropuestas.hasta+"</p>");
+    $("#configuracionmodal").append("<p>Fecha publiación prouestas aprobadas: "+jsonconfiguracion.config.calendario.fechaPublicacionAprobados+"</p>");
 }
