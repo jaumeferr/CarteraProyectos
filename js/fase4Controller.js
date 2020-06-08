@@ -48,8 +48,7 @@ function showprojects(priority) {
             }
             s +="<td>" + item.costes + "</td>";
             s += "<td><button class='btn btn-secondary' onclick='verdetalles(\"" + item.titulo.toString() + "\")'>Ver detalles</button></td>";
-            s += "<td><button class='btn btn-secondary' onclick='vercomentarios(\"" + item.titulo.toString() + "\")'>Ver comentarios</button></td>";
-
+            s += "<td><button class='btn btn-secondary' data-toggle='modal' data-target='#myModal' onclick='vercomentarios(\"" + item.titulo.toString() + "\")'>Ver comentarios</button></td>";
             if (item.seguimiento == "aprobado") {
                 s += "<td><select id='ejecucionproyecto' name='ejecucionproyecto' class='form-control' style='width: 100px;' disabled><option value='bien' style='background-color:green'>Bien</option>";
                 s += "<option value='regular' style='background-color:yellow'>Regular</option><option value='mal' style='background-color:red'>Mal</option></select></td>";
