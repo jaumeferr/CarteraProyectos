@@ -13,56 +13,9 @@ $(document).ready(function() {
         estado = "priorizar_proyectos";
     }
 
-    props = JSON.stringify([{
-            titulo: "AAA",
-            descripcion: "Este es el proyecto AAA y trata de esto.",
-            director: "Alguien Importante",
-            estado: 4,
-            beneficios: "35000",
-            costes: "30000",
-            duracion: "50 días",
-            riesgos: "Muchos",
-            hitos: "Algunos habrá",
-            entregables: "También bastantes",
-            rrhh: [],
-            rrff: [],
-            cuantia: 100000,
-            score: "0",
-            seguimiento: "",
-            cuantiaFinanciacion: "0",
-        },
-        {
-            titulo: "BBB",
-            descripcion: "Este es el proyecto BBB y trata de esto.",
-            director: "Alguien Más Importante",
-            estado: 3,
-            beneficios: "400000",
-            costes: "25000",
-            duracion: "90 días",
-            riesgos: "Muchísimos",
-            hitos: "Algunos habrá también",
-            entregables: "También muchos",
-            rrhh: [],
-            rrff: [],
-            cuantia: 1324000,
-            score: "0",
-            seguimiento: ""
-        }
-    ]);
-
-    crits = JSON.stringify([{
-            desc: "criterio 1",
-            pond: "25"
-        },
-        {
-            desc: "criterio 2",
-            pond: "75"
-        }
-    ]);
-
     if (estado == "priorizar_proyectos") {
         propJSON = sessionStorage.getItem('propuestas');
-        critJSON = sessionStorage.getItem("carteraProyectos.criterios");
+        critJSON = sessionStorage.getItem("carteraProyectos.config.criterios");
 
         propuestas = JSON.parse(propJSON);
         criterios = JSON.parse(critJSON);
@@ -253,7 +206,7 @@ function onAplicarAjusteCritButtonClick() {
     }
 
     //Guardar criterios
-    sessionStorage.setItem('carteraProyectos.criterios', criterios);
+    sessionStorage.setItem('carteraProyectos.config.criterios', criterios);
 
     //Cerrar modal
     var modal = document.getElementById("ajuste_crit_modal");

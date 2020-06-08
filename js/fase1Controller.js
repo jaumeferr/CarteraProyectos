@@ -7,10 +7,7 @@ $(document).ready(function() {
     var cartAux = sessionStorage.getItem('carteraProyectos');
 
     if (cartAux) {
-        carteraProyectos = cartAux;
-
-        //Cargar estado actual de la cartera.
-        //cargar_criterios();
+        carteraProyectos = JSON.parse(cartAux);
     } else {
         //Alternativa, declarar aquí la cartera
         carteraProyectos = {
@@ -44,7 +41,7 @@ $(document).ready(function() {
             }
         }
 
-        sessionStorage.setItem('carteraProyectos', carteraProyectos);
+        sessionStorage.setItem('carteraProyectos', JSON.stringify(carteraProyectos));
     }
 
     //Ocultar todas los paneles
@@ -52,11 +49,25 @@ $(document).ready(function() {
     $("#cal_panel").hide();
     $("#rec_proc_panel").show();
 
+    //
+
     checkPrivileges();
 });
 
 //-----------------------------------------------
 //GENERAL
+
+function importarInfo(){
+    carteraProyectos = JSON.parse(sessionStorage.getItem('carteraProyectos'));
+
+    $("#fConvocatoria").val(carteraProyectos.config.calendario.fechaPublicacionConvocatoria);
+    $("#PPropuestaDesde").val(carteraProyectos.config.calendario.periodoPresentacionPropuestas.desde);
+    $("#PPropuestaHasta").val(carteraProyectos.config.calendario.periodoPresentacionPropuestas.hasta);
+    $("#PEvalPriorDesde").val(carteraProyectos.config.calendario.periodoEvaluacionPriorizacion.desde);
+    $("#PEvalPriorHasta").val(carteraProyectos.config.calendario.periodoEvaluacionPriorizacion.hasta);
+    $("#PAprobados").val(carteraProyectos.config.calendario.fechaPublicacionAprobados);
+     $("#my_amount").val(carteraProyectos.config.rrff.cuantiaInversion);
+}
 
 function checkPrivileges() {
     var role = userLogged.role;
@@ -77,6 +88,8 @@ function checkPrivileges() {
         //Ocultar botoón de enviar.
         $("#send_config_button").hide();
 
+        importarInfo();
+
     } else if (role === "dg" && estado != "aprobar_config") {
         //Ocultar todos los botones de edición.
         $("#add_rec_button").hide();
@@ -95,6 +108,8 @@ function checkPrivileges() {
         //Ocultar botón de aprobar y rechazar.
         $("#approve_config_button").hide();
         $("#reject_config_button").hide();
+
+        importarInfo();
 
 
     } else if (role === "cio" && estado === "crear_config") {
@@ -151,17 +166,14 @@ function onCalPanelButtonClick() {
 
 //BOTTOM
 function onSendConfigButtonClick() {
-    //Validar info de los campos.
-    if (validate()) {
-        //Cargar info de los campos en variable.
-        loadInfo();
-    }
+    loadInfo();
 
     //Guardar info en el storage.
-    sessionStorage.setItem('carteraProyectos', carteraProyectos);
+    sessionStorage.setItem('carteraProyectos', JSON.stringify(carteraProyectos));
 
     //Cambiar estado cartera.
     sessionStorage.setItem('estadoCartera', "aprobar_config");
+    $("#send_config_button").hide();
 
     alert("La configuración se ha enviado correctamente");
 }
@@ -169,6 +181,7 @@ function onSendConfigButtonClick() {
 function onApproveConfigButtonClick() {
     //Cambiar estado.
     sessionStorage.setItem('faseCartera', "2");
+    $("#approve_config_button").hide();
 
     alert("La configuración se ha aprobado correctamente");
 }
@@ -188,20 +201,21 @@ function validate() {
 
 function loadInfo() {
     //Calendar
-    carteraProyectos.calendario.fechaPublicacionConvocatoria = $("#fConvocatoria").val();
-    carteraProyectos.calendario.periodoPresentacionPropuestas.desde = $("#PPropuestaDesde").val();
-    carteraProyectos.calendario.periodoPresentacionPropuestas.hasta = $("#PPropuestaHasta").val();
-    carteraProyectos.calendario.periodoEvaluacionPriorizacion.desde = $("#PEvalPriorDesde").val();
-    carteraProyectos.calendario.periodoEvaluacionPriorizacion.hasta = $("#PEvalPriorHasta").val();
-    carteraProyectos.calendario.fechaPublicacionAprobados = $("#PAprobados").val();
+    carteraProyectos.config.calendario.fechaPublicacionConvocatoria = $("#fConvocatoria").val();
+    carteraProyectos.config.calendario.periodoPresentacionPropuestas.desde = $("#PPropuestaDesde").val();
+    carteraProyectos.config.calendario.periodoPresentacionPropuestas.hasta = $("#PPropuestaHasta").val();
+    carteraProyectos.config.calendario.periodoEvaluacionPriorizacion.desde = $("#PEvalPriorDesde").val();
+    carteraProyectos.config.calendario.periodoEvaluacionPriorizacion.hasta = $("#PEvalPriorHasta").val();
+    carteraProyectos.config.calendario.fechaPublicacionAprobados = $("#PAprobados").val();
 
     //RRHH-RRFF
-    carteraProyectos.rrff.cuantiaInversion = $("#my_amount").val();
+    carteraProyectos.config.rrff.cuantiaInversion = $("#my_amount").val();
 
+    debugger;
     //Criterios
-    var criterios = $("#crit_table");
-    for (var i = 0; i < criterios.rows.Length; i++) {
-        carteraProyectos.criterios.push({ pond: criterios.rows[i].item(0), desc: criterios.rows[i].item(1) });
+    var criterios = document.getElementById('crit_table');
+    for (var i = 1; i < criterios.rows.length; i++) {
+        carteraProyectos.config.criterios.push({ pond: criterios.rows[i].cells[0].innerText, desc: criterios.rows[i].cells[1].innerText });
     }
     //Docu
 }
