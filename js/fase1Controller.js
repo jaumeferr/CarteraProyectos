@@ -211,11 +211,10 @@ function loadInfo() {
     //RRHH-RRFF
     carteraProyectos.config.rrff.cuantiaInversion = $("#my_amount").val();
 
-    debugger;
     //Criterios
-    var criterios = document.getElementById('crit_table');
-    for (var i = 1; i < criterios.rows.length; i++) {
-        carteraProyectos.config.criterios.push({ pond: criterios.rows[i].cells[0].innerText, desc: criterios.rows[i].cells[1].innerText });
+    var crits = document.getElementById('crit_table');
+    for (var i = 1; i < crits.rows.length; i++) {
+        carteraProyectos.config.criterios.push({ pond: crits.rows[i].cells[0].innerText, desc: crits.rows[i].cells[1].innerText });
     }
     //Docu
 }
