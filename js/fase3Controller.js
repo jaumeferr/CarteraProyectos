@@ -294,7 +294,7 @@ function onSaveFinanModalButtonClick() {
     //Borrar propuestas
 
     //Actualizar session storage
-    sessionStorage.setItem('lista_priorizada', lista_priorizada);
+    sessionStorage.setItem('lista_priorizada', JSON.stringify(lista_priorizada));
     alert("El proyecto se ha financiado exitosamente");
 
     //Cerrar ventana
