@@ -18,6 +18,7 @@ $(document).ready(function() {
         critJSON = sessionStorage.getItem("carteraProyectos.config.criterios");
 
         propuestas = JSON.parse(propJSON);
+        propuestas = propuestas.propuestas;
         criterios = JSON.parse(critJSON);
 
         //Cargar propuestas en tabla (PRIORIZAR)
