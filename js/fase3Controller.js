@@ -68,7 +68,7 @@ $(document).ready(function() {
 
     if (estado == "priorizar_proyectos") {
         propJSON = sessionStorage.getItem('propuestas');
-        critJSON = sessionStorage.getItem("carteraProyectos.criterios");
+        critJSON = sessionStorage.getItem("carteraProyectos.config.criterios");
 
         propuestas = JSON.parse(propJSON);
         propuestas = propuestas.propuestas;
@@ -260,7 +260,7 @@ function onAplicarAjusteCritButtonClick() {
     }
 
     //Guardar criterios
-    sessionStorage.setItem('carteraProyectos.criterios', criterios);
+    sessionStorage.setItem('carteraProyectos.config.criterios', criterios);
 
     //Cerrar modal
     var modal = document.getElementById("ajuste_crit_modal");
