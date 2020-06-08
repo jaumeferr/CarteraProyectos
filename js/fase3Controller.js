@@ -216,9 +216,9 @@ function onAplicarAjusteCritButtonClick() {
 
         criterios.push({ desc: $(crit).val(), pond: $(pond).val() });
     }
-
     //Guardar criterios
-    sessionStorage.setItem('carteraProyectos.config.criterios', criterios);
+    carteraProyectos.config.criterios = criterios;
+    sessionStorage.setItem('carteraProyectos', JSON.stringify(carteraProyectos));
 
     //Cerrar modal
     var modal = document.getElementById("ajuste_crit_modal");
