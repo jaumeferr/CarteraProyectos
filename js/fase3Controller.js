@@ -1,8 +1,9 @@
 var userLogged;
 var propuestas;
-var criterios;
 var estado;
 var lista_priorizada;
+var carteraProyectos;
+var criterios;
 
 $(document).ready(function() {
 
@@ -20,13 +21,13 @@ $(document).ready(function() {
     }
 
     if (estado == "priorizar_proyectos") {
-        propJSON = sessionStorage.getItem('propuestas');
-        critJSON = sessionStorage.getItem("carteraProyectos");
+        var propJSON = sessionStorage.getItem('propuestas');
+        var carteraJSON = sessionStorage.getItem("carteraProyectos");
 
         propuestas = JSON.parse(propJSON);
         propuestas = propuestas.propuestas;
-        criterios = JSON.parse(critJSON);
-        criterios = criterios.config.criterios;
+        carteraProyectos = JSON.parse(carteraJSON);
+        criterios = carteraProyectos.config.criterios;
 
         //Cargar propuestas en tabla (PRIORIZAR)
         var table = $("#prior_proy_table");
@@ -39,11 +40,14 @@ $(document).ready(function() {
         $("#prior_proy_table_panel").show();
         $("#publishButton").hide();
         $("#rejectButton").hide();
+        $("#changeCritsButton").hide();
 
     } else if (estado == "financiar_proyectos") {
+        var carteraJSON = sessionStorage.getItem("carteraProyectos");
         priorJSON = sessionStorage.getItem('lista_priorizada');
 
-
+        carteraProyectos = JSON.parse(carteraJSON);
+        criterios = carteraProyectos.config.criterios;
         lista_priorizada = JSON.parse(priorJSON);
 
         //Cargar lista priorizada en tabla (FINANCIAR)
