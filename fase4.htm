@@ -25,9 +25,9 @@
     <br><br>
     <div class="container">
         <div class="row">
-            <div class="col-xl-12 whitecontainer">
+            <div class="col-xl-12 whitecontainer" id=divnotificaciones hidden="true">
                 <p><b>Notificaciones de cambio de estado de proyectos</b></p><br>
-                <div id="notificacionesaceptaciondg" hidden="true" >
+                <div id="notificacionesaceptaciondg"  >
                 </div>
             </div>
         </div>
@@ -114,8 +114,9 @@
                     <br><br>
                     <div id="divbuttons" hidden="true">
                         <button class="btn btn-info" onclick="guardarcambios()">Guardar cambios</button><br><br>
-                        <button class="btn btn-info" onclick="finalizarproyecto()">Finalizar proyecto</button>
-                        <button class="btn btn-info" onclick="pararproyecto()">Parar proyecto</button>
+                        <button id=finalizarbutton class="btn btn-info" onclick="finalizarproyecto()">Finalizar proyecto</button>
+                        <button id=ejecutarbutton class="btn btn-info" onclick="ejecutarproyecto()">Ejecutar proyecto</button>
+                        <button id=pararbutton class="btn btn-info" onclick="pararproyecto()">Parar proyecto</button>
                         <button class="btn btn-info" onclick="cancelarproyecto()">Cancelar proyecto</button>
 
                     </div>

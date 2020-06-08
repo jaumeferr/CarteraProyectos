@@ -53,7 +53,7 @@ $(document).ready(function() {
         //Cargar lista priorizada en tabla (FINANCIAR)
         var table = $("#financ_proy_table");
         lista_priorizada.forEach(function(propuesta) {
-            table.append("<tr><td style='padding-top:15px;padding-left:50px;'>" + propuesta.titulo + "</td><td style='padding-top:15px;padding-left:50px;'>" + propuesta.score + "</td><td style='text-align: center; padding:10px;'><button onclick='onFinanceButtonClick(\"" + propuesta.titulo.toString() + "\")'>Financiar</button></td></tr>");
+            table.append("<tr><td style='padding-top:15px;'>" + propuesta.titulo + "</td><td style='padding-top:15px;padding-left:20px;'>" + propuesta.score + "</td><td style='text-align: center; padding:10px;'><button class='btn btn-secondary' onclick='onFinanceButtonClick(\"" + propuesta.titulo.toString() + "\")'>Financiar</button></td></tr>");
         });
 
         $("#financ_proy_table_panel").show();
@@ -68,6 +68,8 @@ function onPublishButtonClick() {
     sessionStorage.setItem('faseCartera', "4");
     alert("Se ha publicado la lista priorizada de proyectos");
     $("#publishButton").hide();
+    $("#rejectButton").hide();
+    location.href = "fase4.htm"
 }
 
 /*Rechazar propuesta de priorizacion de proyectos*/
@@ -173,6 +175,7 @@ function onSendButtonClick() {
     alert("La lista priorizada se ha enviado correctamente");
 
     $("#sendButton").hide();
+    location.reload(); 
 }
 
 function onChangeCritsButtonClick() {
@@ -260,7 +263,7 @@ function onSavePriorModalButtonClick() {
     }
 
     propuestas.forEach(function(propuesta) {
-        table.append("<tr><td style='padding-top:15px;padding-left:50px;'>" + propuesta.titulo + "</td><td style='padding-top:15px;padding-left:50px;'>" + propuesta.score + "</td><td style='text-align: center; padding:10px;'><button onclick='onEvaluateButtonClick(\"" + propuesta.titulo.toString() + "\")'>Evaluar</button></td></tr>");
+        table.append("<tr><td style='padding-top:15px;padding-left:50px;'>" + propuesta.titulo + "</td><td style='padding-top:15px;padding-left:50px;'>" + propuesta.score + "</td><td style='text-align: center; padding:10px;'><button class='btn btn-secondary' onclick='onEvaluateButtonClick(\"" + propuesta.titulo.toString() + "\")'>Evaluar</button></td></tr>");
     });
 
     //Cerrar ventana
@@ -294,12 +297,14 @@ function onSaveFinanModalButtonClick() {
     //Borrar propuestas
 
     //Actualizar session storage
-    sessionStorage.setItem('lista_priorizada', lista_priorizada);
+    sessionStorage.setItem('lista_priorizada', JSON.stringify(lista_priorizada));
     alert("El proyecto se ha financiado exitosamente");
 
     //Cerrar ventana
     var modal = document.getElementById("prior_proy_modal");
     modal.style.display = "none";
+    $("#cuantia_finan").val("");
+    $("#fecha_inicio").val("");
 }
 
 function onChangeCriteriosCheckbox(checkbox, pond) {

@@ -44,7 +44,7 @@ function showprojects(priority) {
 
             s = "<tr><td>" + item.titulo + "</td>";
             if(priority == "aprobado" || priority =="finalizado"){
-                s += "<td>"+ item.fechainicio +"</td><td>"+ item.fechafin +"</td>";
+                s += "<td>"+ item.fInicio +"</td><td>"+ getfechafin(item.fInicio, item.duracion) +"</td>";
             }
             s +="<td>" + item.costes + "</td>";
             s += "<td><button class='btn btn-secondary' onclick='verdetalles(\"" + item.titulo.toString() + "\")'>Ver detalles</button></td>";
@@ -153,6 +153,23 @@ function reconfigurar() {
 
     $("#divbuttons").show();
 
+    titulo = $("#titleproyecto").val()
+    jsonpropuestas = JSON.parse(sessionStorage.getItem('lista_priorizada'));
+    for (var i = 0; i < jsonpropuestas.length; i++) {
+        item = jsonpropuestas[i];
+        if (item.titulo == titulo) {
+            if(item.seguimiento=="aprobado"){
+                $("#ejecutarbutton").hide();
+                $("#finalizarbutton").show();
+                $("#pararbutton").show();
+            }else if(item.seguimiento=="aplazado"){
+                $("#finalizarbutton").hide();
+                $("#pararbutton").hide();
+                $("#ejecutarbutton").show();
+            }
+        }
+    }
+
     $("#reconfigurarbutton").hide();
 
 }
@@ -181,6 +198,18 @@ function cancelarproyecto() {
     mostrarnotificaciones();
 }
 
+function ejecutarproyecto() {
+    notificaciones = JSON.parse(sessionStorage.getItem('notificacionescio'));
+    titulo = $("#titleproyecto").val();
+    mensajetext = { titulo: $("#titleproyecto").val(), tipo: "Ejecutar" };
+    notificaciones = JSON.parse(sessionStorage.getItem('notificacionescio'));
+    notificaciones.notificacionescio.push(mensajetext);
+    sessionStorage.setItem('notificacionescio', JSON.stringify(notificaciones));
+
+    goback();
+    mostrarnotificaciones();
+}
+
 function mostrarnotificaciones() {
     $("#notificacionesaceptaciondg").empty();
     notificaciones = JSON.parse(sessionStorage.getItem('notificacionescio'));
@@ -190,7 +219,7 @@ function mostrarnotificaciones() {
         s += "<button class='btn-sm btn-info' onclick='aceptarcio(" + i + ")'>Aceptar</button>&nbsp;&nbsp;<button class='btn-sm btn-info' onclick='rechazarcio(" + i + ")'>Rechazar</button>"
         $("#notificacionesaceptaciondg").append(s)
     }
-    $("#notificacionesaceptaciondg").show();
+    $("#divnotificaciones").show();
 }
 
 function aceptarcio(i) {
@@ -203,7 +232,9 @@ function aceptarcio(i) {
                 jsonpropuestas[i].seguimiento = "cancelado";
             } else if (mensaje.tipo == "Paralización") {
                 jsonpropuestas[i].seguimiento = "aplazado";
-            } 
+            } else if(mensaje.tipo == "Ejecutar"){
+                jsonpropuestas[i].seguimiento = "aprobado";
+            }
             break;
         }
     }
@@ -235,6 +266,7 @@ function goback() {
     $("#hitosproyecto").prop("disabled", true);
     $("#entregablesproyecto").prop("disabled", true);
     $("#divbuttons").hide();
+    showprojects("aprobado");
     $("#tableprojects").show();
 }
 
@@ -306,4 +338,17 @@ function volverdeinforme(){
     $("#verinformeevaluacion").hide();
     $("#notificacionesaceptaciondg").show();
     $("#tableprojects").show();
+}
+
+function getfechafin(finicio,duracion){
+    if(duracion==""){
+        duracion=0
+    }else{
+        duracion=parseInt(duracion)
+    }
+    
+    fecha = new Date(finicio);
+    fecha.setDate(fecha.getDate() + duracion)
+    date = fecha.getFullYear()+'-'+ (fecha.getMonth()+1)+'-'+fecha.getDate();
+    return date
 }
