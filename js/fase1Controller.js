@@ -175,6 +175,8 @@ function onSendConfigButtonClick() {
     sessionStorage.setItem('estadoCartera', "aprobar_config");
     $("#send_config_button").hide();
 
+    $("#send_config_button").hide();
+
     alert("La configuración se ha enviado correctamente");
 }
 
@@ -183,6 +185,8 @@ function onApproveConfigButtonClick() {
     sessionStorage.setItem('faseCartera', "2");
     $("#approve_config_button").hide();
 
+    $("#approve_config_button").hide();
+    $("#reject_config_button").hide();
     alert("La configuración se ha aprobado correctamente");
 }
 
@@ -192,6 +196,8 @@ function onRejectConfigButtonClick() {
     //Cambiar estado.
     sessionStorage.setItem('estadoCartera', "crear_config");
 
+    $("#reject_config_button").hide();
+    $("#approve_config_button").hide();
     alert("La configuración se ha rechazado correctamente");
 }
 

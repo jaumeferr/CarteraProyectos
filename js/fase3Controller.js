@@ -1,3 +1,4 @@
+var userLogged;
 var propuestas;
 var estado;
 var lista_priorizada;
@@ -5,6 +6,11 @@ var carteraProyectos;
 var criterios;
 
 $(document).ready(function() {
+
+    userLogged = JSON.parse(sessionStorage.getItem('userLogged'));
+    role = userLogged.role;
+    $("#userInfo").append("Usuario: " + userLogged.name);
+
     var estado = sessionStorage.getItem('estadoCartera');
     if (estado == "aprobar_config") {
         estado = "priorizar_proyectos";
@@ -13,6 +19,53 @@ $(document).ready(function() {
     if (!estado) {
         estado = "priorizar_proyectos";
     }
+
+  /*  props = JSON.stringify([{
+            titulo: "AAA",
+            descripcion: "Este es el proyecto AAA y trata de esto.",
+            director: "Alguien Importante",
+            estado: 4,
+            beneficios: "35000",
+            costes: "30000",
+            duracion: "50 días",
+            riesgos: "Muchos",
+            hitos: "Algunos habrá",
+            entregables: "También bastantes",
+            rrhh: [],
+            rrff: [],
+            cuantia: 100000,
+            score: "0",
+            seguimiento: "",
+            cuantiaFinanciacion: "0",
+        },
+        {
+            titulo: "BBB",
+            descripcion: "Este es el proyecto BBB y trata de esto.",
+            director: "Alguien Más Importante",
+            estado: 3,
+            beneficios: "400000",
+            costes: "25000",
+            duracion: "90 días",
+            riesgos: "Muchísimos",
+            hitos: "Algunos habrá también",
+            entregables: "También muchos",
+            rrhh: [],
+            rrff: [],
+            cuantia: 1324000,
+            score: "0",
+            seguimiento: ""
+        }
+    ]);
+
+    crits = JSON.stringify([{
+            desc: "criterio 1",
+            pond: "25"
+        },
+        {
+            desc: "criterio 2",
+            pond: "75"
+        }
+    ]);*/
 
     if (estado == "priorizar_proyectos") {
         var propJSON = sessionStorage.getItem('propuestas');
