@@ -135,7 +135,7 @@ function verpropuesta(titulo) {
             $("#duracionpropuesta").text(item.duracion);
             $("#riesgospropuesta").text(item.riesgos);
             $("#hitospropuesta").text(item.hitos);
-            $("#entrgablespropuesta").text(item.entregables);
+            $("#entregablespropuesta").text(item.entregables);
             if (userLogged.role == "promotor") {
                 $("#hidetopromotor").hide();
             } else if (userLogged.role == "oficina" || userLogged.role == "cio") {
@@ -175,7 +175,6 @@ function insertpropuestastable(estado) {
 }
 
 function enviarpropuestapromotor() {
-
     title = $("#ftitlepropuestapromotor").text();
     jsonpropuestas = JSON.parse(sessionStorage.getItem('propuestas'));
     for (var i = 0; i < jsonpropuestas.propuestas.length; i++) {

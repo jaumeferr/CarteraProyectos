@@ -1,9 +1,15 @@
+var userLogged;
 var propuestas;
 var criterios;
 var estado;
 var lista_priorizada;
 
 $(document).ready(function() {
+
+    userLogged = JSON.parse(sessionStorage.getItem('userLogged'));
+    role = userLogged.role;
+    $("#userInfo").append("Usuario: " + userLogged.name);
+
     var estado = sessionStorage.getItem('estadoCartera');
     if (estado == "aprobar_config") {
         estado = "priorizar_proyectos";
@@ -13,7 +19,7 @@ $(document).ready(function() {
         estado = "priorizar_proyectos";
     }
 
-    props = JSON.stringify([{
+  /*  props = JSON.stringify([{
             titulo: "AAA",
             descripcion: "Este es el proyecto AAA y trata de esto.",
             director: "Alguien Importante",
@@ -58,13 +64,14 @@ $(document).ready(function() {
             desc: "criterio 2",
             pond: "75"
         }
-    ]);
+    ]);*/
 
     if (estado == "priorizar_proyectos") {
         propJSON = sessionStorage.getItem('propuestas');
         critJSON = sessionStorage.getItem("carteraProyectos.criterios");
 
         propuestas = JSON.parse(propJSON);
+        propuestas = propuestas.propuestas;
         criterios = JSON.parse(critJSON);
 
         //Cargar propuestas en tabla (PRIORIZAR)

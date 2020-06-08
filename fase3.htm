@@ -3,31 +3,56 @@
 
 <head>
     <title> Priorización Proyectos</title>
-    <link rel="stylesheet" href="css/fase3.css">
     <script src="js/jquery-3.3.1.min.js"></script>
     <script src="js/fase3Controller.js"></script>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <script src="js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="css/fase3.css">
 </head>
 
 <body>
-    <!-- Evaluar cada proyecto de la cartera con criterios estratégicos-->
-    <div id="prior_proy_panel">
-        <div id="prior_proy_table_panel" hidden="true">
-            <table id="prior_proy_table">
-                <tr>
-                    <th>Titulo del proyecto</th>
-                    <th>Score</th>
-                </tr>
-            </table>
-        </div>
-        <div id="financ_proy_table_panel" hidden="true">
-            <table id="financ_proy_table">
-                <tr>
-                    <th>Titulo del proyecto</th>
-                    <th>Score</th>
-                </tr>
-            </table>
+    <div class="container-fluid" style="background-color: white;">
+        <div class="row">
+            <div class="col-xl-12" style="padding: 1%;">
+                <div id="userInfo" style="position:absolute; margin:auto; padding: 0.5%; background-color: white;">
+                </div>
+                <div style="text-align: right;">
+                    <button id="changeCritsButton" class="btn btn-info" onclick="onChangeCritsButtonClick()">Ajustar criterios</button>
+                    <button type="button" class="btn btn-info" data-toggle="modal" data-target="#myModal">Ver
+                        configuración cartera</button>
+                    <button class="btn btn-info" onclick="location.href='login.htm'">Salir</button>
+                </div>
+            </div>
         </div>
     </div>
+    <br><br>
+    <div class="container">
+        <div class="row">
+            <div class="col-xl-12">
+                <!-- Evaluar cada proyecto de la cartera con criterios estratégicos-->
+                <div id="prior_proy_panel" class="whitecontainer">
+                    <div id="prior_proy_table_panel" hidden="true" >
+                        <table id="prior_proy_table">
+                            <tr>
+                                <th>Titulo del proyecto</th>
+                                <th>Score</th>
+                            </tr>
+                        </table>
+                    </div>
+                    <div id="financ_proy_table_panel" hidden="true">
+                        <table id="financ_proy_table">
+                            <tr>
+                                <th>Titulo del proyecto</th>
+                                <th>Score</th>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+
     <div id="prior_proy_modal" class="modal">
         <div class="modal-content">
             <div>
@@ -105,22 +130,20 @@
         </div>
     </div>
     <!-- Elaborar la propuesta de la lista priorizada de proyectos-->
-    <div>
-        <button id="sendButton" onclick="onSendButtonClick()">Enviar</button>
-        <button id="changeCritsButton" onclick="onChangeCritsButtonClick()">Ajustar criterios</button>
-        <button id="publishButton" onclick="onPublishButtonClick()">Publicar</button>
-        <button id="rejectButton" onclick="onRejectButtonClick()">Rechazar</button>
-        <button id="exitButton" onclick="onExitButtonClick()">Salir</button>
+    <div class="container whitecontainer">
+        <button id="sendButton" class="btn btn-info" onclick="onSendButtonClick()">Enviar</button>
+        <button id="publishButton" class="btn btn-info" onclick="onPublishButtonClick()">Publicar</button>
+        <button id="rejectButton" class="btn btn-info" onclick="onRejectButtonClick()">Rechazar</button>
     </div>
 
     <!-- Formulario para explicar por qué no se va a publicar-->
     <div id="rejectForm" class="modal">
         <div class="modal-content">
             <label for="rejectDesc">Informe de Rechazo</p>
-                <input id="rejectDesc" name="rejectDesc" type="textarea" cols= "4", rows="5">
+                <input id="rejectDesc" name="rejectDesc" type="textarea" cols="4" , rows="5">
                 <button onclick="onSendRejectionButtonClick()">Enviar</button>
-            </div>
         </div>
+    </div>
 </body>
 
 </html>
