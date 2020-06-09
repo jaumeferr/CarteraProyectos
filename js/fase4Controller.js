@@ -20,9 +20,9 @@ function showprojects(priority) {
     $("#tableproyectosbody").empty();
 
     s = "<tr><th>Título</th>";
-    
-    if(priority == "aprobado" || priority =="finalizado"){
-    s += "<th>Fecha inicio</th><th>Fecha fin</th>";
+
+    if (priority == "aprobado" || priority == "finalizado") {
+        s += "<th>Fecha inicio</th><th>Fecha fin</th>";
     }
 
     s += "<th>Presupuesto</th><th>Detalles del proyecto</th><th>Comentarios</th>";
@@ -41,17 +41,17 @@ function showprojects(priority) {
     for (var i = 0; i < jsonpropuestas.length; i++) {
         item = jsonpropuestas[i];
         if (item.seguimiento == priority) {
-            idname="ejecucionproyecto"+item.titulo;
+            idname = "ejecucionproyecto" + item.titulo;
 
             s = "<tr><td>" + item.titulo + "</td>";
-            if(priority == "aprobado" || priority =="finalizado"){
-                s += "<td>"+ item.fInicio +"</td><td>"+ getfechafin(item.fInicio, item.duracion) +"</td>";
+            if (priority == "aprobado" || priority == "finalizado") {
+                s += "<td>" + item.fInicio + "</td><td>" + getfechafin(item.fInicio, item.duracion) + "</td>";
             }
-            s +="<td>" + item.costes + "</td>";
+            s += "<td>" + item.costes + "</td>";
             s += "<td><button class='btn btn-secondary' onclick='verdetalles(\"" + item.titulo.toString() + "\")'>Ver detalles</button></td>";
             s += "<td><button class='btn btn-secondary' data-toggle='modal' data-target='#myModal'>Ver comentarios</button></td>";
             if (item.seguimiento == "aprobado") {
-                s += "<td><select id='"+idname+"' class='form-control' style='width: 100px;' disabled><option value='bien' style='background-color:green'>Bien</option>";
+                s += "<td><select id='" + idname + "' class='form-control' style='width: 100px;' disabled><option value='bien' style='background-color:green'>Bien</option>";
                 s += "<option value='regular' style='background-color:yellow'>Regular</option><option value='mal' style='background-color:red'>Mal</option></select></td>";
             } else if (item.seguimiento == "aplazado") {
 
@@ -62,29 +62,41 @@ function showprojects(priority) {
             s += "</tr>";
             $("#tableproyectosbody").append(s);
             if (item.ejecucion == "bien") {
-                $("#"+idname+" option[value='bien']").prop("selected", true);
-                $("#"+idname).css("background-color", "green");
+                $("#" + idname + " option[value='bien']").prop("selected", true);
+                $("#" + idname).css("background-color", "green");
             } else if (item.ejecucion == "regular") {
-                $("#"+idname+" option[value='regular']").prop("selected", true);
-                $("#"+idname).css("background-color", "yellow");
+                $("#" + idname + " option[value='regular']").prop("selected", true);
+                $("#" + idname).css("background-color", "yellow");
             } else {
-                $("#"+idname+" option[value='mal']").prop("selected", true);
-                $("#"+idname).css("background-color", "red");
+                $("#" + idname + " option[value='mal']").prop("selected", true);
+                $("#" + idname).css("background-color", "red");
             }
 
             if (userLogged.role == "promotor") {
-                $("#"+idname).prop("disabled", false);
+                $("#" + idname).prop("disabled", false);
             }
-             $("#"+idname).change(function (e) {
-                    estado = $("#"+idname).val()
-                    if (estado == "bien") {
-                        $("#"+idname).css("background-color", "green");
-                    } else if (estado == "regular") {
-                        $("#"+idname).css("background-color", "yellow");
-                    } else {
-                        $("#"+idname).css("background-color", "red");
+            $("#" + idname).change(function (e) {
+                debugger;
+                tit = idname.split("ejecucionproyecto");
+                estado = $("#" + idname).val()
+                jsonpropuestas = JSON.parse(sessionStorage.getItem('lista_priorizada'));
+                for (var i = 0; i < jsonpropuestas.length; i++) {
+                    if (jsonpropuestas[i].titulo = tit) {
+                        if (estado == "bien") {
+                            $("#" + idname).css("background-color", "green");
+                            jsonpropuestas[i].ejecucion = "bien";
+                        } else if (estado == "regular") {
+                            $("#" + idname).css("background-color", "yellow");
+                            jsonpropuestas[i].ejecucion = "regular";
+                        } else {
+                            $("#" + idname).css("background-color", "red");
+                            jsonpropuestas[i].ejecucion = "mal";
+                        }
                     }
-                });
+                }
+                sessionStorage.setItem('lista_priorizada', JSON.stringify(jsonpropuestas));
+
+            });
         }
     }
 
@@ -112,7 +124,8 @@ function verdetalles(titulo) {
             $("#entregablesproyecto").val(item.entregables);
 
             $("#reconfigurarbutton").hide();
-            if ((item.seguimiento != "finalizado") && (userLogged.role == "cd" || userLogged.role == "cio" || userLogged.role == "dg")){
+            $("#crearproyecto").hide();
+            if ((item.seguimiento != "finalizado") && (userLogged.role == "cd" || userLogged.role == "cio" || userLogged.role == "dg")) {
                 $("#reconfigurarbutton").show();
             }
             $("#detalleproyecto").show();
@@ -141,11 +154,11 @@ function reconfigurar() {
     for (var i = 0; i < jsonpropuestas.length; i++) {
         item = jsonpropuestas[i];
         if (item.titulo == titulo) {
-            if(item.seguimiento=="aprobado"){
+            if (item.seguimiento == "aprobado") {
                 $("#ejecutarbutton").hide();
                 $("#finalizarbutton").show();
                 $("#pararbutton").show();
-            }else if(item.seguimiento=="aplazado"){
+            } else if (item.seguimiento == "aplazado") {
                 $("#finalizarbutton").hide();
                 $("#pararbutton").hide();
                 $("#ejecutarbutton").show();
@@ -215,7 +228,7 @@ function aceptarcio(i) {
                 jsonpropuestas[i].seguimiento = "cancelado";
             } else if (mensaje.tipo == "Paralización") {
                 jsonpropuestas[i].seguimiento = "aplazado";
-            } else if(mensaje.tipo == "Ejecutar"){
+            } else if (mensaje.tipo == "Ejecutar") {
                 jsonpropuestas[i].seguimiento = "aprobado";
             }
             break;
@@ -241,6 +254,10 @@ function rechazarcio(i) {
 
 function goback() {
     $("#detalleproyecto").hide();
+    $("#titleproyecto").prop("disabled", true);
+    $("#solicitanteproyecto").prop("disabled", true);
+    $("#directorproyecto").prop("disabled", true);
+    $("#promotorproyecto").prop("disabled", true);
     $("#descripcionproyecto").prop("disabled", true);
     $("#beneficiosproyecto").prop("disabled", true);
     $("#costesproyecto").prop("disabled", true);
@@ -299,7 +316,7 @@ function finalizarproyecto() {
 }
 
 
-function enviarinforme(){
+function enviarinforme() {
     titulo = $("#titleproyecto").val();
     informe = $("#finformeproyecto").val();
     $("#informeevaluacion").hide();
@@ -318,21 +335,80 @@ function enviarinforme(){
     $("#tableprojects").show();
 }
 
-function volverdeinforme(){
+function volverdeinforme() {
     $("#verinformeevaluacion").hide();
     $("#notificacionesaceptaciondg").show();
     $("#tableprojects").show();
 }
 
-function getfechafin(finicio,duracion){
-    if(duracion==""){
-        duracion=0
-    }else{
-        duracion=parseInt(duracion)
+function getfechafin(finicio, duracion) {
+    if (duracion == "") {
+        duracion = 0
+    } else {
+        duracion = parseInt(duracion)
     }
-    
+
     fecha = new Date(finicio);
     fecha.setDate(fecha.getDate() + duracion)
-    date = fecha.getFullYear()+'-'+ (fecha.getMonth()+1)+'-'+fecha.getDate();
+    date = fecha.getFullYear() + '-' + (fecha.getMonth() + 1) + '-' + fecha.getDate();
     return date
+}
+
+
+function crearproyecto(){
+    $("#tableprojects").hide();
+    $("#titleproyecto").prop("disabled", false);
+    $("#solicitanteproyecto").prop("disabled", false);
+    $("#descripcionproyecto").prop("disabled", false);
+    $("#directorproyecto").prop("disabled", false);
+    $("#promotorproyecto").prop("disabled", false);
+    $("#beneficiosproyecto").prop("disabled", false);
+    $("#costesproyecto").prop("disabled", false);
+    $("#duracionproyecto").prop("disabled", false);
+    $("#riesgosproyecto").prop("disabled", false);
+    $("#hitosproyecto").prop("disabled", false);
+    $("#entregablesproyecto").prop("disabled", false);
+    $("#reconfigurarbutton").hide();
+    $("#crearproyecto").show();
+    $("#detalleproyecto").show();
+}
+
+function enviarnuevoproyecto(){
+
+    propuestatext = {
+        estado: 4,
+        titulo: $("#titleproyecto").val(),
+        descripcion: $("#descripcionproyecto").val(),
+        beneficios: $("#beneficiosproyecto").val(),
+        promotor: $("#promotorproyecto").val(),
+        solicitante: $("#solicitanteproyecto").val(),
+        director: $("#directorproyecto").val(),
+        costes: $("#costesproyecto").val(),
+        duracion: $("#duracionproyecto").val(),
+        riesgos: $("#riesgosproyecto").val(),
+        hitos: $("#hitosproyecto").val(),
+        entregables: $("#entregablesproyecto").val(),
+        ejecucion: "bien",
+        rrhh: [],
+        rrff: [],
+        cuantia: "",
+        score: "0",
+        seguimiento: "aprobado",
+        cuantiaFinanciacion: "0",
+        fInicio: "2020-06-10"
+    };
+
+    jsonpropuestas = JSON.parse(sessionStorage.getItem('lista_priorizada'));
+    jsonpropuestas.push(propuestatext);
+    sessionStorage.setItem('lista_priorizada', JSON.stringify(jsonpropuestas));
+    $("#formpropuesta").hide();
+    $("#ftitlepropuesta").val("")
+    $("#fdescripciontextarea").val("")
+    $("#fbeneficiostextarea").val("")
+    $("#fpromotorname").val("")
+
+    $("#detalleproyecto").hide();
+    $("#crearproyecto").hide();
+    $("#reconfigurarbutton").show();
+    goback();
 }

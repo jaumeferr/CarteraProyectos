@@ -17,6 +17,7 @@
                 <div id="userInfo" style="position:absolute; margin:auto; padding: 0.5%; background-color: white;">
                 </div>
                 <div style="text-align: right;">
+                    <button class="btn btn-info" onclick="crearproyecto()" hidden="true">Crear nuevo proyecto</button>
                     <button class="btn btn-info" onclick="location.href='login.htm'">Salir</button>
                 </div>
             </div>
@@ -27,7 +28,7 @@
         <div class="row">
             <div class="col-xl-12 whitecontainer" id=divnotificaciones hidden="true">
                 <p><b>Notificaciones de cambio de estado de proyectos</b></p><br>
-                <div id="notificacionesaceptaciondg"  >
+                <div id="notificacionesaceptaciondg">
                 </div>
             </div>
         </div>
@@ -44,7 +45,7 @@
                         <button type="button" class="btn btn-info" onclick="showprojects('aplazado')">En
                             espera</button>
                         <button type="button" class="btn btn-info" onclick="showprojects('finalizado')">Finalizado
-                            </button>
+                        </button>
                     </div>
                     <br><br>
                     <div>
@@ -76,12 +77,12 @@
                     <label for="titleproyecto">Título </label>
                     <input type="text" id="titleproyecto" name="titleproyecto" disabled
                         class="form-control widthinput"><br><br>
-                    <label for="descripcionproyecto">Descipcion </label>
-                    <input type="text" id="descripcionproyecto" name="descripcionproyecto" disabled
-                        class="form-control widthinput"><br><br>
-                    <label for="beneficiosproyecto">Beneficios estrategicos</label>
-                    <input type="text" id="beneficiosproyecto" name="beneficiosproyecto" disabled
-                        class="form-control widthinput"><br><br>
+                    <label for="descripcionproyecto">Descripción </label>
+                    <textarea rows="5" cols="100" id="descripcionproyecto" name="descripcionproyecto" disabled
+                        class="form-control widthinput"></textarea><br><br>
+                    <label for="beneficiosproyecto">Beneficios estratégicos</label>
+                    <textarea rows="5" cols="100" id="beneficiosproyecto" name="beneficiosproyecto" disabled
+                        class="form-control widthinput"></textarea><br><br>
                     <label for="solicitanteproyecto">Solicitante </label>
                     <input type="text" id="solicitanteproyecto" name="solicitanteproyecto" disabled
                         class="form-control widthinput"><br><br>
@@ -94,28 +95,31 @@
                     <label for="costesproyecto">Costes </label>
                     <input type="text" id="costesproyecto" name="costesproyecto" disabled
                         class="form-control widthinput"><br><br>
-                    <label for="duracionproyecto">Duracion </label>
+                    <label for="duracionproyecto">Duración </label>
                     <input type="text" id="duracionproyecto" name="duracionproyecto" disabled
                         class="form-control widthinput"><br><br>
                     <label for="riesgosproyecto">Riesgos </label>
-                    <input type="text" id="riesgosproyecto" name="riesgosproyecto" disabled
-                        class="form-control widthinput"><br><br>
+                    <textarea rows="5" cols="100" id="riesgosproyecto" name="riesgosproyecto" disabled
+                        class="form-control widthinput"></textarea><br><br>
                     <label for="hitosproyecto">Hitos </label>
-                    <input type="text" id="hitosproyecto" name="hitosproyecto" disabled
-                        class="form-control widthinput"><br><br>
+                    <textarea rows="5" cols="100" id="hitosproyecto" name="hitosproyecto" disabled
+                        class="form-control widthinput"></textarea><br><br>
                     <label for="entregablesproyecto">Entregables </label>
-                    <input type="text" id="entregablesproyecto" name="entregablesproyecto" disabled
-                        class="form-control widthinput"><br><br>
+                    <textarea rows="5" cols="100" id="entregablesproyecto" name="entregablesproyecto" disabled
+                        class="form-control widthinput"></textarea><br><br>
 
                     <button class="btn btn-info" id="reconfigurarbutton" onclick="reconfigurar()" hidden="true">Realizar
-                        cambios en el
+                        cambios en el proyecto</button>
+                    <button class="btn btn-info" id="crearproyecto" onclick="enviarnuevoproyecto()" hidden="true">Crear
                         proyecto</button>
                     <button class="btn btn-info" onclick="goback()">Volver</button>
                     <br><br>
                     <div id="divbuttons" hidden="true">
                         <button class="btn btn-info" onclick="guardarcambios()">Guardar cambios</button><br><br>
-                        <button id=finalizarbutton class="btn btn-info" onclick="finalizarproyecto()">Finalizar proyecto</button>
-                        <button id=ejecutarbutton class="btn btn-info" onclick="ejecutarproyecto()">Ejecutar proyecto</button>
+                        <button id=finalizarbutton class="btn btn-info" onclick="finalizarproyecto()">Finalizar
+                            proyecto</button>
+                        <button id=ejecutarbutton class="btn btn-info" onclick="ejecutarproyecto()">Ejecutar
+                            proyecto</button>
                         <button id=pararbutton class="btn btn-info" onclick="pararproyecto()">Parar proyecto</button>
                         <button class="btn btn-info" onclick="cancelarproyecto()">Cancelar proyecto</button>
 
@@ -131,7 +135,8 @@
                 <div id="informeevaluacion" hidden="true" class="whitecontainer">
                     <h4>Informe de evaluación del proyecto</h4>
                     <p id=titleproyectoinforme></p>
-                    <textarea rows="10" cols="100" name="finformeproyecto" id="finformeproyecto" class="form-control widthinput"></textarea><br><br>
+                    <textarea rows="10" cols="100" name="finformeproyecto" id="finformeproyecto"
+                        class="form-control widthinput"></textarea><br><br>
                     <button class="btn btn-info" onclick="enviarinforme()">Enviar</button>
                 </div>
             </div>
@@ -151,24 +156,24 @@
     </div>
     <div class="modal fade" id="myModal" role="dialog">
         <div class="modal-dialog">
-        
-          <!-- Modal content-->
-          <div class="modal-content">
-            <div class="modal-header">
-              <button type="button" class="close" data-dismiss="modal">&times;</button>
-              <h4 class="modal-title">Comentario del proyecto</h4>
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Comentario del proyecto</h4>
+                </div>
+                <div class="modal-body">
+                    <p>22/03/2020 El proyecto se està desarrollando según lo planeado.</p>
+                    <p>12/04/2020 Se ha retrasado 2 días por el proceso 4.</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default">Añadir comentario</button>
+                </div>
             </div>
-            <div class="modal-body">
-              <p>22/03/2020 El proyecto se està desarrollando según lo planeado.</p>
-              <p>12/04/2020 Se ha retrasado 2 días por el proceso 4.</p>
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-default">Añadir comentario</button>
-            </div>
-          </div>
-          
+
         </div>
-      </div>
+    </div>
     <br><br>
 </body>
 
