@@ -41,6 +41,7 @@ function showprojects(priority) {
     for (var i = 0; i < jsonpropuestas.length; i++) {
         item = jsonpropuestas[i];
         if (item.seguimiento == priority) {
+            idname="ejecucionproyecto"+item.titulo;
 
             s = "<tr><td>" + item.titulo + "</td>";
             if(priority == "aprobado" || priority =="finalizado"){
@@ -48,9 +49,9 @@ function showprojects(priority) {
             }
             s +="<td>" + item.costes + "</td>";
             s += "<td><button class='btn btn-secondary' onclick='verdetalles(\"" + item.titulo.toString() + "\")'>Ver detalles</button></td>";
-            s += "<td><button class='btn btn-secondary' data-toggle='modal' data-target='#myModal' onclick='vercomentarios(\"" + item.titulo.toString() + "\")'>Ver comentarios</button></td>";
+            s += "<td><button class='btn btn-secondary' data-toggle='modal' data-target='#myModal'>Ver comentarios</button></td>";
             if (item.seguimiento == "aprobado") {
-                s += "<td><select id='ejecucionproyecto' name='ejecucionproyecto' class='form-control' style='width: 100px;' disabled><option value='bien' style='background-color:green'>Bien</option>";
+                s += "<td><select id='"+idname+"' class='form-control' style='width: 100px;' disabled><option value='bien' style='background-color:green'>Bien</option>";
                 s += "<option value='regular' style='background-color:yellow'>Regular</option><option value='mal' style='background-color:red'>Mal</option></select></td>";
             } else if (item.seguimiento == "aplazado") {
 
@@ -61,51 +62,34 @@ function showprojects(priority) {
             s += "</tr>";
             $("#tableproyectosbody").append(s);
             if (item.ejecucion == "bien") {
-                $("#ejecucionproyecto option[value='bien']").prop("selected", true);
-                $("#ejecucionproyecto").css("background-color", "green");
+                $("#"+idname+" option[value='bien']").prop("selected", true);
+                $("#"+idname).css("background-color", "green");
             } else if (item.ejecucion == "regular") {
-                $("#ejecucionproyecto option[value='regular']").prop("selected", true);
-                $("#ejecucionproyecto").css("background-color", "yellow");
+                $("#"+idname+" option[value='regular']").prop("selected", true);
+                $("#"+idname).css("background-color", "yellow");
             } else {
-                $("#ejecucionproyecto option[value='mal']").prop("selected", true);
-                $("#ejecucionproyecto").css("background-color", "red");
+                $("#"+idname+" option[value='mal']").prop("selected", true);
+                $("#"+idname).css("background-color", "red");
             }
 
+            if (userLogged.role == "promotor") {
+                $("#"+idname).prop("disabled", false);
+            }
+             $("#"+idname).change(function (e) {
+                    estado = $("#"+idname).val()
+                    if (estado == "bien") {
+                        $("#"+idname).css("background-color", "green");
+                    } else if (estado == "regular") {
+                        $("#"+idname).css("background-color", "yellow");
+                    } else {
+                        $("#"+idname).css("background-color", "red");
+                    }
+                });
         }
-    }
-
-
-
-    if (userLogged.role == "promotor") {
-        $("#ejecucionproyecto").prop("disabled", false);
-
-        $('#ejecucionproyecto').change(function (e) {
-            estado = $('#ejecucionproyecto').val()
-            if (estado == "bien") {
-                $("#ejecucionproyecto").css("background-color", "green");
-            } else if (estado == "regular") {
-                $("#ejecucionproyecto").css("background-color", "yellow");
-            } else {
-                $("#ejecucionproyecto").css("background-color", "red");
-            }
-        });
     }
 
     $("#tableproyectos").show();
 }
-
-
-
-$('#ejecucionproyecto').change(function (e) {
-    estado = $('#ejecucionproyecto').val()
-    if (estado == "bien") {
-        $("#ejecucionproyecto").css("background-color", "green");
-    } else if (estado == "regular") {
-        $("#ejecucionproyecto").css("background-color", "yellow");
-    } else {
-        $("#ejecucionproyecto").css("background-color", "red");
-    }
-});
 
 
 function verdetalles(titulo) {
@@ -330,6 +314,7 @@ function enviarinforme(){
             break;
         }
     }
+    showprojects("aprobado");
     $("#tableprojects").show();
 }
 

@@ -53,7 +53,9 @@ $(document).ready(function() {
         //Cargar lista priorizada en tabla (FINANCIAR)
         var table = $("#financ_proy_table");
         lista_priorizada.forEach(function(propuesta) {
-            table.append("<tr><td style='padding-top:15px;'>" + propuesta.titulo + "</td><td style='padding-top:15px;padding-left:20px;'>" + propuesta.score + "</td><td style='text-align: center; padding:10px;'><button class='btn btn-secondary' onclick='onFinanceButtonClick(\"" + propuesta.titulo.toString() + "\")'>Financiar</button></td></tr>");
+            if (propuesta.estado == 4) {
+                table.append("<tr><td style='padding-top:15px;'>" + propuesta.titulo + "</td><td style='padding-top:15px;padding-left:20px;'>" + propuesta.score + "</td><td style='text-align: center; padding:10px;'><button class='btn btn-secondary' onclick='onFinanceButtonClick(\"" + propuesta.titulo.toString() + "\")'>Financiar</button></td></tr>");
+            }
         });
 
         $("#financ_proy_table_panel").show();
@@ -263,7 +265,9 @@ function onSavePriorModalButtonClick() {
     }
 
     propuestas.forEach(function(propuesta) {
-        table.append("<tr><td style='padding-top:15px;padding-left:50px;'>" + propuesta.titulo + "</td><td style='padding-top:15px;padding-left:50px;'>" + propuesta.score + "</td><td style='text-align: center; padding:10px;'><button class='btn btn-secondary' onclick='onEvaluateButtonClick(\"" + propuesta.titulo.toString() + "\")'>Evaluar</button></td></tr>");
+        if (propuesta.estado == 4) {
+            table.append("<tr><td style='padding-top:15px;padding-left:50px;'>" + propuesta.titulo + "</td><td style='padding-top:15px;padding-left:50px;'>" + propuesta.score + "</td><td style='text-align: center; padding:10px;'><button class='btn btn-secondary' onclick='onEvaluateButtonClick(\"" + propuesta.titulo.toString() + "\")'>Evaluar</button></td></tr>");
+        }
     });
 
     //Cerrar ventana
