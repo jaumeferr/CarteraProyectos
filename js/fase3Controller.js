@@ -158,14 +158,7 @@ function onSendButtonClick() {
     //Ordenar por score
     var lista_prior = propuestas;
     lista_prior.sort(function(a, b) {
-        if (a.score > b.score) {
-            return 1;
-        }
-        if (a.score < b.score) {
-            return -1;
-        }
-        // a must be equal to b
-        return 0;
+        return b.score - a.score;
     });
 
     //Crear lista priorizada en session storage
@@ -177,7 +170,6 @@ function onSendButtonClick() {
     alert("La lista priorizada se ha enviado correctamente");
 
     $("#sendButton").hide();
-    location.reload(); 
 }
 
 function onChangeCritsButtonClick() {

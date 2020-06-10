@@ -59,19 +59,19 @@ $(document).ready(function() {
     } else {
         users = JSON.parse(sessionStorage.getItem('users'));
     }
-    
+
     if (!sessionStorage.getItem('faseCartera')) {
         sessionStorage.setItem('faseCartera', "1");
         sessionStorage.setItem('estadoCartera', "crear_config");
     }
 
-    if(!sessionStorage.getItem('propuestas')){
-        s = {propuestas:[]} ;
+    if (!sessionStorage.getItem('propuestas')) {
+        s = { propuestas: [] };
         sessionStorage.setItem('propuestas', JSON.stringify(s));
     }
 
-    if(!sessionStorage.getItem('notificacionescio')){
-        s = {notificacionescio:[]} ;
+    if (!sessionStorage.getItem('notificacionescio')) {
+        s = { notificacionescio: [] };
         sessionStorage.setItem('notificacionescio', JSON.stringify(s));
     }
 
@@ -95,7 +95,7 @@ function login() {
                 //Redireccionar a la página.
                 url = "fase" + sessionStorage.getItem('faseCartera') + ".htm";
                 location.href = url;
-            } else {            
+            } else {
                 location.href = "nothingtodo.htm";
             }
         }
@@ -124,7 +124,10 @@ function hasSomethingToDo() {
             }
 
         case "3":
-            if (rol === "oficina" || rol === "cio" || rol === "cd" || rol === "dg") {
+            var estado = sessionStorage.getItem('estadoCartera');
+            if ((estado === "aprobar_config" || estado === "priorizar_proyectos") && rol === "cio") {
+                return true
+            } else if (estado == "financiar_proyectos" && (rol === "dg" || rol === "cd")) {
                 return true;
             } else {
                 return false;
