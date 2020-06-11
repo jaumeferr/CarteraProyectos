@@ -57,7 +57,7 @@ $(document).ready(function() {
 //-----------------------------------------------
 //GENERAL
 
-function importarInfo(){
+function importarInfo() {
     carteraProyectos = JSON.parse(sessionStorage.getItem('carteraProyectos'));
 
     $("#fConvocatoria").val(carteraProyectos.config.calendario.fechaPublicacionConvocatoria);
@@ -66,7 +66,7 @@ function importarInfo(){
     $("#PEvalPriorDesde").val(carteraProyectos.config.calendario.periodoEvaluacionPriorizacion.desde);
     $("#PEvalPriorHasta").val(carteraProyectos.config.calendario.periodoEvaluacionPriorizacion.hasta);
     $("#PAprobados").val(carteraProyectos.config.calendario.fechaPublicacionAprobados);
-     $("#my_amount").val(carteraProyectos.config.rrff.cuantiaInversion);
+    $("#my_amount").val(carteraProyectos.config.rrff.cuantiaInversion);
 }
 
 function checkPrivileges() {
@@ -87,6 +87,9 @@ function checkPrivileges() {
 
         //Ocultar botoón de enviar.
         $("#send_config_button").hide();
+        $("#doc_regl_button").hide();
+        $("#doc_conv_button").hide();
+
 
         importarInfo();
 
@@ -109,6 +112,8 @@ function checkPrivileges() {
         $("#approve_config_button").hide();
         $("#reject_config_button").hide();
 
+        $("#doc_panel").hide();
+
         importarInfo();
 
 
@@ -116,6 +121,12 @@ function checkPrivileges() {
         //Ocultar botón de aprobar y rechazar.
         $("#approve_config_button").hide();
         $("#reject_config_button").hide();
+
+        //Ocultar abrir docu
+        $("#doc_regl_button_open").hide();
+        $("#doc_conv_button_open").hide();
+
+
 
     } else {
         //Ocultar todos los botones de edición.
